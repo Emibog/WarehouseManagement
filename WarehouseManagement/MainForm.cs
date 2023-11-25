@@ -35,6 +35,17 @@ namespace WarehouseManagement
             menuDelete.Click += menuDeleteClick; //обработчик события удаления
             cmsButtonDelete.Items.Add(menuDelete);
             buttonAddCell.Visible = isEditing ? true : false;
+
+            Image backgroundImage = Properties.Resources.Map;
+            // Получаем размеры изображения
+            int width = backgroundImage.Width;
+            int height = backgroundImage.Height;
+
+            panelWarehouse.Width = width;
+            panelWarehouse.Height = height;
+
+            // Устанавливаем изображение фоном для панели
+            panelWarehouse.BackgroundImage = backgroundImage;
         }
 
         private void btnAddCell_Click(object sender, EventArgs e)
