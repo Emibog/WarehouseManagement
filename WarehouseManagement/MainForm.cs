@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,7 +30,6 @@ namespace WarehouseManagement
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
             // Загрузка сохраненной карты склада
             // TODO: Реализовать загрузку данных из файла или базы данных
 
@@ -210,6 +210,35 @@ namespace WarehouseManagement
                 {
                     button.ContextMenuStrip = isEditing ? cmsButtonDelete : null;
                 }
+            }
+        }
+
+        private void buttonLogin_Click(object sender, EventArgs e)
+        {
+            String login = "log";
+            String pass = "pass";
+
+            DB db = new DB();
+
+            DataTable table = new DataTable();
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand("SELECT * FROM `users` WHERE `login` = @uL AND `pass` = @uP", db.getConnection());
+
+            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login;
+            command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass;
+
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+
+            if(table.Rows.Count > 0)
+            {
+                MessageBox.Show("yes");
+            }
+            else
+            {
+                MessageBox.Show("no");
             }
         }
 
