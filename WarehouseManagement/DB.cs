@@ -11,11 +11,20 @@ namespace WarehouseManagement
     {
         MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=warehousemanagement");
 
-        public void openConnection()
+        public bool openConnection()
         {
-            if (connection.State == System.Data.ConnectionState.Closed)
+            try
             {
-                connection.Open();
+                if (connection.State == System.Data.ConnectionState.Closed)
+                {
+                    connection.Open();
+                    return true; // Возвращаем true в случае успешного открытия соединения
+                }
+                return false; // Возвращаем false, если соединение уже было открыто
+            }
+            catch (Exception ex)
+            {
+                return false; // Возвращаем false в случае ошибки
             }
         }
 

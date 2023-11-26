@@ -34,6 +34,7 @@ namespace WarehouseManagement
             this.buttonAddCell = new System.Windows.Forms.Button();
             this.buttonEditingMap = new System.Windows.Forms.Button();
             this.panelScroll = new System.Windows.Forms.Panel();
+            this.buttonChangeUser = new System.Windows.Forms.Button();
             this.panelScroll.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,11 +85,22 @@ namespace WarehouseManagement
             this.panelScroll.Size = new System.Drawing.Size(500, 300);
             this.panelScroll.TabIndex = 4;
             // 
+            // buttonChangeUser
+            // 
+            this.buttonChangeUser.Location = new System.Drawing.Point(609, 306);
+            this.buttonChangeUser.Name = "buttonChangeUser";
+            this.buttonChangeUser.Size = new System.Drawing.Size(202, 23);
+            this.buttonChangeUser.TabIndex = 5;
+            this.buttonChangeUser.Text = "Сменить пользователя";
+            this.buttonChangeUser.UseVisualStyleBackColor = true;
+            this.buttonChangeUser.Click += new System.EventHandler(this.buttonChangeUser_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 461);
+            this.Controls.Add(this.buttonChangeUser);
             this.Controls.Add(this.panelScroll);
             this.Controls.Add(this.buttonEditingMap);
             this.Controls.Add(this.buttonAddCell);
@@ -111,6 +123,7 @@ namespace WarehouseManagement
         private System.Windows.Forms.Button buttonAddCell;
         private System.Windows.Forms.Button buttonEditingMap;
         private System.Windows.Forms.Panel panelScroll;
+        private System.Windows.Forms.Button buttonChangeUser;
     }
 }
 

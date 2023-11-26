@@ -16,6 +16,7 @@ namespace WarehouseManagement
         private List<StorageCell> storageCells = new List<StorageCell>();
         private bool isDragging = false;
         private bool isResizing = false;
+        private string userPost;
         private int offsetX, offsetY;
         private int resizeStartX, resizeStartY;
         private Button selectedButton = null;
@@ -23,16 +24,25 @@ namespace WarehouseManagement
         private ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
         private List<string> Products = new List<string> { "Рулон", "Пакет" }; // ОТЛАДКА
 
-        public MainForm()
+        public MainForm(string userPost)
         {
             InitializeComponent();
+            this.userPost = userPost;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            if (userPost == "Администратор")
+            {
+                // Возможности для администратора
+            }
+            else if (userPost == "Пользователь")
+            {
+                buttonEditingMap.Visible = false;
+            }
+
             // Загрузка сохраненной карты склада
             // TODO: Реализовать загрузку данных из файла или базы данных
-
             ToolStripMenuItem menuDelete = new ToolStripMenuItem("Удалить"); //создание объекта-пункта меню
             menuDelete.Click += menuDeleteClick; //обработчик события удаления
             cmsButtonDelete.Items.Add(menuDelete);
@@ -219,7 +229,12 @@ namespace WarehouseManagement
             // TODO: Реализовать сохранение данных
         }
 
-        
+        private void buttonChangeUser_Click(object sender, EventArgs e)
+        {
+            Login logiForm = new Login();
+            logiForm.Show();
+            this.Hide();
+        }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {

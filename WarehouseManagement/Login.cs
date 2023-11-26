@@ -13,6 +13,9 @@ namespace WarehouseManagement
 {
     public partial class Login : Form
     {
+        public string userLogin;
+        public string userPass;
+        public string UserPost { get; private set; }
         public Login()
         {
             InitializeComponent();
@@ -20,36 +23,43 @@ namespace WarehouseManagement
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            String login = textBoxLogin.Text;
-            String pass = textBoxPass.Text;
+            userLogin = textBoxLogin.Text;
+            userPass = textBoxPass.Text;
 
             DB db = new DB();
 
-            DataTable table = new DataTable();
-
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand("SELECT * FROM `users` WHERE `login` = @uL AND `pass` = @uP", db.getConnection());
-
-            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login;
-            command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass;
-
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-
-            if (table.Rows.Count > 0)
+            if (db.openConnection())
             {
-                // Создаем и открываем MainForm
-                MainForm mainForm = new MainForm();
-                mainForm.Show();
+                DataTable table = new DataTable();
 
-                // Закрываем текущую форму авторизации
-                this.Hide();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `users` WHERE `login` = @uL AND `pass` = @uP", db.getConnection());
+
+                command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = userLogin;
+                command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = userPass;
+
+                adapter.SelectCommand = command;
+                adapter.Fill(table);
+
+                if (table.Rows.Count > 0)
+                {
+                    UserPost = table.Rows[0]["post"].ToString();
+                    // Создаем и открываем MainForm
+                    MainForm mainForm = new MainForm(UserPost);
+                    mainForm.Show();
+                    // Закрываем текущую форму авторизации
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Неверный логин или пароль");
+                }
             }
             else
             {
-                MessageBox.Show("Неверный логин или пароль");
-            }
+                MessageBox.Show("Не удалось поключиться к БД");
+            }            
         }
     }
 }

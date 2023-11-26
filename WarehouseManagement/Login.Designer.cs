@@ -48,6 +48,7 @@ namespace WarehouseManagement
             // 
             this.textBoxPass.Location = new System.Drawing.Point(139, 110);
             this.textBoxPass.Name = "textBoxPass";
+            this.textBoxPass.PasswordChar = '*';
             this.textBoxPass.Size = new System.Drawing.Size(130, 20);
             this.textBoxPass.TabIndex = 1;
             this.textBoxPass.Text = "pass";
