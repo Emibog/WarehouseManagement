@@ -55,6 +55,7 @@ namespace WarehouseManagement
             // 
             // buttonLogin
             // 
+            this.buttonLogin.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonLogin.Location = new System.Drawing.Point(139, 154);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(130, 23);
@@ -83,6 +84,7 @@ namespace WarehouseManagement
             // 
             // Login
             // 
+            this.AcceptButton = this.buttonLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(430, 218);
