@@ -34,7 +34,7 @@ namespace WarehouseManagement
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-                MySqlCommand command = new MySqlCommand("SELECT * FROM `users` WHERE `login` = @uL AND `pass` = @uP", db.getConnection());
+                MySqlCommand command = new MySqlCommand("SELECT * FROM `users` WHERE `login` = @uL AND BINARY `pass` = @uP", db.getConnection());
 
                 command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = userLogin;
                 command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = userPass;

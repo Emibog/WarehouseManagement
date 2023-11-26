@@ -39,6 +39,7 @@ namespace WarehouseManagement
             else if (userPost == "Пользователь")
             {
                 buttonEditingMap.Visible = false;
+                tsmiAddUser.Visible = false;
             }
 
             // Загрузка сохраненной карты склада
@@ -229,11 +230,46 @@ namespace WarehouseManagement
             // TODO: Реализовать сохранение данных
         }
 
-        private void buttonChangeUser_Click(object sender, EventArgs e)
+        private void tsmiChangeUser_Click(object sender, EventArgs e)
         {
             Login logiForm = new Login();
             logiForm.Show();
             this.Hide();
+        }
+
+        private void tsmiAddUser_Click(object sender, EventArgs e)
+        {
+            NewUser newUser = new NewUser();
+            if (newUser.ShowDialog() == DialogResult.OK)
+            {
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+                    
+                    MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `users` AUTO_INCREMENT = 1", db.getConnection());
+                    MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`login`, `pass`, `post`) VALUES (@login, @pass, @post)", db.getConnection());
+
+                    // Замените значения параметров на реальные данные
+                    command.Parameters.AddWithValue("@login", newUser.newLogin);
+                    command.Parameters.AddWithValue("@pass", newUser.newPass);
+                    command.Parameters.AddWithValue("@post", "Пользователь");
+
+
+                    autoIncrement.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+
+                    MessageBox.Show("Пользователь успешно добавлен.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при добавлении пользователя в базу данных.\n\n" + ex.Message, "Ошибка добавления пользователя", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+                }
+            }            
         }
 
         private void btnLoad_Click(object sender, EventArgs e)

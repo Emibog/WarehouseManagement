@@ -34,8 +34,12 @@ namespace WarehouseManagement
             this.buttonAddCell = new System.Windows.Forms.Button();
             this.buttonEditingMap = new System.Windows.Forms.Button();
             this.panelScroll = new System.Windows.Forms.Panel();
-            this.buttonChangeUser = new System.Windows.Forms.Button();
+            this.menuStripMainForm = new System.Windows.Forms.MenuStrip();
+            this.tsmChangeUsers = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAddUser = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiChangeUser = new System.Windows.Forms.ToolStripMenuItem();
             this.panelScroll.SuspendLayout();
+            this.menuStripMainForm.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelWarehouse
@@ -85,26 +89,50 @@ namespace WarehouseManagement
             this.panelScroll.Size = new System.Drawing.Size(500, 300);
             this.panelScroll.TabIndex = 4;
             // 
-            // buttonChangeUser
+            // menuStripMainForm
             // 
-            this.buttonChangeUser.Location = new System.Drawing.Point(609, 306);
-            this.buttonChangeUser.Name = "buttonChangeUser";
-            this.buttonChangeUser.Size = new System.Drawing.Size(202, 23);
-            this.buttonChangeUser.TabIndex = 5;
-            this.buttonChangeUser.Text = "Сменить пользователя";
-            this.buttonChangeUser.UseVisualStyleBackColor = true;
-            this.buttonChangeUser.Click += new System.EventHandler(this.buttonChangeUser_Click);
+            this.menuStripMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmChangeUsers});
+            this.menuStripMainForm.Location = new System.Drawing.Point(0, 0);
+            this.menuStripMainForm.Name = "menuStripMainForm";
+            this.menuStripMainForm.Size = new System.Drawing.Size(884, 24);
+            this.menuStripMainForm.TabIndex = 7;
+            this.menuStripMainForm.Text = "Меню главной формы";
+            // 
+            // tsmChangeUsers
+            // 
+            this.tsmChangeUsers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiChangeUser,
+            this.tsmiAddUser});
+            this.tsmChangeUsers.Name = "tsmChangeUsers";
+            this.tsmChangeUsers.Size = new System.Drawing.Size(179, 20);
+            this.tsmChangeUsers.Text = "&Управление пользователями";
+            // 
+            // tsmiAddUser
+            // 
+            this.tsmiAddUser.Name = "tsmiAddUser";
+            this.tsmiAddUser.Size = new System.Drawing.Size(204, 22);
+            this.tsmiAddUser.Text = "&Добавить пользователя";
+            this.tsmiAddUser.Click += new System.EventHandler(this.tsmiAddUser_Click);
+            // 
+            // tsmiChangeUser
+            // 
+            this.tsmiChangeUser.Name = "tsmiChangeUser";
+            this.tsmiChangeUser.Size = new System.Drawing.Size(204, 22);
+            this.tsmiChangeUser.Text = "&Сменить пользователя";
+            this.tsmiChangeUser.Click += new System.EventHandler(this.tsmiChangeUser_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 461);
-            this.Controls.Add(this.buttonChangeUser);
             this.Controls.Add(this.panelScroll);
             this.Controls.Add(this.buttonEditingMap);
             this.Controls.Add(this.buttonAddCell);
             this.Controls.Add(this.listBoxProducts);
+            this.Controls.Add(this.menuStripMainForm);
+            this.MainMenuStrip = this.menuStripMainForm;
             this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -112,7 +140,10 @@ namespace WarehouseManagement
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panelScroll.ResumeLayout(false);
+            this.menuStripMainForm.ResumeLayout(false);
+            this.menuStripMainForm.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -123,7 +154,10 @@ namespace WarehouseManagement
         private System.Windows.Forms.Button buttonAddCell;
         private System.Windows.Forms.Button buttonEditingMap;
         private System.Windows.Forms.Panel panelScroll;
-        private System.Windows.Forms.Button buttonChangeUser;
+        private System.Windows.Forms.MenuStrip menuStripMainForm;
+        private System.Windows.Forms.ToolStripMenuItem tsmChangeUsers;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAddUser;
+        private System.Windows.Forms.ToolStripMenuItem tsmiChangeUser;
     }
 }
 
