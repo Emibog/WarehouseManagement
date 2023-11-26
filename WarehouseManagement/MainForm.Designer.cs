@@ -34,7 +34,6 @@ namespace WarehouseManagement
             this.buttonAddCell = new System.Windows.Forms.Button();
             this.buttonEditingMap = new System.Windows.Forms.Button();
             this.panelScroll = new System.Windows.Forms.Panel();
-            this.buttonLogin = new System.Windows.Forms.Button();
             this.panelScroll.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,22 +84,11 @@ namespace WarehouseManagement
             this.panelScroll.Size = new System.Drawing.Size(500, 300);
             this.panelScroll.TabIndex = 4;
             // 
-            // buttonLogin
-            // 
-            this.buttonLogin.Location = new System.Drawing.Point(643, 355);
-            this.buttonLogin.Name = "buttonLogin";
-            this.buttonLogin.Size = new System.Drawing.Size(75, 23);
-            this.buttonLogin.TabIndex = 5;
-            this.buttonLogin.Text = "buttonLogin";
-            this.buttonLogin.UseVisualStyleBackColor = true;
-            this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 461);
-            this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.panelScroll);
             this.Controls.Add(this.buttonEditingMap);
             this.Controls.Add(this.buttonAddCell);
@@ -109,6 +97,7 @@ namespace WarehouseManagement
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Управление складом";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panelScroll.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -122,7 +111,6 @@ namespace WarehouseManagement
         private System.Windows.Forms.Button buttonAddCell;
         private System.Windows.Forms.Button buttonEditingMap;
         private System.Windows.Forms.Panel panelScroll;
-        private System.Windows.Forms.Button buttonLogin;
     }
 }
 

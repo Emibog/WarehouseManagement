@@ -213,45 +213,23 @@ namespace WarehouseManagement
             }
         }
 
-        private void buttonLogin_Click(object sender, EventArgs e)
-        {
-            String login = "log";
-            String pass = "pass";
-
-            DB db = new DB();
-
-            DataTable table = new DataTable();
-
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand("SELECT * FROM `users` WHERE `login` = @uL AND `pass` = @uP", db.getConnection());
-
-            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login;
-            command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass;
-
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-
-            if(table.Rows.Count > 0)
-            {
-                MessageBox.Show("yes");
-            }
-            else
-            {
-                MessageBox.Show("no");
-            }
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Сохранение данных о ячейках в файл или базу данных
             // TODO: Реализовать сохранение данных
         }
 
+        
+
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // Загрузка данных о ячейках из файла или базы данных
             // TODO: Реализовать загрузку данных
+        }
+
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
