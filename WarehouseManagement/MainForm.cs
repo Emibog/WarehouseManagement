@@ -28,6 +28,7 @@ namespace WarehouseManagement
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            
             // Загрузка сохраненной карты склада
             // TODO: Реализовать загрузку данных из файла или базы данных
 
