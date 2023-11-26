@@ -21,6 +21,7 @@ namespace WarehouseManagement
         private bool isEditing = false;
         private ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
         private List<string> Products = new List<string> { "Рулон", "Пакет" }; // ОТЛАДКА
+
         public MainForm()
         {
             InitializeComponent();
