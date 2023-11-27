@@ -61,6 +61,11 @@ namespace WarehouseManagement
             panelWarehouse.BackgroundImage = backgroundImage;
         }
 
+        /// <summary>
+        /// Создание ячейки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddCell_Click(object sender, EventArgs e)
         {
             // Добавление новой ячейки
@@ -150,7 +155,10 @@ namespace WarehouseManagement
              }
         }
 
-
+        /// <summary>
+        /// Создание ячейки на карте с добавлением всех функций
+        /// </summary>
+        /// <param name="cell"></param>
         private void DrawCell(StorageCell cell)
         {
             if (isEditing)
@@ -175,16 +183,6 @@ namespace WarehouseManagement
             }
         }
 
-
-        private void menuDeleteClick(object sender, EventArgs e)
-        {
-            if (isEditing)
-            {
-                Button btn = ((ContextMenuStrip)((ToolStripMenuItem)sender).GetCurrentParent()).SourceControl as Button;
-                panelWarehouse.Controls.Remove(btn);
-            }
-        }
-
         private void CellButton_Paint(object sender, PaintEventArgs e)
         {
             Button resizedButton = (Button)sender;
@@ -194,20 +192,41 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Удаление ячейки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuDeleteClick(object sender, EventArgs e)
+        {
+            if (isEditing)
+            {
+                Button btn = ((ContextMenuStrip)((ToolStripMenuItem)sender).GetCurrentParent()).SourceControl as Button;
+                panelWarehouse.Controls.Remove(btn);
+            }
+        }
 
+
+        /// Показать содержимое ячейки
+        /// </summary>
+        /// <param name="cell"></param>
         private void ShowProducts(StorageCell cell)
         {
             //Получаем номер ячейки
             string Nm = cell.Name;
-            // Отобразить список товаров в ячейке
+            // Если ячейки не находятся в режиме редактирования
             if (!isEditing)
             {
                 listBoxProducts.Items.Clear();
-                //MessageBox.Show(Nm);
                 listBoxProducts.Items.AddRange(Products.ToArray());
             }
         }
 
+        /// <summary>
+        /// Включение/отключение редактированиия карты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEditingMap_Click(object sender, EventArgs e)
         {
             isEditing = !isEditing;
@@ -230,6 +249,11 @@ namespace WarehouseManagement
             // TODO: Реализовать сохранение данных
         }
 
+        /// <summary>
+        /// Смена пользователя
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsmiChangeUser_Click(object sender, EventArgs e)
         {
             Login logiForm = new Login();
@@ -237,6 +261,11 @@ namespace WarehouseManagement
             this.Hide();
         }
 
+        /// <summary>
+        /// Добавление пользователя
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsmiAddUser_Click(object sender, EventArgs e)
         {
             NewUser newUser = new NewUser();
