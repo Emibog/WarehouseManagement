@@ -26,7 +26,9 @@ namespace WarehouseManagement
         private bool isEditing = false;
         private bool isEditingPrev = false;
         private ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
-        private List<string> itemsToHide = new List<string> { "buttonEditingMap", "tsmiAddUser", "buttonSaveMap" };
+        private List<string> itemsToHide = new List<string> { "buttonEditingMap", "tsmiAddUser", "buttonSaveMap", "tsmiSaveMapData"};
+        private string imgFileName;
+        private string datFileName;
         private List<string> Products = new List<string> { "Рулон", "Пакет" }; // ОТЛАДКА
 
         public MainForm(string userPost)
@@ -58,7 +60,11 @@ namespace WarehouseManagement
             cmsButtonDelete.Items.Add(menuDelete);
             buttonAddCell.Visible = isEditing ? true : false;
 
-            Image backgroundImage = Properties.Resources.Map;
+            string imagePath = "..\\..\\Resources\\Map1.png";
+            Image backgroundImage = Image.FromFile(imagePath);
+            imgFileName = Path.GetFileName(imagePath);
+            datFileName = Path.ChangeExtension(Path.GetFileNameWithoutExtension(imagePath), "dat");
+
             // Получаем размеры изображения
             int width = backgroundImage.Width;
             int height = backgroundImage.Height;
@@ -66,8 +72,9 @@ namespace WarehouseManagement
             panelWarehouse.Width = width;
             panelWarehouse.Height = height;
 
-            // Устанавливаем изображение фоном для панели
+            // Устанавливаем изображение фоном для панели и подгружаем ячейки
             panelWarehouse.BackgroundImage = backgroundImage;
+            LoadMapDataFromFile(datFileName);
         }
 
         /// <summary>
@@ -314,9 +321,9 @@ namespace WarehouseManagement
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSave_Click(object sender, EventArgs e)
+        private void tsmiSaveMapData_Click(object sender, EventArgs e)
         {
-            SaveMapToFile("map_data.dat");
+            SaveMapDataToFile(datFileName);
         }
 
         /// <summary>
@@ -324,9 +331,9 @@ namespace WarehouseManagement
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnLoad_Click(object sender, EventArgs e)
+        private void tsmiLoadMapData_Click(object sender, EventArgs e)
         {
-            LoadMapFromFile("map_data.dat");
+            LoadMapDataFromFile(datFileName);
         }
 
         /// <summary>
@@ -358,7 +365,7 @@ namespace WarehouseManagement
         /// Сериализация карты. Сохранение в файл
         /// </summary>
         /// <param name="fileName"></param>
-        private void SaveMapToFile(string fileName)
+        private void SaveMapDataToFile(string fileName)
         {
             UpdateStorageCellsFromButtons();
 
@@ -385,7 +392,7 @@ namespace WarehouseManagement
         /// Десериализация. Загрузка из файла
         /// </summary>
         /// <param name="fileName"></param>
-        private void LoadMapFromFile(string fileName)
+        private void LoadMapDataFromFile(string fileName)
         {
             // Десериализация
             try
@@ -417,6 +424,28 @@ namespace WarehouseManagement
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке карты.\n\n{ex.Message}", "Ошибка загрузки карты", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tsmiLoadMapImg_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogSelectMapImg.ShowDialog() == DialogResult.OK)
+            {
+                Image backgroundImage = Image.FromFile(openFileDialogSelectMapImg.FileName);
+                imgFileName = Path.GetFileName(openFileDialogSelectMapImg.FileName);
+                datFileName = Path.ChangeExtension(Path.GetFileNameWithoutExtension(openFileDialogSelectMapImg.FileName), "dat");
+
+                // Получаем размеры изображения
+                int width = backgroundImage.Width;
+                int height = backgroundImage.Height;
+
+                panelWarehouse.Width = width;
+                panelWarehouse.Height = height;
+
+                // Устанавливаем изображение фоном для панели и подгружаем ячейки
+                panelWarehouse.BackgroundImage = backgroundImage;
+                panelWarehouse.Controls.Clear();
+                LoadMapDataFromFile(datFileName);
             }
         }
 

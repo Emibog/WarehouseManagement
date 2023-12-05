@@ -38,8 +38,11 @@ namespace WarehouseManagement
             this.tsmChangeUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiChangeUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddUser = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonSaveMap = new System.Windows.Forms.Button();
-            this.buttonLoadMap = new System.Windows.Forms.Button();
+            this.управлениеСкладомToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiLoadMapData = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSaveMapData = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiLoadMapImg = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.SuspendLayout();
@@ -94,7 +97,8 @@ namespace WarehouseManagement
             // menuStripMainForm
             // 
             this.menuStripMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmChangeUsers});
+            this.tsmChangeUsers,
+            this.управлениеСкладомToolStripMenuItem});
             this.menuStripMainForm.Location = new System.Drawing.Point(0, 0);
             this.menuStripMainForm.Name = "menuStripMainForm";
             this.menuStripMainForm.Size = new System.Drawing.Size(884, 24);
@@ -124,33 +128,46 @@ namespace WarehouseManagement
             this.tsmiAddUser.Text = "&Добавить пользователя";
             this.tsmiAddUser.Click += new System.EventHandler(this.tsmiAddUser_Click);
             // 
-            // buttonSaveMap
+            // управлениеСкладомToolStripMenuItem
             // 
-            this.buttonSaveMap.Location = new System.Drawing.Point(609, 289);
-            this.buttonSaveMap.Name = "buttonSaveMap";
-            this.buttonSaveMap.Size = new System.Drawing.Size(202, 23);
-            this.buttonSaveMap.TabIndex = 8;
-            this.buttonSaveMap.Text = "Сохранить карту";
-            this.buttonSaveMap.UseVisualStyleBackColor = true;
-            this.buttonSaveMap.Click += new System.EventHandler(this.btnSave_Click);
+            this.управлениеСкладомToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiLoadMapImg,
+            this.tsmiLoadMapData,
+            this.tsmiSaveMapData});
+            this.управлениеСкладомToolStripMenuItem.Name = "управлениеСкладомToolStripMenuItem";
+            this.управлениеСкладомToolStripMenuItem.Size = new System.Drawing.Size(135, 20);
+            this.управлениеСкладомToolStripMenuItem.Text = "Управление &складом";
             // 
-            // buttonLoadMap
+            // tsmiLoadMapData
             // 
-            this.buttonLoadMap.Location = new System.Drawing.Point(609, 318);
-            this.buttonLoadMap.Name = "buttonLoadMap";
-            this.buttonLoadMap.Size = new System.Drawing.Size(202, 23);
-            this.buttonLoadMap.TabIndex = 9;
-            this.buttonLoadMap.Text = "Загрузить карту";
-            this.buttonLoadMap.UseVisualStyleBackColor = true;
-            this.buttonLoadMap.Click += new System.EventHandler(this.btnLoad_Click);
+            this.tsmiLoadMapData.Name = "tsmiLoadMapData";
+            this.tsmiLoadMapData.Size = new System.Drawing.Size(201, 22);
+            this.tsmiLoadMapData.Text = "&Загрузить ячейки";
+            this.tsmiLoadMapData.Click += new System.EventHandler(this.tsmiLoadMapData_Click);
+            // 
+            // tsmiSaveMapData
+            // 
+            this.tsmiSaveMapData.Name = "tsmiSaveMapData";
+            this.tsmiSaveMapData.Size = new System.Drawing.Size(201, 22);
+            this.tsmiSaveMapData.Text = "&Сохранить ячейки";
+            this.tsmiSaveMapData.Click += new System.EventHandler(this.tsmiSaveMapData_Click);
+            // 
+            // tsmiLoadMapImg
+            // 
+            this.tsmiLoadMapImg.Name = "tsmiLoadMapImg";
+            this.tsmiLoadMapImg.Size = new System.Drawing.Size(201, 22);
+            this.tsmiLoadMapImg.Text = "Загрузить к&арту склада";
+            this.tsmiLoadMapImg.Click += new System.EventHandler(this.tsmiLoadMapImg_Click);
+            // 
+            // openFileDialogSelectMapImg
+            // 
+            this.openFileDialogSelectMapImg.FileName = "MapImg";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 461);
-            this.Controls.Add(this.buttonLoadMap);
-            this.Controls.Add(this.buttonSaveMap);
             this.Controls.Add(this.panelScroll);
             this.Controls.Add(this.buttonEditingMap);
             this.Controls.Add(this.buttonAddCell);
@@ -182,8 +199,11 @@ namespace WarehouseManagement
         private System.Windows.Forms.ToolStripMenuItem tsmChangeUsers;
         private System.Windows.Forms.ToolStripMenuItem tsmiAddUser;
         private System.Windows.Forms.ToolStripMenuItem tsmiChangeUser;
-        private System.Windows.Forms.Button buttonSaveMap;
-        private System.Windows.Forms.Button buttonLoadMap;
+        private System.Windows.Forms.OpenFileDialog openFileDialogSelectMapImg;
+        private System.Windows.Forms.ToolStripMenuItem управлениеСкладомToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiLoadMapData;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSaveMapData;
+        private System.Windows.Forms.ToolStripMenuItem tsmiLoadMapImg;
     }
 }
 
