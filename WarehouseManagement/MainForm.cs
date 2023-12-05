@@ -45,6 +45,7 @@ namespace WarehouseManagement
                 buttonAddCell.Visible = false;
                 tsmiAddUser.Visible = false;
                 tsmiSaveMapData.Visible = false;
+                tsmiOpenDB.Visible = false;
             }
 
             // Загрузка сохраненной карты склада
@@ -422,11 +423,6 @@ namespace WarehouseManagement
                 MessageBox.Show($"Ошибка при загрузке карты.\n\n{ex.Message}", "Ошибка загрузки карты", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            textBoxMessage.Visible = false;
-            timerMessageBox.Enabled = false;
-        }
 
         private void tsmiLoadMapImg_Click(object sender, EventArgs e)
         {
@@ -448,6 +444,24 @@ namespace WarehouseManagement
                 panelWarehouse.Controls.Clear();
                 LoadMapDataFromFile(datFileName);
             }
+        }
+
+        private void tsmiOpenDB_Click(object sender, EventArgs e)
+        {
+            // Создаем и открываем DBView
+            DBView dBView = new DBView();
+            dBView.Show();
+        }
+
+        /// <summary>
+        /// Таймер для уведомлений
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            textBoxMessage.Visible = false;
+            timerMessageBox.Enabled = false;
         }
 
         /*
