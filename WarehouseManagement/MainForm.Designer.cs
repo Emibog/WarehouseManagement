@@ -181,7 +181,7 @@ namespace WarehouseManagement
             // timerMessageBox
             // 
             this.timerMessageBox.Interval = 4000;
-            this.timerMessageBox.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerMessageBox.Tick += new System.EventHandler(this.timerMessageBox_Tick);
             // 
             // textBoxMessage
             // 
