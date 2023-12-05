@@ -122,9 +122,32 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\warehouse.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\changeUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\openDB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loadImg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loadCells.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\saveCells.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

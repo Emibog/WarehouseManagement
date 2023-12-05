@@ -38,7 +38,7 @@ namespace WarehouseManagement
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(800, 461);
+            this.webBrowser1.Size = new System.Drawing.Size(1084, 511);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.Url = new System.Uri("http://localhost/phpMyAdmin/index.php?db=&table=&token=387a4a233e213e425846337229" +
         "497b73&lang=ru", System.UriKind.Absolute);
@@ -47,9 +47,9 @@ namespace WarehouseManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 461);
+            this.ClientSize = new System.Drawing.Size(1084, 511);
             this.Controls.Add(this.webBrowser1);
-            this.MinimumSize = new System.Drawing.Size(800, 500);
+            this.MinimumSize = new System.Drawing.Size(650, 350);
             this.Name = "DBView";
             this.Text = "DBView";
             this.ResumeLayout(false);

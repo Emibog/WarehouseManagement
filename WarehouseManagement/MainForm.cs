@@ -453,7 +453,6 @@ namespace WarehouseManagement
             dBView.Show();
         }
 
-        //ТЕСТ
         /// <summary>
         /// Таймер для уведомлений
         /// </summary>

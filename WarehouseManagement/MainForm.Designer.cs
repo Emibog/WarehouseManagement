@@ -117,12 +117,14 @@ namespace WarehouseManagement
             this.tsmChangeUsers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiChangeUser,
             this.tsmiAddUser});
+            this.tsmChangeUsers.Image = global::WarehouseManagement.Properties.Resources.user;
             this.tsmChangeUsers.Name = "tsmChangeUsers";
-            this.tsmChangeUsers.Size = new System.Drawing.Size(179, 20);
+            this.tsmChangeUsers.Size = new System.Drawing.Size(195, 20);
             this.tsmChangeUsers.Text = "&Управление пользователями";
             // 
             // tsmiChangeUser
             // 
+            this.tsmiChangeUser.Image = global::WarehouseManagement.Properties.Resources.changeUser;
             this.tsmiChangeUser.Name = "tsmiChangeUser";
             this.tsmiChangeUser.Size = new System.Drawing.Size(204, 22);
             this.tsmiChangeUser.Text = "&Сменить пользователя";
@@ -130,6 +132,7 @@ namespace WarehouseManagement
             // 
             // tsmiAddUser
             // 
+            this.tsmiAddUser.Image = global::WarehouseManagement.Properties.Resources.addUser;
             this.tsmiAddUser.Name = "tsmiAddUser";
             this.tsmiAddUser.Size = new System.Drawing.Size(204, 22);
             this.tsmiAddUser.Text = "&Добавить пользователя";
@@ -142,12 +145,14 @@ namespace WarehouseManagement
             this.tsmiLoadMapData,
             this.tsmiSaveMapData,
             this.tsmiOpenDB});
+            this.управлениеСкладомToolStripMenuItem.Image = global::WarehouseManagement.Properties.Resources.warehouse;
             this.управлениеСкладомToolStripMenuItem.Name = "управлениеСкладомToolStripMenuItem";
-            this.управлениеСкладомToolStripMenuItem.Size = new System.Drawing.Size(135, 20);
+            this.управлениеСкладомToolStripMenuItem.Size = new System.Drawing.Size(151, 20);
             this.управлениеСкладомToolStripMenuItem.Text = "Управление &складом";
             // 
             // tsmiLoadMapImg
             // 
+            this.tsmiLoadMapImg.Image = global::WarehouseManagement.Properties.Resources.loadImg;
             this.tsmiLoadMapImg.Name = "tsmiLoadMapImg";
             this.tsmiLoadMapImg.Size = new System.Drawing.Size(201, 22);
             this.tsmiLoadMapImg.Text = "Загрузить к&арту склада";
@@ -155,6 +160,7 @@ namespace WarehouseManagement
             // 
             // tsmiLoadMapData
             // 
+            this.tsmiLoadMapData.Image = global::WarehouseManagement.Properties.Resources.loadCells;
             this.tsmiLoadMapData.Name = "tsmiLoadMapData";
             this.tsmiLoadMapData.Size = new System.Drawing.Size(201, 22);
             this.tsmiLoadMapData.Text = "&Загрузить ячейки";
@@ -162,6 +168,7 @@ namespace WarehouseManagement
             // 
             // tsmiSaveMapData
             // 
+            this.tsmiSaveMapData.Image = global::WarehouseManagement.Properties.Resources.saveCells;
             this.tsmiSaveMapData.Name = "tsmiSaveMapData";
             this.tsmiSaveMapData.Size = new System.Drawing.Size(201, 22);
             this.tsmiSaveMapData.Text = "&Сохранить ячейки";
@@ -169,6 +176,7 @@ namespace WarehouseManagement
             // 
             // tsmiOpenDB
             // 
+            this.tsmiOpenDB.Image = global::WarehouseManagement.Properties.Resources.openDB;
             this.tsmiOpenDB.Name = "tsmiOpenDB";
             this.tsmiOpenDB.Size = new System.Drawing.Size(201, 22);
             this.tsmiOpenDB.Text = "Открыть базу данных";
