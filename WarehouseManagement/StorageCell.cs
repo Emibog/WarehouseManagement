@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WarehouseManagement
 {
+    [Serializable]
     public class StorageCell
     {
         public string Name { get; set; }

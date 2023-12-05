@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,7 +24,9 @@ namespace WarehouseManagement
         private int resizeStartX, resizeStartY;
         private Button selectedButton = null;
         private bool isEditing = false;
+        private bool isEditingPrev = false;
         private ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
+        private List<string> itemsToHide = new List<string> { "buttonEditingMap", "tsmiAddUser", "buttonSaveMap" };
         private List<string> Products = new List<string> { "Рулон", "Пакет" }; // ОТЛАДКА
 
         public MainForm(string userPost)
@@ -32,14 +37,18 @@ namespace WarehouseManagement
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (userPost == "Администратор")
+            // Скрытие запрещенных элементов для пользователя
+            if (userPost == "Пользователь")
             {
-                // Возможности для администратора
-            }
-            else if (userPost == "Пользователь")
-            {
-                buttonEditingMap.Visible = false;
-                tsmiAddUser.Visible = false;
+                foreach (string itemName in itemsToHide)
+                {
+                    Control item = Controls.Find(itemName, true).FirstOrDefault();
+
+                    if (item != null)
+                    {
+                        item.Visible = false;
+                    }
+                }
             }
 
             // Загрузка сохраненной карты склада
@@ -167,20 +176,25 @@ namespace WarehouseManagement
                 if (inputDialog.ShowDialog() == DialogResult.OK)
                 {
                     cell.Name = inputDialog.EnteredText;
-                    Button cellButton = new Button();
-                    cellButton.Text = inputDialog.EnteredText;
-                    cellButton.Size = new Size(cell.Width, cell.Height);
-                    cellButton.Location = new Point(cell.X, cell.Y);
-                    cellButton.MouseDown += CellButton_MouseDown;
-                    cellButton.MouseMove += CellButton_MouseMove;
-                    cellButton.MouseUp += CellButton_MouseUp;
-                    cellButton.Paint += CellButton_Paint;
-                    cellButton.Click += (sender, e) => ShowProducts(cell);
-                    cellButton.ContextMenuStrip = isEditing ? cmsButtonDelete : null;
-
-                    panelWarehouse.Controls.Add(cellButton);
+                }
+                else
+                {
+                    return; // Если пользователь отменил ввод, не создавать ячейку
                 }
             }
+
+            Button cellButton = new Button();
+            cellButton.Text = cell.Name;
+            cellButton.Size = new Size(cell.Width, cell.Height);
+            cellButton.Location = new Point(cell.X, cell.Y);
+            cellButton.MouseDown += CellButton_MouseDown;
+            cellButton.MouseMove += CellButton_MouseMove;
+            cellButton.MouseUp += CellButton_MouseUp;
+            cellButton.Paint += CellButton_Paint;
+            cellButton.Click += (sender, e) => ShowProducts(cell);
+            cellButton.ContextMenuStrip = isEditing ? cmsButtonDelete : null;
+
+            panelWarehouse.Controls.Add(cellButton);
         }
 
         private void CellButton_Paint(object sender, PaintEventArgs e)
@@ -243,12 +257,6 @@ namespace WarehouseManagement
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            // Сохранение данных о ячейках в файл или базу данных
-            // TODO: Реализовать сохранение данных
-        }
-
         /// <summary>
         /// Смена пользователя
         /// </summary>
@@ -301,11 +309,130 @@ namespace WarehouseManagement
             }            
         }
 
+        /// <summary>
+        /// Сохранение карты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveMapToFile("map_data.dat");
+        }
+
+        /// <summary>
+        /// Загрузка карты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            LoadMapFromFile("map_data.dat");
+        }
+
+        /// <summary>
+        /// Обновление списка созданных ячеек для сериализации
+        /// </summary>
+        private void UpdateStorageCellsFromButtons()
+        {
+            storageCells.Clear();
+
+            foreach (Control control in panelWarehouse.Controls)
+            {
+                if (control is Button button)
+                {
+                    StorageCell cell = new StorageCell
+                    {
+                        Name = button.Text,
+                        X = button.Left,
+                        Y = button.Top,
+                        Width = button.Width,
+                        Height = button.Height
+                    };
+
+                    storageCells.Add(cell);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Сериализация карты. Сохранение в файл
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void SaveMapToFile(string fileName)
+        {
+            UpdateStorageCellsFromButtons();
+
+            List<StorageCell> cellDataList = storageCells;
+
+            // Сериализация
+            try
+            {
+                using (FileStream fs = new FileStream(fileName, FileMode.Create))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(fs, cellDataList);
+                }
+
+                MessageBox.Show("Карта успешно сохранена.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении карты.\n\n{ex.Message}", "Ошибка сохранения карты", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Десериализация. Загрузка из файла
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void LoadMapFromFile(string fileName)
+        {
+            // Десериализация
+            try
+            {
+                using (FileStream fs = new FileStream(fileName, FileMode.Open))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    storageCells = (List<StorageCell>)formatter.Deserialize(fs);
+
+                    isEditingPrev = isEditing;
+                    isEditing = false;
+                    // Очищаем панель перед добавлением ячеек
+                    panelWarehouse.Controls.Clear();
+
+                    // Перерисовываем ячейки
+                    foreach (StorageCell cell in storageCells)
+                    {
+                        DrawCell(cell);
+                    }
+                }
+
+                isEditing = isEditingPrev;
+                MessageBox.Show("Карта успешно загружена.");
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Файл с картой не найден.", "Ошибка загрузки карты", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке карты.\n\n{ex.Message}", "Ошибка загрузки карты", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /*
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // Загрузка данных о ячейках из файла или базы данных
             // TODO: Реализовать загрузку данных
         }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            // Сохранение данных о ячейках в файл или базу данных
+            // TODO: Реализовать сохранение данных
+        }
+        */
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
