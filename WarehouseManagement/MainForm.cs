@@ -409,6 +409,9 @@ namespace WarehouseManagement
                 }
 
                 isEditing = isEditingPrev;
+                textBoxMessage.Text = "Карта успешно загружена";
+                textBoxMessage.Visible = true;
+                timerMessageBox.Enabled = true;
             }
             catch (FileNotFoundException)
             {
@@ -418,6 +421,11 @@ namespace WarehouseManagement
             {
                 MessageBox.Show($"Ошибка при загрузке карты.\n\n{ex.Message}", "Ошибка загрузки карты", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            textBoxMessage.Visible = false;
+            timerMessageBox.Enabled = false;
         }
 
         private void tsmiLoadMapImg_Click(object sender, EventArgs e)

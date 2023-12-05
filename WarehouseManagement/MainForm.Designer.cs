@@ -29,6 +29,7 @@ namespace WarehouseManagement
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panelWarehouse = new System.Windows.Forms.Panel();
             this.listBoxProducts = new System.Windows.Forms.ListBox();
             this.buttonAddCell = new System.Windows.Forms.Button();
@@ -39,12 +40,18 @@ namespace WarehouseManagement
             this.tsmiChangeUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddUser = new System.Windows.Forms.ToolStripMenuItem();
             this.управлениеСкладомToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiLoadMapImg = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLoadMapData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveMapData = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiLoadMapImg = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
+            this.timerMessageBox = new System.Windows.Forms.Timer(this.components);
+            this.textBoxMessage = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelWarehouse
@@ -52,20 +59,20 @@ namespace WarehouseManagement
             this.panelWarehouse.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panelWarehouse.Location = new System.Drawing.Point(3, 0);
             this.panelWarehouse.Name = "panelWarehouse";
-            this.panelWarehouse.Size = new System.Drawing.Size(288, 238);
+            this.panelWarehouse.Size = new System.Drawing.Size(222, 110);
             this.panelWarehouse.TabIndex = 0;
             // 
             // listBoxProducts
             // 
             this.listBoxProducts.FormattingEnabled = true;
-            this.listBoxProducts.Location = new System.Drawing.Point(609, 29);
+            this.listBoxProducts.Location = new System.Drawing.Point(3, 3);
             this.listBoxProducts.Name = "listBoxProducts";
             this.listBoxProducts.Size = new System.Drawing.Size(202, 160);
             this.listBoxProducts.TabIndex = 1;
             // 
             // buttonAddCell
             // 
-            this.buttonAddCell.Location = new System.Drawing.Point(609, 248);
+            this.buttonAddCell.Location = new System.Drawing.Point(3, 211);
             this.buttonAddCell.Name = "buttonAddCell";
             this.buttonAddCell.Size = new System.Drawing.Size(202, 23);
             this.buttonAddCell.TabIndex = 2;
@@ -75,7 +82,7 @@ namespace WarehouseManagement
             // 
             // buttonEditingMap
             // 
-            this.buttonEditingMap.Location = new System.Drawing.Point(609, 206);
+            this.buttonEditingMap.Location = new System.Drawing.Point(3, 176);
             this.buttonEditingMap.Name = "buttonEditingMap";
             this.buttonEditingMap.Size = new System.Drawing.Size(202, 23);
             this.buttonEditingMap.TabIndex = 3;
@@ -87,11 +94,10 @@ namespace WarehouseManagement
             // 
             this.panelScroll.AutoScroll = true;
             this.panelScroll.Controls.Add(this.panelWarehouse);
-            this.panelScroll.Location = new System.Drawing.Point(31, 29);
-            this.panelScroll.MaximumSize = new System.Drawing.Size(500, 300);
-            this.panelScroll.MinimumSize = new System.Drawing.Size(500, 300);
+            this.panelScroll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelScroll.Location = new System.Drawing.Point(3, 3);
             this.panelScroll.Name = "panelScroll";
-            this.panelScroll.Size = new System.Drawing.Size(500, 300);
+            this.panelScroll.Size = new System.Drawing.Size(453, 383);
             this.panelScroll.TabIndex = 4;
             // 
             // menuStripMainForm
@@ -101,7 +107,7 @@ namespace WarehouseManagement
             this.управлениеСкладомToolStripMenuItem});
             this.menuStripMainForm.Location = new System.Drawing.Point(0, 0);
             this.menuStripMainForm.Name = "menuStripMainForm";
-            this.menuStripMainForm.Size = new System.Drawing.Size(884, 24);
+            this.menuStripMainForm.Size = new System.Drawing.Size(918, 24);
             this.menuStripMainForm.TabIndex = 7;
             this.menuStripMainForm.Text = "Меню главной формы";
             // 
@@ -138,6 +144,13 @@ namespace WarehouseManagement
             this.управлениеСкладомToolStripMenuItem.Size = new System.Drawing.Size(135, 20);
             this.управлениеСкладомToolStripMenuItem.Text = "Управление &складом";
             // 
+            // tsmiLoadMapImg
+            // 
+            this.tsmiLoadMapImg.Name = "tsmiLoadMapImg";
+            this.tsmiLoadMapImg.Size = new System.Drawing.Size(201, 22);
+            this.tsmiLoadMapImg.Text = "Загрузить к&арту склада";
+            this.tsmiLoadMapImg.Click += new System.EventHandler(this.tsmiLoadMapImg_Click);
+            // 
             // tsmiLoadMapData
             // 
             this.tsmiLoadMapData.Name = "tsmiLoadMapData";
@@ -152,27 +165,68 @@ namespace WarehouseManagement
             this.tsmiSaveMapData.Text = "&Сохранить ячейки";
             this.tsmiSaveMapData.Click += new System.EventHandler(this.tsmiSaveMapData_Click);
             // 
-            // tsmiLoadMapImg
-            // 
-            this.tsmiLoadMapImg.Name = "tsmiLoadMapImg";
-            this.tsmiLoadMapImg.Size = new System.Drawing.Size(201, 22);
-            this.tsmiLoadMapImg.Text = "Загрузить к&арту склада";
-            this.tsmiLoadMapImg.Click += new System.EventHandler(this.tsmiLoadMapImg_Click);
-            // 
             // openFileDialogSelectMapImg
             // 
             this.openFileDialogSelectMapImg.FileName = "MapImg";
+            // 
+            // timerMessageBox
+            // 
+            this.timerMessageBox.Interval = 4000;
+            this.timerMessageBox.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // textBoxMessage
+            // 
+            this.textBoxMessage.AutoSize = true;
+            this.textBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
+            this.textBoxMessage.Location = new System.Drawing.Point(229, 0);
+            this.textBoxMessage.MinimumSize = new System.Drawing.Size(100, 0);
+            this.textBoxMessage.Name = "textBoxMessage";
+            this.textBoxMessage.Size = new System.Drawing.Size(100, 16);
+            this.textBoxMessage.TabIndex = 8;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panelScroll, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.20862F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.79138F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(918, 441);
+            this.tableLayoutPanel1.TabIndex = 9;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.listBoxProducts, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 0, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(462, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.00654F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.99346F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(453, 239);
+            this.tableLayoutPanel2.TabIndex = 10;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 461);
-            this.Controls.Add(this.panelScroll);
-            this.Controls.Add(this.buttonEditingMap);
-            this.Controls.Add(this.buttonAddCell);
-            this.Controls.Add(this.listBoxProducts);
+            this.ClientSize = new System.Drawing.Size(918, 465);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStripMainForm);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStripMainForm;
             this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "MainForm";
@@ -183,6 +237,9 @@ namespace WarehouseManagement
             this.panelScroll.ResumeLayout(false);
             this.menuStripMainForm.ResumeLayout(false);
             this.menuStripMainForm.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,6 +261,10 @@ namespace WarehouseManagement
         private System.Windows.Forms.ToolStripMenuItem tsmiLoadMapData;
         private System.Windows.Forms.ToolStripMenuItem tsmiSaveMapData;
         private System.Windows.Forms.ToolStripMenuItem tsmiLoadMapImg;
+        private System.Windows.Forms.Timer timerMessageBox;
+        private System.Windows.Forms.Label textBoxMessage;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }
 
