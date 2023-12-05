@@ -26,7 +26,6 @@ namespace WarehouseManagement
         private bool isEditing = false;
         private bool isEditingPrev = false;
         private ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
-        private List<string> itemsToHide = new List<string> { "buttonEditingMap", "tsmiAddUser", "buttonSaveMap", "tsmiSaveMapData"};
         private string imgFileName;
         private string datFileName;
         private List<string> Products = new List<string> { "Рулон", "Пакет" }; // ОТЛАДКА
@@ -42,15 +41,10 @@ namespace WarehouseManagement
             // Скрытие запрещенных элементов для пользователя
             if (userPost == "Пользователь")
             {
-                foreach (string itemName in itemsToHide)
-                {
-                    Control item = Controls.Find(itemName, true).FirstOrDefault();
-
-                    if (item != null)
-                    {
-                        item.Visible = false;
-                    }
-                }
+                buttonEditingMap.Visible = false;
+                buttonAddCell.Visible = false;
+                tsmiAddUser.Visible = false;
+                tsmiSaveMapData.Visible = false;
             }
 
             // Загрузка сохраненной карты склада
@@ -415,7 +409,6 @@ namespace WarehouseManagement
                 }
 
                 isEditing = isEditingPrev;
-                MessageBox.Show("Карта успешно загружена.");
             }
             catch (FileNotFoundException)
             {
