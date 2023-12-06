@@ -28,6 +28,10 @@ namespace WarehouseManagement
         private ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
         private string imgFileName;
         private string datFileName;
+        private DBView dbView = new DBView();
+        private InputDialog inputDialog = new InputDialog();
+        private Login logiForm = new Login();
+        private NewUser newUser = new NewUser();
         private List<string> Products = new List<string> { "Рулон", "Пакет" }; // ОТЛАДКА
 
         public MainForm(string userPost)
@@ -49,7 +53,6 @@ namespace WarehouseManagement
             }
 
             // Загрузка сохраненной карты склада
-            // TODO: Реализовать загрузку данных из файла или базы данных
             ToolStripMenuItem menuDelete = new ToolStripMenuItem("Удалить"); //создание объекта-пункта меню
             menuDelete.Click += menuDeleteClick; //обработчик события удаления
             cmsButtonDelete.Items.Add(menuDelete);
@@ -173,8 +176,7 @@ namespace WarehouseManagement
         private void DrawCell(StorageCell cell)
         {
             if (isEditing)
-            {
-                InputDialog inputDialog = new InputDialog();
+            {   
                 if (inputDialog.ShowDialog() == DialogResult.OK)
                 {
                     cell.Name = inputDialog.EnteredText;
@@ -228,7 +230,7 @@ namespace WarehouseManagement
         /// <param name="cell"></param>
         private void ShowProducts(StorageCell cell)
         {
-            //Получаем номер ячейки
+            // Получаем номер ячейки
             string Nm = cell.Name;
             // Если ячейки не находятся в режиме редактирования
             if (!isEditing)
@@ -266,9 +268,9 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void tsmiChangeUser_Click(object sender, EventArgs e)
         {
-            Login logiForm = new Login();
             logiForm.Show();
             this.Hide();
+            dbView.Hide();
         }
 
         /// <summary>
@@ -278,7 +280,6 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void tsmiAddUser_Click(object sender, EventArgs e)
         {
-            NewUser newUser = new NewUser();
             if (newUser.ShowDialog() == DialogResult.OK)
             {
                 DB db = new DB();
@@ -293,7 +294,6 @@ namespace WarehouseManagement
                     command.Parameters.AddWithValue("@login", newUser.newLogin);
                     command.Parameters.AddWithValue("@pass", newUser.newPass);
                     command.Parameters.AddWithValue("@post", "Пользователь");
-
 
                     autoIncrement.ExecuteNonQuery();
                     command.ExecuteNonQuery();
@@ -350,7 +350,6 @@ namespace WarehouseManagement
                         Width = button.Width,
                         Height = button.Height
                     };
-
                     storageCells.Add(cell);
                 }
             }
@@ -424,6 +423,11 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Загрузка изображения склада
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsmiLoadMapImg_Click(object sender, EventArgs e)
         {
             if (openFileDialogSelectMapImg.ShowDialog() == DialogResult.OK)
@@ -446,11 +450,15 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Открытие окна с БД
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsmiOpenDB_Click(object sender, EventArgs e)
         {
-            // Создаем и открываем DBView
-            DBView dBView = new DBView();
-            dBView.Show();
+            // Открываем DBView
+            dbView.Show();
         }
 
         /// <summary>
@@ -464,20 +472,11 @@ namespace WarehouseManagement
             timerMessageBox.Enabled = false;
         }
 
-        /*
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
-            // Загрузка данных о ячейках из файла или базы данных
-            // TODO: Реализовать загрузку данных
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            // Сохранение данных о ячейках в файл или базу данных
-            // TODO: Реализовать сохранение данных
-        }
-        */
-
+        /// <summary>
+        /// Закрытие формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
