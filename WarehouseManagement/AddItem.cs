@@ -20,13 +20,14 @@ namespace WarehouseManagement
         public formAddItem()
         {
             InitializeComponent();
+            comboBoxCells.Items.Add("ав");
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             EnteredItemName = textBoxItemName.Text;
             EnteredCategory = textBoxCategory.Text;
-            EnteredCell = textBoxCell.Text;
+            EnteredCell = comboBoxCells.SelectedItem.ToString();
             EnteredAmount = textBoxAmount.Text;
         }
 

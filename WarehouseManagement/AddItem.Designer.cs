@@ -32,12 +32,12 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.textBoxItemName = new System.Windows.Forms.TextBox();
             this.textBoxCategory = new System.Windows.Forms.TextBox();
-            this.textBoxCell = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxAmount = new System.Windows.Forms.TextBox();
+            this.comboBoxCells = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -75,13 +75,6 @@
             this.textBoxCategory.Name = "textBoxCategory";
             this.textBoxCategory.Size = new System.Drawing.Size(100, 20);
             this.textBoxCategory.TabIndex = 3;
-            // 
-            // textBoxCell
-            // 
-            this.textBoxCell.Location = new System.Drawing.Point(414, 133);
-            this.textBoxCell.Name = "textBoxCell";
-            this.textBoxCell.Size = new System.Drawing.Size(100, 20);
-            this.textBoxCell.TabIndex = 4;
             // 
             // label1
             // 
@@ -126,17 +119,25 @@
             this.textBoxAmount.Size = new System.Drawing.Size(100, 20);
             this.textBoxAmount.TabIndex = 9;
             // 
+            // comboBoxCells
+            // 
+            this.comboBoxCells.FormattingEnabled = true;
+            this.comboBoxCells.Location = new System.Drawing.Point(403, 133);
+            this.comboBoxCells.Name = "comboBoxCells";
+            this.comboBoxCells.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCells.TabIndex = 10;
+            // 
             // formAddItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.comboBoxCells);
             this.Controls.Add(this.textBoxAmount);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBoxCell);
             this.Controls.Add(this.textBoxCategory);
             this.Controls.Add(this.textBoxItemName);
             this.Controls.Add(this.buttonCancel);
@@ -155,11 +156,11 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TextBox textBoxItemName;
         private System.Windows.Forms.TextBox textBoxCategory;
-        private System.Windows.Forms.TextBox textBoxCell;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxAmount;
+        private System.Windows.Forms.ComboBox comboBoxCells;
     }
 }
