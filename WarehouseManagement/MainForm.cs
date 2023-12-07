@@ -199,7 +199,6 @@ namespace WarehouseManagement
 
                         // Закрываем соединение
                         db.closeConnection();
-
                     }
                     catch (Exception ex)
                     {
@@ -231,6 +230,10 @@ namespace WarehouseManagement
             cellButton.ContextMenuStrip = isEditing ? cmsButtonDelete : null;
 
             panelWarehouse.Controls.Add(cellButton);
+            if (isEditing)
+            {
+                SaveMapDataToFile(datFileName);
+            }
         }
 
         private void CellButton_Paint(object sender, PaintEventArgs e)
@@ -260,7 +263,6 @@ namespace WarehouseManagement
                     MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `cells` AUTO_INCREMENT = 1", db.getConnection());
                     MySqlCommand command = new MySqlCommand("DELETE FROM `cells` WHERE `cell` = @cell", db.getConnection());
 
-                    MessageBox.Show(btn.Text);
                     // Замените значения параметров на реальные данные
                     command.Parameters.AddWithValue("@cell", btn.Text);
 
@@ -269,7 +271,6 @@ namespace WarehouseManagement
 
                     // Закрываем соединение
                     db.closeConnection();
-                    
                 }
                 catch (Exception ex)
                 {
@@ -280,6 +281,7 @@ namespace WarehouseManagement
                     db.closeConnection();
                 }
                 panelWarehouse.Controls.Remove(btn);
+                SaveMapDataToFile(datFileName);
             }
         }
 
@@ -476,7 +478,9 @@ namespace WarehouseManagement
                     formatter.Serialize(fs, cellDataList);
                 }
 
-                MessageBox.Show("Карта успешно сохранена.");
+                textBoxMessage.Text = "Карта успешно сохранена";
+                textBoxMessage.Visible = true;
+                timerMessageBox.Enabled = true;
             }
             catch (Exception ex)
             {
