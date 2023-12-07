@@ -18,10 +18,14 @@ namespace WarehouseManagement
         public string EnteredCell { get; set; }
         public string EnteredAmount { get; set; }
 
-        public formAddItem()
+        public formAddItem(List<StorageCell> storageCell)
         {
             InitializeComponent();
-            DB db = new DB();
+            foreach (StorageCell control in storageCell)
+            {
+                comboBoxCells.Items.Add(control.Name);
+            }
+            /*DB db = new DB();
             try
             {
                 db.openConnection();
@@ -56,7 +60,7 @@ namespace WarehouseManagement
             finally
             {
                 db.closeConnection();
-            }
+            }*/
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

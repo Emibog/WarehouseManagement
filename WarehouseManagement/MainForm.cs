@@ -569,7 +569,7 @@ namespace WarehouseManagement
 
         private void buttonAddItem_Click(object sender, EventArgs e)
         {
-            formAddItem fAddItem = new formAddItem();
+            formAddItem fAddItem = new formAddItem(storageCells);
             if (fAddItem.ShowDialog() == DialogResult.OK)
             {
                 DB db = new DB();
