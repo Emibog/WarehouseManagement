@@ -182,6 +182,33 @@ namespace WarehouseManagement
                 {
                     cell.Name = inputDialog.EnteredText;
                     cell.Color = inputDialog.EnteredColor;
+                    DB db = new DB();
+                    try
+                    {
+                        db.openConnection();
+
+                        MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `cells` AUTO_INCREMENT = 1", db.getConnection());
+                        MySqlCommand command = new MySqlCommand("INSERT INTO `cells` (`cell`) VALUES (@cell)", db.getConnection());
+
+                        // Замените значения параметров на реальные данные
+                        command.Parameters.AddWithValue("@cell", cell.Name);
+
+                        autoIncrement.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+
+
+                        // Закрываем соединение
+                        db.closeConnection();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка при добавлении ячейки.\n\n" + ex.Message, "Ошибка добавления ячейки", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        db.closeConnection();
+                    }
                     inputDialog.Close();
                 }
                 else
@@ -225,6 +252,33 @@ namespace WarehouseManagement
             if (isEditing)
             {
                 Button btn = ((ContextMenuStrip)((ToolStripMenuItem)sender).GetCurrentParent()).SourceControl as Button;
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+
+                    MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `cells` AUTO_INCREMENT = 1", db.getConnection());
+                    MySqlCommand command = new MySqlCommand("DELETE FROM `cells` WHERE `cell` = @cell", db.getConnection());
+
+                    MessageBox.Show(btn.Text);
+                    // Замените значения параметров на реальные данные
+                    command.Parameters.AddWithValue("@cell", btn.Text);
+
+                    autoIncrement.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+
+                    // Закрываем соединение
+                    db.closeConnection();
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при удалении ячейки.\n\n" + ex.Message, "Ошибка удалении ячейки", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+                }
                 panelWarehouse.Controls.Remove(btn);
             }
         }

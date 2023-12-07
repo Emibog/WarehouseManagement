@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,7 +21,42 @@ namespace WarehouseManagement
         public formAddItem()
         {
             InitializeComponent();
-            comboBoxCells.Items.Add("ав");
+            /*DB db = new DB();
+            try
+            {
+                db.openConnection();
+
+                MySqlCommand command = new MySqlCommand("SELECT `item` FROM `items` WHERE cell = @cell", db.getConnection());
+
+                // Замените значения параметров на реальные данные
+                //command.Parameters.AddWithValue("@cell", cellName);
+
+                // Используем ExecuteReader для выполнения запроса SELECT
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    // Перебираем результаты запроса
+                    while (reader.Read())
+                    {
+                        // Получаем значение из столбца "item"
+                        string itemValue = reader["cells"].ToString();
+
+                        // Добавляем значение в коллекцию Products
+                        comboBoxCells.Items.Add("ав");
+                    }
+                }
+
+                // Закрываем соединение
+                db.closeConnection();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при отображении товаров.\n\n" + ex.Message, "Ошибка отображения товаров", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                db.closeConnection();
+            }*/
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
