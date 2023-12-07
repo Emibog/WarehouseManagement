@@ -28,6 +28,8 @@ namespace WarehouseManagement
         private ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
         private string imgFileName;
         private string datFileName;
+        private string imagePath = "..\\..\\Resources\\Map1.png";
+        private string mapName = "";
         private DBView dbView = new DBView();
         private Login logiForm = new Login();
         private NewUser newUser = new NewUser();
@@ -57,10 +59,11 @@ namespace WarehouseManagement
             cmsButtonDelete.Items.Add(menuDelete);
             buttonAddCell.Visible = isEditing ? true : false;
 
-            string imagePath = "..\\..\\Resources\\Map1.png";
+            
             Image backgroundImage = Image.FromFile(imagePath);
             imgFileName = Path.GetFileName(imagePath);
-            datFileName = Path.ChangeExtension(Path.GetFileNameWithoutExtension(imagePath), "dat");
+            mapName = Path.GetFileNameWithoutExtension(imagePath);
+            datFileName = Path.ChangeExtension(mapName, "dat");
 
             // Получаем размеры изображения
             int width = backgroundImage.Width;
@@ -303,10 +306,10 @@ namespace WarehouseManagement
                 {
                     db.openConnection();
 
-                    MySqlCommand command = new MySqlCommand("SELECT `item` FROM `items` WHERE cell = @cell", db.getConnection());
+                    MySqlCommand command = new MySqlCommand("SELECT `item` FROM `items` WHERE cell = @cell AND map = @map", db.getConnection());
 
-                    // Замените значения параметров на реальные данные
                     command.Parameters.AddWithValue("@cell", cellName);
+                    command.Parameters.AddWithValue("@map", mapName);
 
                     //Очищаем список от предыдущих товаров
                     Products.Clear();
@@ -540,7 +543,8 @@ namespace WarehouseManagement
             {
                 Image backgroundImage = Image.FromFile(openFileDialogSelectMapImg.FileName);
                 imgFileName = Path.GetFileName(openFileDialogSelectMapImg.FileName);
-                datFileName = Path.ChangeExtension(Path.GetFileNameWithoutExtension(openFileDialogSelectMapImg.FileName), "dat");
+                mapName = Path.GetFileNameWithoutExtension(openFileDialogSelectMapImg.FileName);
+                datFileName = Path.ChangeExtension(mapName, "dat");
 
                 // Получаем размеры изображения
                 int width = backgroundImage.Width;
@@ -578,11 +582,12 @@ namespace WarehouseManagement
                     db.openConnection();
 
                     MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `items` AUTO_INCREMENT = 1", db.getConnection());
-                    MySqlCommand command = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `category`, `amount`) VALUES (@item, @cell, @category, @amount)", db.getConnection());
+                    MySqlCommand command = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `map`, `category`, `amount`) VALUES (@item, @cell, @map, @category, @amount)", db.getConnection());
 
                     // Замените значения параметров на реальные данные
                     command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
                     command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
+                    command.Parameters.AddWithValue("@map", mapName);
                     command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
                     command.Parameters.AddWithValue("@amount", fAddItem.EnteredAmount);
 

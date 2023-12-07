@@ -31,13 +31,13 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.textBoxItemName = new System.Windows.Forms.TextBox();
-            this.textBoxCategory = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxAmount = new System.Windows.Forms.TextBox();
             this.comboBoxCells = new System.Windows.Forms.ComboBox();
+            this.comboBoxCategories = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -68,13 +68,6 @@
             this.textBoxItemName.Name = "textBoxItemName";
             this.textBoxItemName.Size = new System.Drawing.Size(100, 20);
             this.textBoxItemName.TabIndex = 2;
-            // 
-            // textBoxCategory
-            // 
-            this.textBoxCategory.Location = new System.Drawing.Point(403, 200);
-            this.textBoxCategory.Name = "textBoxCategory";
-            this.textBoxCategory.Size = new System.Drawing.Size(100, 20);
-            this.textBoxCategory.TabIndex = 3;
             // 
             // label1
             // 
@@ -121,24 +114,34 @@
             // 
             // comboBoxCells
             // 
+            this.comboBoxCells.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCells.FormattingEnabled = true;
             this.comboBoxCells.Location = new System.Drawing.Point(403, 133);
             this.comboBoxCells.Name = "comboBoxCells";
             this.comboBoxCells.Size = new System.Drawing.Size(121, 21);
             this.comboBoxCells.TabIndex = 10;
             // 
+            // comboBoxCategories
+            // 
+            this.comboBoxCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCategories.FormattingEnabled = true;
+            this.comboBoxCategories.Location = new System.Drawing.Point(403, 197);
+            this.comboBoxCategories.Name = "comboBoxCategories";
+            this.comboBoxCategories.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCategories.TabIndex = 11;
+            // 
             // formAddItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.comboBoxCategories);
             this.Controls.Add(this.comboBoxCells);
             this.Controls.Add(this.textBoxAmount);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBoxCategory);
             this.Controls.Add(this.textBoxItemName);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
@@ -155,12 +158,12 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TextBox textBoxItemName;
-        private System.Windows.Forms.TextBox textBoxCategory;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxAmount;
         private System.Windows.Forms.ComboBox comboBoxCells;
+        private System.Windows.Forms.ComboBox comboBoxCategories;
     }
 }

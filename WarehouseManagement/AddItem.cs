@@ -25,15 +25,12 @@ namespace WarehouseManagement
             {
                 comboBoxCells.Items.Add(control.Name);
             }
-            /*DB db = new DB();
+            DB db = new DB();
             try
             {
                 db.openConnection();
 
-                MySqlCommand command = new MySqlCommand("SELECT `cell` FROM `cells`", db.getConnection());
-
-                // Замените значения параметров на реальные данные
-                //command.Parameters.AddWithValue("@cell", cellName);
+                MySqlCommand command = new MySqlCommand("SELECT `category` FROM `categories`", db.getConnection());
 
                 // Используем ExecuteReader для выполнения запроса SELECT
                 using (MySqlDataReader reader = command.ExecuteReader())
@@ -42,10 +39,10 @@ namespace WarehouseManagement
                     while (reader.Read())
                     {
                         // Получаем значение из столбца "item"
-                        string cell = reader["cell"].ToString();
+                        string category = reader["category"].ToString();
 
                         // Добавляем значение в коллекцию Products
-                        comboBoxCells.Items.Add(cell);
+                        comboBoxCategories.Items.Add(category);
                     }
                 }
 
@@ -60,13 +57,13 @@ namespace WarehouseManagement
             finally
             {
                 db.closeConnection();
-            }*/
+            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             EnteredItemName = textBoxItemName.Text;
-            EnteredCategory = textBoxCategory.Text;
+            EnteredCategory = comboBoxCategories.SelectedItem.ToString();
             EnteredCell = comboBoxCells.SelectedItem.ToString();
             EnteredAmount = textBoxAmount.Text;
         }
