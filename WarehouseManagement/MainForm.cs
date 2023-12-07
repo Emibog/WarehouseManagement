@@ -434,6 +434,7 @@ namespace WarehouseManagement
         private void tsmiSaveMapData_Click(object sender, EventArgs e)
         {
             SaveMapDataToFile(datFileName);
+            disableEditingMod();
         }
 
         /// <summary>
@@ -444,6 +445,7 @@ namespace WarehouseManagement
         private void tsmiLoadMapData_Click(object sender, EventArgs e)
         {
             LoadMapDataFromFile(datFileName);
+            disableEditingMod();
         }
 
         /// <summary>
@@ -492,7 +494,7 @@ namespace WarehouseManagement
 
                 textBoxMessage.Text = "Карта успешно сохранена";
                 textBoxMessage.Visible = true;
-                timerMessageBox.Enabled = true;
+                timerMessageBox.Start();
             }
             catch (Exception ex)
             {
@@ -529,7 +531,7 @@ namespace WarehouseManagement
                 isEditing = isEditingPrev;
                 textBoxMessage.Text = "Карта успешно загружена";
                 textBoxMessage.Visible = true;
-                timerMessageBox.Enabled = true;
+                timerMessageBox.Start();
             }
             catch (FileNotFoundException)
             {
@@ -565,7 +567,12 @@ namespace WarehouseManagement
                 // Устанавливаем изображение фоном для панели и подгружаем ячейки
                 panelWarehouse.BackgroundImage = backgroundImage;
                 panelWarehouse.Controls.Clear();
+
+                //Восстановление исходных параметров
                 listBoxProducts.Items.Clear();
+
+                disableEditingMod();
+
                 LoadMapDataFromFile(datFileName);
             }
         }
@@ -626,7 +633,26 @@ namespace WarehouseManagement
         private void timerMessageBox_Tick(object sender, EventArgs e)
         {
             textBoxMessage.Visible = false;
-            timerMessageBox.Enabled = false;
+            timerMessageBox.Stop();
+        }
+
+        private void disableEditingMod()
+        {
+            if (isEditing)
+            {
+                isEditing = false;
+                buttonEditingMap.Text = "Редактировать карту";
+                buttonAddCell.Visible = false;
+
+                // Устанавливаем или снимаем ContextMenuStrip у существующих кнопок в зависимости от значения isEditing
+                foreach (Control control in panelWarehouse.Controls)
+                {
+                    if (control is Button button)
+                    {
+                        button.ContextMenuStrip = null;
+                    }
+                }
+            }
         }
 
         /// <summary>
