@@ -69,11 +69,11 @@
     <Compile Include="NewUser.Designer.cs">
       <DependentUpon>NewUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="InputDialog.cs">
+    <Compile Include="AddCell.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InputDialog.Designer.cs">
-      <DependentUpon>InputDialog.cs</DependentUpon>
+    <Compile Include="AddCell.Designer.cs">
+      <DependentUpon>AddCell.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -102,8 +102,8 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InputDialog.resx">
-      <DependentUpon>InputDialog.cs</DependentUpon>
+    <EmbeddedResource Include="AddCell.resx">
+      <DependentUpon>AddCell.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewUser.resx">
       <DependentUpon>NewUser.cs</DependentUpon>

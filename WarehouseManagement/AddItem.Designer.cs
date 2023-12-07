@@ -148,6 +148,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "formAddItem";
             this.Text = "Добавить товар";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formAddItem_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

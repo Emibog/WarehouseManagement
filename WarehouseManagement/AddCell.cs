@@ -24,16 +24,20 @@ namespace WarehouseManagement
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            EnteredText = textBoxName.Text;
-            color = comboBoxColor.SelectedItem.ToString();
-            EnteredColor = Color.FromName(color);
+            if (string.IsNullOrEmpty(comboBoxColor.Text)){  }
+            else
+            {
+                EnteredText = textBoxName.Text;
+                color = comboBoxColor.SelectedItem.ToString();
+                EnteredColor = Color.FromName(color);
+            }
         }
 
         private void InputDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxName.Text))
+            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxName.Text) | string.IsNullOrEmpty(comboBoxColor.Text))
             {
-                MessageBox.Show("Номер ячейки не введен!");
+                MessageBox.Show("Не все данные указаны!");
                 e.Cancel = true; // Отменить закрытие формы
             }
         }

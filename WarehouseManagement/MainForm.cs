@@ -264,13 +264,21 @@ namespace WarehouseManagement
                     db.openConnection();
 
                     MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `cells` AUTO_INCREMENT = 1", db.getConnection());
+                    MySqlCommand autoIncrementItems = new MySqlCommand("ALTER TABLE `cells` AUTO_INCREMENT = 1", db.getConnection());
                     MySqlCommand command = new MySqlCommand("DELETE FROM `cells` WHERE `cell` = @cell", db.getConnection());
+                    MySqlCommand delItemsInCell = new MySqlCommand("DELETE FROM `items` WHERE `cell` = @cell", db.getConnection());
 
                     // Замените значения параметров на реальные данные
                     command.Parameters.AddWithValue("@cell", btn.Text);
+                    delItemsInCell.Parameters.AddWithValue("@cell", btn.Text);
 
                     autoIncrement.ExecuteNonQuery();
+                    autoIncrementItems.ExecuteNonQuery();
                     command.ExecuteNonQuery();
+                    delItemsInCell.ExecuteNonQuery();
+
+                    Products.Clear();
+                    listBoxProducts.Items.Clear();
 
                     // Закрываем соединение
                     db.closeConnection();

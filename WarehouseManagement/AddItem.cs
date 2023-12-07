@@ -60,12 +60,27 @@ namespace WarehouseManagement
             }
         }
 
+        private void formAddItem_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxItemName.Text) | string.IsNullOrEmpty(textBoxAmount.Text) 
+                | string.IsNullOrEmpty(comboBoxCells.Text) | string.IsNullOrEmpty(comboBoxCategories.Text))
+            {
+                MessageBox.Show("Не все данные указаны!");
+                e.Cancel = true; // Отменить закрытие формы
+            }
+        }
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            EnteredItemName = textBoxItemName.Text;
-            EnteredCategory = comboBoxCategories.SelectedItem.ToString();
-            EnteredCell = comboBoxCells.SelectedItem.ToString();
-            EnteredAmount = textBoxAmount.Text;
+            if (string.IsNullOrEmpty(comboBoxCells.Text) | string.IsNullOrEmpty(comboBoxCategories.Text)){  }
+            else
+            {
+                EnteredItemName = textBoxItemName.Text;
+                EnteredCell = comboBoxCells.SelectedItem.ToString();
+                EnteredCategory = comboBoxCategories.SelectedItem.ToString();
+                EnteredAmount = textBoxAmount.Text;
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
