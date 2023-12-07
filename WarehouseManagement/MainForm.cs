@@ -32,7 +32,7 @@ namespace WarehouseManagement
         private string mapName = "";
         private DBView dbView = new DBView();
         private Login logiForm = new Login();
-        private NewUser newUser = new NewUser();
+        private AddUser addUser = new AddUser();
         private List<string> Products = new List<string> { };
 
         public MainForm(string userPost)
@@ -191,10 +191,11 @@ namespace WarehouseManagement
                         db.openConnection();
 
                         MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `cells` AUTO_INCREMENT = 1", db.getConnection());
-                        MySqlCommand command = new MySqlCommand("INSERT INTO `cells` (`cell`) VALUES (@cell)", db.getConnection());
+                        MySqlCommand command = new MySqlCommand("INSERT INTO `cells` (`cell`, `map`) VALUES (@cell, @map)", db.getConnection());
 
                         // Замените значения параметров на реальные данные
                         command.Parameters.AddWithValue("@cell", cell.Name);
+                        command.Parameters.AddWithValue("@map", mapName);
 
                         autoIncrement.ExecuteNonQuery();
                         command.ExecuteNonQuery();
@@ -394,7 +395,7 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void tsmiAddUser_Click(object sender, EventArgs e)
         {
-            if (newUser.ShowDialog() == DialogResult.OK)
+            if (addUser.ShowDialog() == DialogResult.OK)
             {
                 DB db = new DB();
                 try
@@ -405,8 +406,8 @@ namespace WarehouseManagement
                     MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`login`, `pass`, `post`) VALUES (@login, @pass, @post)", db.getConnection());
 
                     // Замените значения параметров на реальные данные
-                    command.Parameters.AddWithValue("@login", newUser.newLogin);
-                    command.Parameters.AddWithValue("@pass", newUser.newPass);
+                    command.Parameters.AddWithValue("@login", addUser.newLogin);
+                    command.Parameters.AddWithValue("@pass", addUser.newPass);
                     command.Parameters.AddWithValue("@post", "Пользователь");
 
                     autoIncrement.ExecuteNonQuery();
@@ -564,6 +565,7 @@ namespace WarehouseManagement
                 // Устанавливаем изображение фоном для панели и подгружаем ячейки
                 panelWarehouse.BackgroundImage = backgroundImage;
                 panelWarehouse.Controls.Clear();
+                listBoxProducts.Items.Clear();
                 LoadMapDataFromFile(datFileName);
             }
         }

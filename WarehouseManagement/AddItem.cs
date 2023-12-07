@@ -63,10 +63,10 @@ namespace WarehouseManagement
         private void formAddItem_FormClosing(object sender, FormClosingEventArgs e)
         {
 
-            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxItemName.Text) | string.IsNullOrEmpty(textBoxAmount.Text) 
-                | string.IsNullOrEmpty(comboBoxCells.Text) | string.IsNullOrEmpty(comboBoxCategories.Text))
+            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxItemName.Text) | string.IsNullOrEmpty(comboBoxCells.Text) 
+                | string.IsNullOrEmpty(comboBoxCategories.Text) | numericUpDownAmount.Value <= 0)
             {
-                MessageBox.Show("Не все данные указаны!");
+                MessageBox.Show("Не все данные указаны корректно!");
                 e.Cancel = true; // Отменить закрытие формы
             }
         }
@@ -79,7 +79,7 @@ namespace WarehouseManagement
                 EnteredItemName = textBoxItemName.Text;
                 EnteredCell = comboBoxCells.SelectedItem.ToString();
                 EnteredCategory = comboBoxCategories.SelectedItem.ToString();
-                EnteredAmount = textBoxAmount.Text;
+                EnteredAmount = numericUpDownAmount.Value.ToString();
             }
         }
 

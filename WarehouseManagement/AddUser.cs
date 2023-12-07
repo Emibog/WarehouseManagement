@@ -10,14 +10,23 @@ using System.Windows.Forms;
 
 namespace WarehouseManagement
 {
-    public partial class NewUser : Form
+    public partial class AddUser : Form
     {
         public string newLogin { get; private set; }
         public string newPass { get; private set; }
 
-        public NewUser()
+        public AddUser()
         {
             InitializeComponent();
+        }
+
+        private void AddUser_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxNewLogin.Text) | string.IsNullOrEmpty(textBoxNewPass.Text))
+            {
+                MessageBox.Show("Не все данные указаны!");
+                e.Cancel = true; // Отменить закрытие формы
+            }
         }
 
         private void btnOK_Click(object sender, EventArgs e)

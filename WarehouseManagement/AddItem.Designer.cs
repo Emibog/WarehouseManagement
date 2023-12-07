@@ -35,9 +35,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBoxAmount = new System.Windows.Forms.TextBox();
             this.comboBoxCells = new System.Windows.Forms.ComboBox();
             this.comboBoxCategories = new System.Windows.Forms.ComboBox();
+            this.numericUpDownAmount = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -105,13 +106,6 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Количество";
             // 
-            // textBoxAmount
-            // 
-            this.textBoxAmount.Location = new System.Drawing.Point(414, 246);
-            this.textBoxAmount.Name = "textBoxAmount";
-            this.textBoxAmount.Size = new System.Drawing.Size(100, 20);
-            this.textBoxAmount.TabIndex = 9;
-            // 
             // comboBoxCells
             // 
             this.comboBoxCells.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -130,14 +124,26 @@
             this.comboBoxCategories.Size = new System.Drawing.Size(121, 21);
             this.comboBoxCategories.TabIndex = 11;
             // 
+            // numericUpDownAmount
+            // 
+            this.numericUpDownAmount.Location = new System.Drawing.Point(403, 246);
+            this.numericUpDownAmount.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownAmount.Name = "numericUpDownAmount";
+            this.numericUpDownAmount.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDownAmount.TabIndex = 12;
+            // 
             // formAddItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.numericUpDownAmount);
             this.Controls.Add(this.comboBoxCategories);
             this.Controls.Add(this.comboBoxCells);
-            this.Controls.Add(this.textBoxAmount);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -149,6 +155,7 @@
             this.Name = "formAddItem";
             this.Text = "Добавить товар";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formAddItem_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,8 +170,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxAmount;
         private System.Windows.Forms.ComboBox comboBoxCells;
         private System.Windows.Forms.ComboBox comboBoxCategories;
+        private System.Windows.Forms.NumericUpDown numericUpDownAmount;
     }
 }
