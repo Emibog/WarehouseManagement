@@ -13,20 +13,25 @@ namespace WarehouseManagement
     public partial class InputDialog : Form
     {
         public string EnteredText { get; private set; }
+        public Color EnteredColor { get; private set; }
+        private string color;
 
         public InputDialog()
         {
             InitializeComponent();
+            comboBoxColor.SelectedIndex = 0;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            EnteredText = textBoxInput.Text;
+            EnteredText = textBoxName.Text;
+            color = comboBoxColor.SelectedItem.ToString();
+            EnteredColor = Color.FromName(color);
         }
 
         private void InputDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxInput.Text))
+            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxName.Text))
             {
                 MessageBox.Show("Номер ячейки не введен!");
                 e.Cancel = true; // Отменить закрытие формы
@@ -35,7 +40,8 @@ namespace WarehouseManagement
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-
+            textBoxName.Text = "";
+            comboBoxColor.SelectedIndex = 0;
         }
     }
 }

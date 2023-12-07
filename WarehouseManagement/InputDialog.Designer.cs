@@ -29,18 +29,20 @@ namespace WarehouseManagement
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxInput = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.labelPrompt = new System.Windows.Forms.Label();
             this.OK = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
+            this.labelColor = new System.Windows.Forms.Label();
+            this.comboBoxColor = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // textBoxInput
+            // textBoxName
             // 
-            this.textBoxInput.Location = new System.Drawing.Point(195, 48);
-            this.textBoxInput.Name = "textBoxInput";
-            this.textBoxInput.Size = new System.Drawing.Size(100, 20);
-            this.textBoxInput.TabIndex = 0;
+            this.textBoxName.Location = new System.Drawing.Point(195, 48);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(121, 20);
+            this.textBoxName.TabIndex = 0;
             // 
             // labelPrompt
             // 
@@ -73,17 +75,44 @@ namespace WarehouseManagement
             this.Cancel.UseVisualStyleBackColor = true;
             this.Cancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // labelColor
+            // 
+            this.labelColor.AutoSize = true;
+            this.labelColor.Location = new System.Drawing.Point(25, 84);
+            this.labelColor.Name = "labelColor";
+            this.labelColor.Size = new System.Drawing.Size(70, 13);
+            this.labelColor.TabIndex = 5;
+            this.labelColor.Text = "Цвет ячейки";
+            // 
+            // comboBoxColor
+            // 
+            this.comboBoxColor.FormattingEnabled = true;
+            this.comboBoxColor.Items.AddRange(new object[] {
+            "White",
+            "Red",
+            "Yellow",
+            "Grey",
+            "Green",
+            "Orange",
+            "Blue"});
+            this.comboBoxColor.Location = new System.Drawing.Point(195, 81);
+            this.comboBoxColor.Name = "comboBoxColor";
+            this.comboBoxColor.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxColor.TabIndex = 6;
+            // 
             // InputDialog
             // 
             this.AcceptButton = this.OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.Cancel;
-            this.ClientSize = new System.Drawing.Size(324, 152);
+            this.ClientSize = new System.Drawing.Size(349, 152);
+            this.Controls.Add(this.comboBoxColor);
+            this.Controls.Add(this.labelColor);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.OK);
             this.Controls.Add(this.labelPrompt);
-            this.Controls.Add(this.textBoxInput);
+            this.Controls.Add(this.textBoxName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "InputDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -96,9 +125,11 @@ namespace WarehouseManagement
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBoxInput;
+        private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label labelPrompt;
         private System.Windows.Forms.Button OK;
         private System.Windows.Forms.Button Cancel;
+        private System.Windows.Forms.Label labelColor;
+        private System.Windows.Forms.ComboBox comboBoxColor;
     }
 }

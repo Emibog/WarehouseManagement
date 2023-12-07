@@ -29,7 +29,6 @@ namespace WarehouseManagement
         private string imgFileName;
         private string datFileName;
         private DBView dbView = new DBView();
-        private InputDialog inputDialog = new InputDialog();
         private Login logiForm = new Login();
         private NewUser newUser = new NewUser();
         private List<string> Products = new List<string> { "Рулон", "Пакет" }; // ОТЛАДКА
@@ -73,29 +72,6 @@ namespace WarehouseManagement
             // Устанавливаем изображение фоном для панели и подгружаем ячейки
             panelWarehouse.BackgroundImage = backgroundImage;
             LoadMapDataFromFile(datFileName);
-        }
-
-        /// <summary>
-        /// Создание ячейки
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnAddCell_Click(object sender, EventArgs e)
-        {
-            // Добавление новой ячейки
-            StorageCell newCell = new StorageCell
-            {
-                //Создание начальных параметров
-                Name = "Cell " + (storageCells.Count + 1),
-                X = 10,
-                Y = 10,
-                Width = 50,
-                Height = 50
-            };
-
-            storageCells.Add(newCell);
-
-            DrawCell(newCell);
         }
 
         private void CellButton_MouseDown(object sender, MouseEventArgs e)
@@ -150,23 +126,47 @@ namespace WarehouseManagement
                     resizeStartX = e.X;
                     resizeStartY = e.Y;
                 }
-            } 
+            }
         }
 
         private void CellButton_MouseUp(object sender, MouseEventArgs e)
         {
             if (isEditing && e.Button == MouseButtons.Left)
             {
-                 isDragging = false;
-                 isResizing = false;
+                isDragging = false;
+                isResizing = false;
 
-                 StorageCell cell = storageCells.Find(c => c.Name == selectedButton.Text);
-                 if (cell != null)
-                 {
-                     cell.ButtonX = selectedButton.Left;
-                     cell.ButtonY = selectedButton.Top;
-                 }
-             }
+                StorageCell cell = storageCells.Find(c => c.Name == selectedButton.Text);
+                if (cell != null)
+                {
+                    cell.ButtonX = selectedButton.Left;
+                    cell.ButtonY = selectedButton.Top;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Создание ячейки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAddCell_Click(object sender, EventArgs e)
+        {
+            // Добавление новой ячейки
+            StorageCell newCell = new StorageCell
+            {
+                //Создание начальных параметров
+                Name = "Cell " + (storageCells.Count + 1),
+                X = 10,
+                Y = 10,
+                Color = Color.White,
+                Width = 50,
+                Height = 50
+            };
+
+            storageCells.Add(newCell);
+
+            DrawCell(newCell);
         }
 
         /// <summary>
@@ -176,10 +176,13 @@ namespace WarehouseManagement
         private void DrawCell(StorageCell cell)
         {
             if (isEditing)
-            {   
+            {
+                InputDialog inputDialog = new InputDialog();
                 if (inputDialog.ShowDialog() == DialogResult.OK)
                 {
                     cell.Name = inputDialog.EnteredText;
+                    cell.Color = inputDialog.EnteredColor;
+                    inputDialog.Close();
                 }
                 else
                 {
@@ -190,6 +193,8 @@ namespace WarehouseManagement
             Button cellButton = new Button();
             cellButton.Text = cell.Name;
             cellButton.Size = new Size(cell.Width, cell.Height);
+            cellButton.BackColor = cell.Color;
+            //cellButton.BackColor = Color.White;
             cellButton.Location = new Point(cell.X, cell.Y);
             cellButton.MouseDown += CellButton_MouseDown;
             cellButton.MouseMove += CellButton_MouseMove;
@@ -224,7 +229,7 @@ namespace WarehouseManagement
             }
         }
 
-
+        /// <summary>
         /// Показать содержимое ячейки
         /// </summary>
         /// <param name="cell"></param>
@@ -286,7 +291,7 @@ namespace WarehouseManagement
                 try
                 {
                     db.openConnection();
-                    
+
                     MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `users` AUTO_INCREMENT = 1", db.getConnection());
                     MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`login`, `pass`, `post`) VALUES (@login, @pass, @post)", db.getConnection());
 
@@ -308,7 +313,7 @@ namespace WarehouseManagement
                 {
                     db.closeConnection();
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -347,6 +352,7 @@ namespace WarehouseManagement
                         Name = button.Text,
                         X = button.Left,
                         Y = button.Top,
+                        Color = button.BackColor,
                         Width = button.Width,
                         Height = button.Height
                     };

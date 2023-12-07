@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace WarehouseManagement
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public Color Color { get; set; }
         public List<string> Products { get; set; }
         public int ButtonX { get; set; }
         public int ButtonY { get; set; }
