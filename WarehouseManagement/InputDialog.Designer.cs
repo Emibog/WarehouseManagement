@@ -1,7 +1,7 @@
 ﻿
 namespace WarehouseManagement
 {
-    partial class InputDialog
+    partial class formInputDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -100,7 +100,7 @@ namespace WarehouseManagement
             this.comboBoxColor.Size = new System.Drawing.Size(121, 21);
             this.comboBoxColor.TabIndex = 6;
             // 
-            // InputDialog
+            // formInputDialog
             // 
             this.AcceptButton = this.OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,7 +114,7 @@ namespace WarehouseManagement
             this.Controls.Add(this.labelPrompt);
             this.Controls.Add(this.textBoxName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "InputDialog";
+            this.Name = "formInputDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Создание ячейки";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InputDialog_FormClosing);

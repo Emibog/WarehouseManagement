@@ -177,7 +177,7 @@ namespace WarehouseManagement
         {
             if (isEditing)
             {
-                InputDialog inputDialog = new InputDialog();
+                formInputDialog inputDialog = new formInputDialog();
                 if (inputDialog.ShowDialog() == DialogResult.OK)
                 {
                     cell.Name = inputDialog.EnteredText;
@@ -465,6 +465,42 @@ namespace WarehouseManagement
         {
             // Открываем DBView
             dbView.Show();
+        }
+
+        private void buttonAddItem_Click(object sender, EventArgs e)
+        {
+            formAddItem fAddItem = new formAddItem();
+            if (fAddItem.ShowDialog() == DialogResult.OK)
+            {
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+
+                    MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `items` AUTO_INCREMENT = 1", db.getConnection());
+                    MySqlCommand command = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `category`, `amount`) VALUES (@item, @cell, @category, @amount)", db.getConnection());
+
+                    // Замените значения параметров на реальные данные
+                    command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
+                    command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
+                    command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
+                    command.Parameters.AddWithValue("@amount", fAddItem.EnteredAmount);
+
+                    autoIncrement.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+
+                    MessageBox.Show("Товар успешно добавлен.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при добавлении товара в базу данных.\n\n" + ex.Message, "Ошибка добавления товара", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+                }
+                fAddItem.Close();
+            }
         }
 
         /// <summary>

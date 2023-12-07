@@ -49,6 +49,7 @@ namespace WarehouseManagement
             this.textBoxMessage = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonAddItem = new System.Windows.Forms.Button();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -209,6 +210,7 @@ namespace WarehouseManagement
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.66013F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelScroll, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonAddItem, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -235,6 +237,16 @@ namespace WarehouseManagement
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(304, 239);
             this.tableLayoutPanel2.TabIndex = 10;
+            // 
+            // buttonAddItem
+            // 
+            this.buttonAddItem.Location = new System.Drawing.Point(611, 392);
+            this.buttonAddItem.Name = "buttonAddItem";
+            this.buttonAddItem.Size = new System.Drawing.Size(177, 23);
+            this.buttonAddItem.TabIndex = 11;
+            this.buttonAddItem.Text = "Добавить товар";
+            this.buttonAddItem.UseVisualStyleBackColor = true;
+            this.buttonAddItem.Click += new System.EventHandler(this.buttonAddItem_Click);
             // 
             // MainForm
             // 
@@ -283,6 +295,7 @@ namespace WarehouseManagement
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.ToolStripMenuItem tsmiOpenDB;
+        private System.Windows.Forms.Button buttonAddItem;
     }
 }
 

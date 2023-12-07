@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace WarehouseManagement
 {
-    public partial class InputDialog : Form
+    public partial class formInputDialog : Form
     {
         public string EnteredText { get; private set; }
         public Color EnteredColor { get; private set; }
         private string color;
 
-        public InputDialog()
+        public formInputDialog()
         {
             InitializeComponent();
             comboBoxColor.SelectedIndex = 0;
