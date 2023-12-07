@@ -21,12 +21,12 @@ namespace WarehouseManagement
         public formAddItem()
         {
             InitializeComponent();
-            /*DB db = new DB();
+            DB db = new DB();
             try
             {
                 db.openConnection();
 
-                MySqlCommand command = new MySqlCommand("SELECT `item` FROM `items` WHERE cell = @cell", db.getConnection());
+                MySqlCommand command = new MySqlCommand("SELECT `cell` FROM `cells`", db.getConnection());
 
                 // Замените значения параметров на реальные данные
                 //command.Parameters.AddWithValue("@cell", cellName);
@@ -38,10 +38,10 @@ namespace WarehouseManagement
                     while (reader.Read())
                     {
                         // Получаем значение из столбца "item"
-                        string itemValue = reader["cells"].ToString();
+                        string cell = reader["cell"].ToString();
 
                         // Добавляем значение в коллекцию Products
-                        comboBoxCells.Items.Add("ав");
+                        comboBoxCells.Items.Add(cell);
                     }
                 }
 
@@ -51,12 +51,12 @@ namespace WarehouseManagement
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при отображении товаров.\n\n" + ex.Message, "Ошибка отображения товаров", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка при отображении ячеек.\n\n" + ex.Message, "Ошибка отображения ячеек", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 db.closeConnection();
-            }*/
+            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
