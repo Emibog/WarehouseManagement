@@ -31,7 +31,7 @@ namespace WarehouseManagement
         private DBView dbView = new DBView();
         private Login logiForm = new Login();
         private NewUser newUser = new NewUser();
-        private List<string> Products = new List<string> { "Рулон", "Пакет" }; // ОТЛАДКА
+        private List<string> Products = new List<string> { };
 
         public MainForm(string userPost)
         {
@@ -235,13 +235,55 @@ namespace WarehouseManagement
         /// <param name="cell"></param>
         private void ShowProducts(StorageCell cell)
         {
-            // Получаем номер ячейки
-            string Nm = cell.Name;
+            //Запрос SELECT `item` FROM `items` WHERE cell = "ав"; 
+
+            // Получаем имя ячейки
+            string cellName = cell.Name;
             // Если ячейки не находятся в режиме редактирования
             if (!isEditing)
             {
-                listBoxProducts.Items.Clear();
-                listBoxProducts.Items.AddRange(Products.ToArray());
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+
+                    MySqlCommand command = new MySqlCommand("SELECT `item` FROM `items` WHERE cell = @cell", db.getConnection());
+
+                    // Замените значения параметров на реальные данные
+                    command.Parameters.AddWithValue("@cell", cellName);
+
+                    //Очищаем список от предыдущих товаров
+                    Products.Clear();
+
+                    // Используем ExecuteReader для выполнения запроса SELECT
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        // Перебираем результаты запроса
+                        while (reader.Read())
+                        {
+                            // Получаем значение из столбца "item"
+                            string itemValue = reader["item"].ToString();
+
+                            // Добавляем значение в коллекцию Products
+                            Products.Add(itemValue);
+                        }
+                    }
+
+                    // Закрываем соединение
+                    db.closeConnection();
+
+                    // Очищаем и обновляем элементы ListBox
+                    listBoxProducts.Items.Clear();
+                    listBoxProducts.Items.AddRange(Products.ToArray());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при отображении товаров.\n\n" + ex.Message, "Ошибка отображения товаров", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+                }
             }
         }
 
