@@ -153,6 +153,7 @@
             this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "formAddItem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавить товар";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formAddItem_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).EndInit();

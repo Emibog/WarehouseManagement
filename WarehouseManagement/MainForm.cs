@@ -401,17 +401,7 @@ namespace WarehouseManagement
                 try
                 {
                     db.openConnection();
-
-                    MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `users` AUTO_INCREMENT = 1", db.getConnection());
-                    MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`login`, `pass`, `post`) VALUES (@login, @pass, @post)", db.getConnection());
-
-                    // Замените значения параметров на реальные данные
-                    command.Parameters.AddWithValue("@login", addUser.newLogin);
-                    command.Parameters.AddWithValue("@pass", addUser.newPass);
-                    command.Parameters.AddWithValue("@post", "Пользователь");
-
-                    autoIncrement.ExecuteNonQuery();
-                    command.ExecuteNonQuery();
+                    dbAddUser(db, addUser);
 
                     MessageBox.Show("Пользователь успешно добавлен.");
                 }
@@ -424,6 +414,20 @@ namespace WarehouseManagement
                     db.closeConnection();
                 }
             }
+        }
+
+        private void dbAddUser(DB db, AddUser addUser)
+        {
+            MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `users` AUTO_INCREMENT = 1", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`login`, `pass`, `post`) VALUES (@login, @pass, @post)", db.getConnection());
+
+            // Замените значения параметров на реальные данные
+            command.Parameters.AddWithValue("@login", addUser.newLogin);
+            command.Parameters.AddWithValue("@pass", addUser.newPass);
+            command.Parameters.AddWithValue("@post", "Пользователь");
+
+            autoIncrement.ExecuteNonQuery();
+            command.ExecuteNonQuery();
         }
 
         /// <summary>
@@ -605,16 +609,16 @@ namespace WarehouseManagement
                     db.openConnection();
 
                     // Проверка наличия товара в БД
-                    if (ItemExists(db, fAddItem.EnteredItemName, fAddItem.EnteredCell, mapName, fAddItem.EnteredCategory))
+                    if (ItemExists(db, fAddItem, mapName))
                     {
                         // Товар уже существует, обновляем количество
-                        UpdateItemAmount(db, fAddItem.EnteredItemName, fAddItem.EnteredCell, mapName, fAddItem.EnteredCategory, fAddItem.EnteredAmount);
+                        UpdateItemAmount(db, fAddItem, mapName);
                         MessageBox.Show("Количество товара успешно обновлено.");
                     }
                     else
                     {
                         // Товар не существует, добавляем новую запись
-                        InsertNewItem(db, fAddItem.EnteredItemName, fAddItem.EnteredCell, mapName, fAddItem.EnteredCategory, fAddItem.EnteredAmount);
+                        InsertNewItem(db, fAddItem, mapName);
                         MessageBox.Show("Товар успешно добавлен.");
                     }
                 }
@@ -640,14 +644,14 @@ namespace WarehouseManagement
         /// <param name="map"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        private bool ItemExists(DB db, string itemName, string cell, string map, string category)
+        private bool ItemExists(DB db, formAddItem fAddItem, string mapName)
         {
             // Проверка наличия товара в БД по заданным условиям
             MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
-            command.Parameters.AddWithValue("@item", itemName);
-            command.Parameters.AddWithValue("@cell", cell);
-            command.Parameters.AddWithValue("@map", map);
-            command.Parameters.AddWithValue("@category", category);
+            command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
+            command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
+            command.Parameters.AddWithValue("@map", mapName);
+            command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
 
             int count = Convert.ToInt32(command.ExecuteScalar());
             return count > 0;
@@ -662,15 +666,15 @@ namespace WarehouseManagement
         /// <param name="map"></param>
         /// <param name="category"></param>
         /// <param name="newAmount"></param>
-        private void UpdateItemAmount(DB db, string itemName, string cell, string map, string category, string newAmount)
+        private void UpdateItemAmount(DB db, formAddItem fAddItem, string mapName)
         {
             // Обновление количества товара
             MySqlCommand command = new MySqlCommand("UPDATE `items` SET `amount` = `amount` + @newAmount WHERE `item` = @item AND `cell` = @cell AND `map` = @map AND `category` = @category", db.getConnection());
-            command.Parameters.AddWithValue("@newAmount", newAmount);
-            command.Parameters.AddWithValue("@item", itemName);
-            command.Parameters.AddWithValue("@cell", cell);
-            command.Parameters.AddWithValue("@map", map);
-            command.Parameters.AddWithValue("@category", category);
+            command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
+            command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
+            command.Parameters.AddWithValue("@map", mapName);
+            command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
+            command.Parameters.AddWithValue("@newAmount", fAddItem.EnteredAmount);
 
             command.ExecuteNonQuery();
         }
@@ -684,17 +688,17 @@ namespace WarehouseManagement
         /// <param name="map"></param>
         /// <param name="category"></param>
         /// <param name="amount"></param>
-        private void InsertNewItem(DB db, string itemName, string cell, string map, string category, string amount)
+        private void InsertNewItem(DB db, formAddItem fAddItem, string mapName)
         {
             // Вставка новой записи о товаре
             MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `items` AUTO_INCREMENT = 1", db.getConnection());
             MySqlCommand command = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `map`, `category`, `amount`) VALUES (@item, @cell, @map, @category, @amount)", db.getConnection());
 
-            command.Parameters.AddWithValue("@item", itemName);
-            command.Parameters.AddWithValue("@cell", cell);
-            command.Parameters.AddWithValue("@map", map);
-            command.Parameters.AddWithValue("@category", category);
-            command.Parameters.AddWithValue("@amount", amount);
+            command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
+            command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
+            command.Parameters.AddWithValue("@map", mapName);
+            command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
+            command.Parameters.AddWithValue("@amount", fAddItem.EnteredAmount);
 
             autoIncrement.ExecuteNonQuery();
             command.ExecuteNonQuery();

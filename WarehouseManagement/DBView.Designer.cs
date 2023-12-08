@@ -29,26 +29,26 @@ namespace WarehouseManagement
         /// </summary>
         private void InitializeComponent()
         {
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.webBrowserDB = new System.Windows.Forms.WebBrowser();
             this.SuspendLayout();
             // 
-            // webBrowser1
+            // webBrowserDB
             // 
-            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(1084, 511);
-            this.webBrowser1.TabIndex = 0;
-            this.webBrowser1.Url = new System.Uri("http://localhost/phpMyAdmin/index.php?db=&table=&token=387a4a233e213e425846337229" +
-        "497b73&lang=ru", System.UriKind.Absolute);
+            this.webBrowserDB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowserDB.Location = new System.Drawing.Point(0, 0);
+            this.webBrowserDB.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserDB.Name = "webBrowserDB";
+            this.webBrowserDB.Size = new System.Drawing.Size(1084, 511);
+            this.webBrowserDB.TabIndex = 0;
+            this.webBrowserDB.Url = new System.Uri("http://localhost/phpMyAdmin/index.php?route=/database/structure&server=1&db=wareh" +
+        "ousemanagement", System.UriKind.Absolute);
             // 
             // DBView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1084, 511);
-            this.Controls.Add(this.webBrowser1);
+            this.Controls.Add(this.webBrowserDB);
             this.MinimumSize = new System.Drawing.Size(650, 350);
             this.Name = "DBView";
             this.Text = "DBView";
@@ -58,6 +58,6 @@ namespace WarehouseManagement
 
         #endregion
 
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.WebBrowser webBrowserDB;
     }
 }
