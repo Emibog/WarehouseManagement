@@ -44,7 +44,7 @@
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(266, 316);
+            this.buttonOK.Location = new System.Drawing.Point(79, 257);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -55,7 +55,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(439, 316);
+            this.buttonCancel.Location = new System.Drawing.Point(238, 257);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
@@ -65,15 +65,15 @@
             // 
             // textBoxItemName
             // 
-            this.textBoxItemName.Location = new System.Drawing.Point(414, 81);
+            this.textBoxItemName.Location = new System.Drawing.Point(192, 46);
             this.textBoxItemName.Name = "textBoxItemName";
-            this.textBoxItemName.Size = new System.Drawing.Size(100, 20);
+            this.textBoxItemName.Size = new System.Drawing.Size(121, 20);
             this.textBoxItemName.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(263, 81);
+            this.label1.Location = new System.Drawing.Point(76, 46);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(57, 13);
             this.label1.TabIndex = 5;
@@ -82,7 +82,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(266, 200);
+            this.label2.Location = new System.Drawing.Point(76, 135);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 13);
             this.label2.TabIndex = 6;
@@ -91,7 +91,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(276, 133);
+            this.label3.Location = new System.Drawing.Point(76, 89);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 7;
@@ -100,7 +100,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(266, 246);
+            this.label4.Location = new System.Drawing.Point(76, 186);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(66, 13);
             this.label4.TabIndex = 8;
@@ -110,7 +110,7 @@
             // 
             this.comboBoxCells.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCells.FormattingEnabled = true;
-            this.comboBoxCells.Location = new System.Drawing.Point(403, 133);
+            this.comboBoxCells.Location = new System.Drawing.Point(192, 89);
             this.comboBoxCells.Name = "comboBoxCells";
             this.comboBoxCells.Size = new System.Drawing.Size(121, 21);
             this.comboBoxCells.TabIndex = 10;
@@ -119,14 +119,14 @@
             // 
             this.comboBoxCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCategories.FormattingEnabled = true;
-            this.comboBoxCategories.Location = new System.Drawing.Point(403, 197);
+            this.comboBoxCategories.Location = new System.Drawing.Point(192, 135);
             this.comboBoxCategories.Name = "comboBoxCategories";
             this.comboBoxCategories.Size = new System.Drawing.Size(121, 21);
             this.comboBoxCategories.TabIndex = 11;
             // 
             // numericUpDownAmount
             // 
-            this.numericUpDownAmount.Location = new System.Drawing.Point(403, 246);
+            this.numericUpDownAmount.Location = new System.Drawing.Point(192, 186);
             this.numericUpDownAmount.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -140,7 +140,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(409, 336);
             this.Controls.Add(this.numericUpDownAmount);
             this.Controls.Add(this.comboBoxCategories);
             this.Controls.Add(this.comboBoxCells);
