@@ -715,6 +715,47 @@ namespace WarehouseManagement
             timerMessageBox.Stop();
         }
 
+        private void tsmiAddItem_Click(object sender, EventArgs e)
+        {
+            formAddItem fAddItem = new formAddItem(storageCells);
+
+            if (fAddItem.ShowDialog() == DialogResult.OK)
+            {
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+
+                    // Проверка наличия товара в БД
+                    if (ItemExists(db, fAddItem, mapName))
+                    {
+                        // Товар уже существует, обновляем количество
+                        UpdateItemAmount(db, fAddItem, mapName);
+                        MessageBox.Show("Количество товара успешно обновлено.");
+                    }
+                    else
+                    {
+                        // Товар не существует, добавляем новую запись
+                        InsertNewItem(db, fAddItem, mapName);
+                        MessageBox.Show("Товар успешно добавлен.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при работе с базой данных.\n\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+                }
+
+                fAddItem.Close();
+            }
+        }
+
+        /// <summary>
+        /// Отключения режима редактирования (для событий не связанных с изменением карты)
+        /// </summary>
         private void disableEditingMod()
         {
             if (isEditing)

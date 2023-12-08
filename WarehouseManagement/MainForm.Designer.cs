@@ -49,7 +49,8 @@ namespace WarehouseManagement
             this.textBoxMessage = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonAddItem = new System.Windows.Forms.Button();
+            this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -106,7 +107,8 @@ namespace WarehouseManagement
             // 
             this.menuStripMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmChangeUsers,
-            this.управлениеСкладомToolStripMenuItem});
+            this.управлениеСкладомToolStripMenuItem,
+            this.товарыToolStripMenuItem});
             this.menuStripMainForm.Location = new System.Drawing.Point(0, 0);
             this.menuStripMainForm.Name = "menuStripMainForm";
             this.menuStripMainForm.Size = new System.Drawing.Size(918, 24);
@@ -210,7 +212,6 @@ namespace WarehouseManagement
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.66013F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelScroll, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttonAddItem, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -238,15 +239,20 @@ namespace WarehouseManagement
             this.tableLayoutPanel2.Size = new System.Drawing.Size(304, 239);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
-            // buttonAddItem
+            // товарыToolStripMenuItem
             // 
-            this.buttonAddItem.Location = new System.Drawing.Point(611, 392);
-            this.buttonAddItem.Name = "buttonAddItem";
-            this.buttonAddItem.Size = new System.Drawing.Size(177, 23);
-            this.buttonAddItem.TabIndex = 11;
-            this.buttonAddItem.Text = "Добавить товар";
-            this.buttonAddItem.UseVisualStyleBackColor = true;
-            this.buttonAddItem.Click += new System.EventHandler(this.buttonAddItem_Click);
+            this.товарыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAddItem});
+            this.товарыToolStripMenuItem.Name = "товарыToolStripMenuItem";
+            this.товарыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.товарыToolStripMenuItem.Text = "Товары";
+            // 
+            // tsmiAddItem
+            // 
+            this.tsmiAddItem.Name = "tsmiAddItem";
+            this.tsmiAddItem.Size = new System.Drawing.Size(180, 22);
+            this.tsmiAddItem.Text = "Добавить товар";
+            this.tsmiAddItem.Click += new System.EventHandler(this.tsmiAddItem_Click);
             // 
             // MainForm
             // 
@@ -295,7 +301,8 @@ namespace WarehouseManagement
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.ToolStripMenuItem tsmiOpenDB;
-        private System.Windows.Forms.Button buttonAddItem;
+        private System.Windows.Forms.ToolStripMenuItem товарыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAddItem;
     }
 }
 
