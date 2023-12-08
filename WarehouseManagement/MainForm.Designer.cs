@@ -44,13 +44,13 @@ namespace WarehouseManagement
             this.tsmiLoadMapData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveMapData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
             this.timerMessageBox = new System.Windows.Forms.Timer(this.components);
             this.textBoxMessage = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -185,6 +185,21 @@ namespace WarehouseManagement
             this.tsmiOpenDB.Text = "Открыть базу данных";
             this.tsmiOpenDB.Click += new System.EventHandler(this.tsmiOpenDB_Click);
             // 
+            // товарыToolStripMenuItem
+            // 
+            this.товарыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAddItem});
+            this.товарыToolStripMenuItem.Name = "товарыToolStripMenuItem";
+            this.товарыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.товарыToolStripMenuItem.Text = "Товары";
+            // 
+            // tsmiAddItem
+            // 
+            this.tsmiAddItem.Name = "tsmiAddItem";
+            this.tsmiAddItem.Size = new System.Drawing.Size(160, 22);
+            this.tsmiAddItem.Text = "Добавить товар";
+            this.tsmiAddItem.Click += new System.EventHandler(this.tsmiAddItem_Click);
+            // 
             // openFileDialogSelectMapImg
             // 
             this.openFileDialogSelectMapImg.FileName = "MapImg";
@@ -239,21 +254,6 @@ namespace WarehouseManagement
             this.tableLayoutPanel2.Size = new System.Drawing.Size(304, 239);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
-            // товарыToolStripMenuItem
-            // 
-            this.товарыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiAddItem});
-            this.товарыToolStripMenuItem.Name = "товарыToolStripMenuItem";
-            this.товарыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.товарыToolStripMenuItem.Text = "Товары";
-            // 
-            // tsmiAddItem
-            // 
-            this.tsmiAddItem.Name = "tsmiAddItem";
-            this.tsmiAddItem.Size = new System.Drawing.Size(180, 22);
-            this.tsmiAddItem.Text = "Добавить товар";
-            this.tsmiAddItem.Click += new System.EventHandler(this.tsmiAddItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -261,7 +261,6 @@ namespace WarehouseManagement
             this.ClientSize = new System.Drawing.Size(918, 465);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStripMainForm);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStripMainForm;
             this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "MainForm";

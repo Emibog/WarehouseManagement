@@ -16,7 +16,8 @@ namespace WarehouseManagement
     {
         public string userLogin;
         public string userPass;
-        public string UserPost { get; private set; }
+        public string userPost { get; private set; }
+        public string userName { get; private set; }
         private string mampPath = @"..\..\MAMP\MAMP";
 
         public Login()
@@ -85,9 +86,10 @@ namespace WarehouseManagement
 
                 if (table.Rows.Count > 0)
                 {
-                    UserPost = table.Rows[0]["post"].ToString();
+                    userPost = table.Rows[0]["post"].ToString();
+                    userName = table.Rows[0]["login"].ToString();
                     // Создаем и открываем MainForm
-                    MainForm mainForm = new MainForm(UserPost);
+                    MainForm mainForm = new MainForm(userPost, userName);
                     mainForm.Show();
                     // Закрываем текущую форму авторизации
                     this.Hide();

@@ -20,6 +20,7 @@ namespace WarehouseManagement
         private bool isDragging = false;
         private bool isResizing = false;
         private string userPost;
+        private string userName;
         private int offsetX, offsetY;
         private int resizeStartX, resizeStartY;
         private Button selectedButton = null;
@@ -35,12 +36,19 @@ namespace WarehouseManagement
         private AddUser addUser = new AddUser();
         private List<string> Products = new List<string> { };
 
-        public MainForm(string userPost)
+        public MainForm(string userPost, string userName)
         {
             InitializeComponent();
             this.userPost = userPost;
+            this.userName = userName;
+            Text = "Управление складом. Пользователь: " + userName + " (" + userPost + ")";
         }
 
+        /// <summary>
+        /// Загрузка формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
             // Скрытие запрещенных элементов для пользователя
@@ -199,7 +207,6 @@ namespace WarehouseManagement
 
                         autoIncrement.ExecuteNonQuery();
                         command.ExecuteNonQuery();
-
 
                         // Закрываем соединение
                         db.closeConnection();
@@ -364,6 +371,10 @@ namespace WarehouseManagement
         {
             isEditing = !isEditing;
             buttonEditingMap.Text = isEditing ? "Отключить редактирование" : "Редактировать карту";
+            if (!isEditing)
+            {
+                SaveMapDataToFile(datFileName);
+            }
             buttonAddCell.Visible = isEditing ? true : false;
 
             // Устанавливаем или снимаем ContextMenuStrip у существующих кнопок в зависимости от значения isEditing
@@ -383,6 +394,7 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void tsmiChangeUser_Click(object sender, EventArgs e)
         {
+            SaveMapDataToFile(datFileName);
             logiForm.Show();
             this.Hide();
             dbView.Hide();
@@ -421,7 +433,6 @@ namespace WarehouseManagement
             MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `users` AUTO_INCREMENT = 1", db.getConnection());
             MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`login`, `pass`, `post`) VALUES (@login, @pass, @post)", db.getConnection());
 
-            // Замените значения параметров на реальные данные
             command.Parameters.AddWithValue("@login", addUser.newLogin);
             command.Parameters.AddWithValue("@pass", addUser.newPass);
             command.Parameters.AddWithValue("@post", "Пользователь");
@@ -556,6 +567,8 @@ namespace WarehouseManagement
         {
             if (openFileDialogSelectMapImg.ShowDialog() == DialogResult.OK)
             {
+                SaveMapDataToFile(datFileName);
+
                 Image backgroundImage = Image.FromFile(openFileDialogSelectMapImg.FileName);
                 imgFileName = Path.GetFileName(openFileDialogSelectMapImg.FileName);
                 mapName = Path.GetFileNameWithoutExtension(openFileDialogSelectMapImg.FileName);
@@ -744,6 +757,7 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
+            SaveMapDataToFile(datFileName);
             Application.Exit();
         }
     }
