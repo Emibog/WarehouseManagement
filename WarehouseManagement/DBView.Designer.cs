@@ -51,7 +51,7 @@ namespace WarehouseManagement
             this.Controls.Add(this.webBrowserDB);
             this.MinimumSize = new System.Drawing.Size(650, 350);
             this.Name = "DBView";
-            this.Text = "DBView";
+            this.Text = "База данных";
             this.ResumeLayout(false);
 
         }
