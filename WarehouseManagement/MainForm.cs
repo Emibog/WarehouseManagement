@@ -588,9 +588,15 @@ namespace WarehouseManagement
             dbView.Show();
         }
 
+        /// <summary>
+        /// Добавление товара
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonAddItem_Click(object sender, EventArgs e)
         {
             formAddItem fAddItem = new formAddItem(storageCells);
+
             if (fAddItem.ShowDialog() == DialogResult.OK)
             {
                 DB db = new DB();
@@ -598,31 +604,100 @@ namespace WarehouseManagement
                 {
                     db.openConnection();
 
-                    MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `items` AUTO_INCREMENT = 1", db.getConnection());
-                    MySqlCommand command = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `map`, `category`, `amount`) VALUES (@item, @cell, @map, @category, @amount)", db.getConnection());
-
-                    // Замените значения параметров на реальные данные
-                    command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
-                    command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
-                    command.Parameters.AddWithValue("@map", mapName);
-                    command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
-                    command.Parameters.AddWithValue("@amount", fAddItem.EnteredAmount);
-
-                    autoIncrement.ExecuteNonQuery();
-                    command.ExecuteNonQuery();
-
-                    MessageBox.Show("Товар успешно добавлен.");
+                    // Проверка наличия товара в БД
+                    if (ItemExists(db, fAddItem.EnteredItemName, fAddItem.EnteredCell, mapName, fAddItem.EnteredCategory))
+                    {
+                        // Товар уже существует, обновляем количество
+                        UpdateItemAmount(db, fAddItem.EnteredItemName, fAddItem.EnteredCell, mapName, fAddItem.EnteredCategory, fAddItem.EnteredAmount);
+                        MessageBox.Show("Количество товара успешно обновлено.");
+                    }
+                    else
+                    {
+                        // Товар не существует, добавляем новую запись
+                        InsertNewItem(db, fAddItem.EnteredItemName, fAddItem.EnteredCell, mapName, fAddItem.EnteredCategory, fAddItem.EnteredAmount);
+                        MessageBox.Show("Товар успешно добавлен.");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Ошибка при добавлении товара в базу данных.\n\n" + ex.Message, "Ошибка добавления товара", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ошибка при работе с базой данных.\n\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
                     db.closeConnection();
                 }
+
                 fAddItem.Close();
             }
+        }
+
+        /// <summary>
+        /// Проверка на существование товара
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="itemName"></param>
+        /// <param name="cell"></param>
+        /// <param name="map"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        private bool ItemExists(DB db, string itemName, string cell, string map, string category)
+        {
+            // Проверка наличия товара в БД по заданным условиям
+            MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
+            command.Parameters.AddWithValue("@item", itemName);
+            command.Parameters.AddWithValue("@cell", cell);
+            command.Parameters.AddWithValue("@map", map);
+            command.Parameters.AddWithValue("@category", category);
+
+            int count = Convert.ToInt32(command.ExecuteScalar());
+            return count > 0;
+        }
+
+        /// <summary>
+        /// Товар существует, обновляем его количество
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="itemName"></param>
+        /// <param name="cell"></param>
+        /// <param name="map"></param>
+        /// <param name="category"></param>
+        /// <param name="newAmount"></param>
+        private void UpdateItemAmount(DB db, string itemName, string cell, string map, string category, string newAmount)
+        {
+            // Обновление количества товара
+            MySqlCommand command = new MySqlCommand("UPDATE `items` SET `amount` = `amount` + @newAmount WHERE `item` = @item AND `cell` = @cell AND `map` = @map AND `category` = @category", db.getConnection());
+            command.Parameters.AddWithValue("@newAmount", newAmount);
+            command.Parameters.AddWithValue("@item", itemName);
+            command.Parameters.AddWithValue("@cell", cell);
+            command.Parameters.AddWithValue("@map", map);
+            command.Parameters.AddWithValue("@category", category);
+
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// Товар не существует, добавление нового товара
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="itemName"></param>
+        /// <param name="cell"></param>
+        /// <param name="map"></param>
+        /// <param name="category"></param>
+        /// <param name="amount"></param>
+        private void InsertNewItem(DB db, string itemName, string cell, string map, string category, string amount)
+        {
+            // Вставка новой записи о товаре
+            MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `items` AUTO_INCREMENT = 1", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `map`, `category`, `amount`) VALUES (@item, @cell, @map, @category, @amount)", db.getConnection());
+
+            command.Parameters.AddWithValue("@item", itemName);
+            command.Parameters.AddWithValue("@cell", cell);
+            command.Parameters.AddWithValue("@map", map);
+            command.Parameters.AddWithValue("@category", category);
+            command.Parameters.AddWithValue("@amount", amount);
+
+            autoIncrement.ExecuteNonQuery();
+            command.ExecuteNonQuery();
         }
 
         /// <summary>
