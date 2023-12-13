@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace WarehouseManagement
 {
-    public partial class AddUser : Form
+    public partial class formAddUser : Form
     {
         public string newLogin { get; private set; }
         public string newPass { get; private set; }
 
-        public AddUser()
+        public formAddUser()
         {
             InitializeComponent();
         }

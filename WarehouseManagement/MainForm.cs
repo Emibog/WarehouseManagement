@@ -33,7 +33,6 @@ namespace WarehouseManagement
         private string mapName = "";
         private DBView dbView = new DBView();
         private Login logiForm = new Login();
-        private AddUser addUser = new AddUser();
         private List<string> Products = new List<string> { };
 
         public MainForm(string userPost, string userName)
@@ -407,6 +406,8 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void tsmiAddUser_Click(object sender, EventArgs e)
         {
+            formAddUser addUser = new formAddUser();
+
             if (addUser.ShowDialog() == DialogResult.OK)
             {
                 DB db = new DB();
@@ -426,9 +427,10 @@ namespace WarehouseManagement
                     db.closeConnection();
                 }
             }
+            addUser.Close();
         }
 
-        private void dbAddUser(DB db, AddUser addUser)
+        private void dbAddUser(DB db, formAddUser addUser)
         {
             MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `users` AUTO_INCREMENT = 1", db.getConnection());
             MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`login`, `pass`, `post`) VALUES (@login, @pass, @post)", db.getConnection());
@@ -726,6 +728,48 @@ namespace WarehouseManagement
         {
             textBoxMessage.Visible = false;
             timerMessageBox.Stop();
+        }
+
+        /// <summary>
+        /// Добавление новой категории
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiAddCategory_Click(object sender, EventArgs e)
+        {
+           formAddCategory fAddCategory = new formAddCategory();
+
+            if (fAddCategory.ShowDialog() == DialogResult.OK)
+            {
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+                    dbAddCategory(db, fAddCategory);
+
+                    MessageBox.Show("Категория успешно добавлена.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при добавлении категории в базу данных.\n\n" + ex.Message, "Ошибка добавления категории", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+
+                }
+            }
+        }
+
+        private void dbAddCategory(DB db, formAddCategory fAddCategory)
+        {
+            MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `categories` AUTO_INCREMENT = 1", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `categories` (`category`) VALUES (@category)", db.getConnection());
+
+            command.Parameters.AddWithValue("@category", fAddCategory.categoryName);
+
+            autoIncrement.ExecuteNonQuery();
+            command.ExecuteNonQuery();
         }
 
         /// <summary>

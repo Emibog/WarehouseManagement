@@ -1,7 +1,7 @@
 ﻿
 namespace WarehouseManagement
 {
-    partial class AddUser
+    partial class formAddUser
     {
         /// <summary>
         /// Required designer variable.
@@ -91,7 +91,7 @@ namespace WarehouseManagement
             this.label2.TabIndex = 5;
             this.label2.Text = "Пароль нового пользователя";
             // 
-            // AddUser
+            // formAddUser
             // 
             this.AcceptButton = this.OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -105,7 +105,7 @@ namespace WarehouseManagement
             this.Controls.Add(this.textBoxNewPass);
             this.Controls.Add(this.textBoxNewLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "AddUser";
+            this.Name = "formAddUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Создание нового пользователя";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddUser_FormClosing);
