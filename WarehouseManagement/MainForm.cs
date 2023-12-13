@@ -430,6 +430,11 @@ namespace WarehouseManagement
             addUser.Close();
         }
 
+        /// <summary>
+        /// Запрос добавления пользователя
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="addUser"></param>
         private void dbAddUser(DB db, formAddUser addUser)
         {
             MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `users` AUTO_INCREMENT = 1", db.getConnection());
@@ -761,6 +766,11 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Запрос добавления категории
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="fAddCategory"></param>
         private void dbAddCategory(DB db, formAddCategory fAddCategory)
         {
             MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `categories` AUTO_INCREMENT = 1", db.getConnection());
