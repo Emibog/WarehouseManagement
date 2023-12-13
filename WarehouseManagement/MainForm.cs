@@ -712,7 +712,7 @@ namespace WarehouseManagement
         {
             // Вставка новой записи о товаре
             MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `items` AUTO_INCREMENT = 1", db.getConnection());
-            MySqlCommand command = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `map`, `category`, `amount`) VALUES (@item, @cell, @map, @category, @amount)", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `map`, `category`, `amount`, `date`) VALUES (@item, @cell, @map, @category, @amount, NOW())", db.getConnection());
 
             command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
             command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);

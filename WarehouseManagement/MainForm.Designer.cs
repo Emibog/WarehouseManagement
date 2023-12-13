@@ -36,13 +36,6 @@ namespace WarehouseManagement
             this.buttonEditingMap = new System.Windows.Forms.Button();
             this.panelScroll = new System.Windows.Forms.Panel();
             this.menuStripMainForm = new System.Windows.Forms.MenuStrip();
-            this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiAddItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
-            this.timerMessageBox = new System.Windows.Forms.Timer(this.components);
-            this.textBoxMessage = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tsmChangeUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiChangeUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddUser = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +44,14 @@ namespace WarehouseManagement
             this.tsmiLoadMapData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveMapData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddCategory = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
+            this.timerMessageBox = new System.Windows.Forms.Timer(this.components);
+            this.textBoxMessage = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -116,13 +116,84 @@ namespace WarehouseManagement
             this.menuStripMainForm.TabIndex = 7;
             this.menuStripMainForm.Text = "Меню главной формы";
             // 
+            // tsmChangeUsers
+            // 
+            this.tsmChangeUsers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiChangeUser,
+            this.tsmiAddUser});
+            this.tsmChangeUsers.Image = global::WarehouseManagement.Properties.Resources.user;
+            this.tsmChangeUsers.Name = "tsmChangeUsers";
+            this.tsmChangeUsers.Size = new System.Drawing.Size(195, 20);
+            this.tsmChangeUsers.Text = "&Управление пользователями";
+            // 
+            // tsmiChangeUser
+            // 
+            this.tsmiChangeUser.Image = global::WarehouseManagement.Properties.Resources.changeUser;
+            this.tsmiChangeUser.Name = "tsmiChangeUser";
+            this.tsmiChangeUser.Size = new System.Drawing.Size(204, 22);
+            this.tsmiChangeUser.Text = "&Сменить пользователя";
+            this.tsmiChangeUser.Click += new System.EventHandler(this.tsmiChangeUser_Click);
+            // 
+            // tsmiAddUser
+            // 
+            this.tsmiAddUser.Image = global::WarehouseManagement.Properties.Resources.addUser;
+            this.tsmiAddUser.Name = "tsmiAddUser";
+            this.tsmiAddUser.Size = new System.Drawing.Size(204, 22);
+            this.tsmiAddUser.Text = "&Добавить пользователя";
+            this.tsmiAddUser.Click += new System.EventHandler(this.tsmiAddUser_Click);
+            // 
+            // управлениеСкладомToolStripMenuItem
+            // 
+            this.управлениеСкладомToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiLoadMapImg,
+            this.tsmiSaveMapData,
+            this.tsmiLoadMapData,
+            this.tsmiOpenDB});
+            this.управлениеСкладомToolStripMenuItem.Image = global::WarehouseManagement.Properties.Resources.warehouse;
+            this.управлениеСкладомToolStripMenuItem.Name = "управлениеСкладомToolStripMenuItem";
+            this.управлениеСкладомToolStripMenuItem.Size = new System.Drawing.Size(151, 20);
+            this.управлениеСкладомToolStripMenuItem.Text = "Управление &складом";
+            // 
+            // tsmiLoadMapImg
+            // 
+            this.tsmiLoadMapImg.Image = global::WarehouseManagement.Properties.Resources.loadImg;
+            this.tsmiLoadMapImg.Name = "tsmiLoadMapImg";
+            this.tsmiLoadMapImg.Size = new System.Drawing.Size(201, 22);
+            this.tsmiLoadMapImg.Text = "Загрузить к&арту склада";
+            this.tsmiLoadMapImg.Click += new System.EventHandler(this.tsmiLoadMapImg_Click);
+            // 
+            // tsmiLoadMapData
+            // 
+            this.tsmiLoadMapData.Image = global::WarehouseManagement.Properties.Resources.loadCells;
+            this.tsmiLoadMapData.Name = "tsmiLoadMapData";
+            this.tsmiLoadMapData.Size = new System.Drawing.Size(201, 22);
+            this.tsmiLoadMapData.Text = "&Загрузить ячейки";
+            this.tsmiLoadMapData.Click += new System.EventHandler(this.tsmiLoadMapData_Click);
+            // 
+            // tsmiSaveMapData
+            // 
+            this.tsmiSaveMapData.Image = global::WarehouseManagement.Properties.Resources.saveCells;
+            this.tsmiSaveMapData.Name = "tsmiSaveMapData";
+            this.tsmiSaveMapData.Size = new System.Drawing.Size(201, 22);
+            this.tsmiSaveMapData.Text = "&Сохранить ячейки";
+            this.tsmiSaveMapData.Click += new System.EventHandler(this.tsmiSaveMapData_Click);
+            // 
+            // tsmiOpenDB
+            // 
+            this.tsmiOpenDB.Image = global::WarehouseManagement.Properties.Resources.openDB;
+            this.tsmiOpenDB.Name = "tsmiOpenDB";
+            this.tsmiOpenDB.Size = new System.Drawing.Size(201, 22);
+            this.tsmiOpenDB.Text = "Открыть базу данных";
+            this.tsmiOpenDB.Click += new System.EventHandler(this.tsmiOpenDB_Click);
+            // 
             // товарыToolStripMenuItem
             // 
             this.товарыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAddItem,
             this.tsmiAddCategory});
+            this.товарыToolStripMenuItem.Image = global::WarehouseManagement.Properties.Resources.item;
             this.товарыToolStripMenuItem.Name = "товарыToolStripMenuItem";
-            this.товарыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.товарыToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
             this.товарыToolStripMenuItem.Text = "Товары";
             // 
             // tsmiAddItem
@@ -131,6 +202,13 @@ namespace WarehouseManagement
             this.tsmiAddItem.Size = new System.Drawing.Size(188, 22);
             this.tsmiAddItem.Text = "Добавить товар";
             this.tsmiAddItem.Click += new System.EventHandler(this.tsmiAddItem_Click);
+            // 
+            // tsmiAddCategory
+            // 
+            this.tsmiAddCategory.Name = "tsmiAddCategory";
+            this.tsmiAddCategory.Size = new System.Drawing.Size(188, 22);
+            this.tsmiAddCategory.Text = "Добавить категорию";
+            this.tsmiAddCategory.Click += new System.EventHandler(this.tsmiAddCategory_Click);
             // 
             // openFileDialogSelectMapImg
             // 
@@ -185,83 +263,6 @@ namespace WarehouseManagement
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(304, 239);
             this.tableLayoutPanel2.TabIndex = 10;
-            // 
-            // tsmChangeUsers
-            // 
-            this.tsmChangeUsers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiChangeUser,
-            this.tsmiAddUser});
-            this.tsmChangeUsers.Image = global::WarehouseManagement.Properties.Resources.user;
-            this.tsmChangeUsers.Name = "tsmChangeUsers";
-            this.tsmChangeUsers.Size = new System.Drawing.Size(195, 20);
-            this.tsmChangeUsers.Text = "&Управление пользователями";
-            // 
-            // tsmiChangeUser
-            // 
-            this.tsmiChangeUser.Image = global::WarehouseManagement.Properties.Resources.changeUser;
-            this.tsmiChangeUser.Name = "tsmiChangeUser";
-            this.tsmiChangeUser.Size = new System.Drawing.Size(204, 22);
-            this.tsmiChangeUser.Text = "&Сменить пользователя";
-            this.tsmiChangeUser.Click += new System.EventHandler(this.tsmiChangeUser_Click);
-            // 
-            // tsmiAddUser
-            // 
-            this.tsmiAddUser.Image = global::WarehouseManagement.Properties.Resources.addUser;
-            this.tsmiAddUser.Name = "tsmiAddUser";
-            this.tsmiAddUser.Size = new System.Drawing.Size(204, 22);
-            this.tsmiAddUser.Text = "&Добавить пользователя";
-            this.tsmiAddUser.Click += new System.EventHandler(this.tsmiAddUser_Click);
-            // 
-            // управлениеСкладомToolStripMenuItem
-            // 
-            this.управлениеСкладомToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiLoadMapImg,
-            this.tsmiLoadMapData,
-            this.tsmiSaveMapData,
-            this.tsmiOpenDB});
-            this.управлениеСкладомToolStripMenuItem.Image = global::WarehouseManagement.Properties.Resources.warehouse;
-            this.управлениеСкладомToolStripMenuItem.Name = "управлениеСкладомToolStripMenuItem";
-            this.управлениеСкладомToolStripMenuItem.Size = new System.Drawing.Size(151, 20);
-            this.управлениеСкладомToolStripMenuItem.Text = "Управление &складом";
-            // 
-            // tsmiLoadMapImg
-            // 
-            this.tsmiLoadMapImg.Image = global::WarehouseManagement.Properties.Resources.loadImg;
-            this.tsmiLoadMapImg.Name = "tsmiLoadMapImg";
-            this.tsmiLoadMapImg.Size = new System.Drawing.Size(201, 22);
-            this.tsmiLoadMapImg.Text = "Загрузить к&арту склада";
-            this.tsmiLoadMapImg.Click += new System.EventHandler(this.tsmiLoadMapImg_Click);
-            // 
-            // tsmiLoadMapData
-            // 
-            this.tsmiLoadMapData.Image = global::WarehouseManagement.Properties.Resources.loadCells;
-            this.tsmiLoadMapData.Name = "tsmiLoadMapData";
-            this.tsmiLoadMapData.Size = new System.Drawing.Size(201, 22);
-            this.tsmiLoadMapData.Text = "&Загрузить ячейки";
-            this.tsmiLoadMapData.Click += new System.EventHandler(this.tsmiLoadMapData_Click);
-            // 
-            // tsmiSaveMapData
-            // 
-            this.tsmiSaveMapData.Image = global::WarehouseManagement.Properties.Resources.saveCells;
-            this.tsmiSaveMapData.Name = "tsmiSaveMapData";
-            this.tsmiSaveMapData.Size = new System.Drawing.Size(201, 22);
-            this.tsmiSaveMapData.Text = "&Сохранить ячейки";
-            this.tsmiSaveMapData.Click += new System.EventHandler(this.tsmiSaveMapData_Click);
-            // 
-            // tsmiOpenDB
-            // 
-            this.tsmiOpenDB.Image = global::WarehouseManagement.Properties.Resources.openDB;
-            this.tsmiOpenDB.Name = "tsmiOpenDB";
-            this.tsmiOpenDB.Size = new System.Drawing.Size(201, 22);
-            this.tsmiOpenDB.Text = "Открыть базу данных";
-            this.tsmiOpenDB.Click += new System.EventHandler(this.tsmiOpenDB_Click);
-            // 
-            // tsmiAddCategory
-            // 
-            this.tsmiAddCategory.Name = "tsmiAddCategory";
-            this.tsmiAddCategory.Size = new System.Drawing.Size(188, 22);
-            this.tsmiAddCategory.Text = "Добавить категорию";
-            this.tsmiAddCategory.Click += new System.EventHandler(this.tsmiAddCategory_Click);
             // 
             // MainForm
             // 
