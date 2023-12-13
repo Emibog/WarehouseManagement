@@ -17,10 +17,14 @@ namespace WarehouseManagement
         public string EnteredCategory { get; set; }
         public string EnteredCell { get; set; }
         public string EnteredAmount { get; set; }
+        private List<StorageCell> storageCell;
+        private formAddItem form;
 
         public formAddItem(List<StorageCell> storageCell)
         {
             InitializeComponent();
+            this.storageCell = storageCell;
+            form = this;
             foreach (StorageCell control in storageCell)
             {
                 comboBoxCells.Items.Add(control.Name);
@@ -86,6 +90,64 @@ namespace WarehouseManagement
         private void buttonCancel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonAddCategory_Click(object sender, EventArgs e)
+        {
+            formAddCategory fAddCategory = new formAddCategory();
+
+            if (fAddCategory.ShowDialog() == DialogResult.OK)
+            {
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+                    dbAddCategory(db, fAddCategory);
+
+                    MessageBox.Show("Категория успешно добавлена.");
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при добавлении категории в базу данных.\n\n" + ex.Message, "Ошибка добавления категории", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+
+                }
+            }
+        }
+
+        private void dbAddCategory(DB db, formAddCategory fAddCategory)
+        {
+            MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `categories` AUTO_INCREMENT = 1", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `categories` (`category`) VALUES (@category)", db.getConnection());
+
+            command.Parameters.AddWithValue("@category", fAddCategory.categoryName);
+
+            autoIncrement.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+            
+            MySqlCommand updateCategories = new MySqlCommand("SELECT `category` FROM `categories`", db.getConnection());
+
+            // Обновление категорий
+            // Используем ExecuteReader для выполнения запроса SELECT
+            using (MySqlDataReader reader = updateCategories.ExecuteReader())
+            {
+                // Очистка категорий
+                comboBoxCategories.Items.Clear();
+
+                // Перебираем результаты запроса
+                while (reader.Read())
+                {
+                    // Получаем значение из столбца "item"
+                    string category = reader["category"].ToString();
+
+                    // Добавляем значение в коллекцию Products
+                    comboBoxCategories.Items.Add(category);
+                }
+            }
         }
     }
 }

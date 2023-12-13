@@ -38,6 +38,7 @@
             this.comboBoxCells = new System.Windows.Forms.ComboBox();
             this.comboBoxCategories = new System.Windows.Forms.ComboBox();
             this.numericUpDownAmount = new System.Windows.Forms.NumericUpDown();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -136,11 +137,22 @@
             this.numericUpDownAmount.Size = new System.Drawing.Size(121, 20);
             this.numericUpDownAmount.TabIndex = 12;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(319, 135);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(23, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "+";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.buttonAddCategory_Click);
+            // 
             // formAddItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(409, 336);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDownAmount);
             this.Controls.Add(this.comboBoxCategories);
             this.Controls.Add(this.comboBoxCells);
@@ -174,5 +186,6 @@
         private System.Windows.Forms.ComboBox comboBoxCells;
         private System.Windows.Forms.ComboBox comboBoxCategories;
         private System.Windows.Forms.NumericUpDown numericUpDownAmount;
+        private System.Windows.Forms.Button button1;
     }
 }

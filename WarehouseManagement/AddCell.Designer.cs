@@ -78,7 +78,7 @@ namespace WarehouseManagement
             // labelColor
             // 
             this.labelColor.AutoSize = true;
-            this.labelColor.Location = new System.Drawing.Point(25, 84);
+            this.labelColor.Location = new System.Drawing.Point(22, 84);
             this.labelColor.Name = "labelColor";
             this.labelColor.Size = new System.Drawing.Size(70, 13);
             this.labelColor.TabIndex = 5;
