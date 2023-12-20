@@ -16,7 +16,7 @@ namespace WarehouseManagement
 {
     public partial class MainForm : Form
     {
-        private List<StorageCell> storageCells = new List<StorageCell>();
+        public List<StorageCell> storageCells = new List<StorageCell>();
         private bool isDragging = false;
         private bool isResizing = false;
         private string userPost;
@@ -26,7 +26,7 @@ namespace WarehouseManagement
         private Button selectedButton = null;
         private bool isEditing = false;
         private bool isEditingPrev = false;
-        private ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
+        public ContextMenuStrip cmsButtonDelete = new ContextMenuStrip(); //контекстное меню
         private string imgFileName;
         private string datFileName;
         private string imagePath = "..\\..\\Resources\\Map1.png";
@@ -160,7 +160,7 @@ namespace WarehouseManagement
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnAddCell_Click(object sender, EventArgs e)
+        public void btnAddCell_Click(object sender, EventArgs e)
         {
             // Добавление новой ячейки
             StorageCell newCell = new StorageCell
@@ -260,7 +260,7 @@ namespace WarehouseManagement
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void menuDeleteClick(object sender, EventArgs e)
+        public void menuDeleteClick(object sender, EventArgs e)
         {
             if (isEditing)
             {
