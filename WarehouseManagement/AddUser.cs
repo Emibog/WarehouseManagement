@@ -12,6 +12,9 @@ namespace WarehouseManagement
 {
     public partial class formAddUser : Form
     {
+        internal object TextBoxNewLogin;
+        internal object TextBoxNewPass;
+
         public string newLogin { get; private set; }
         public string newPass { get; private set; }
 
@@ -29,7 +32,7 @@ namespace WarehouseManagement
             }
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        public void btnOK_Click(object sender, EventArgs e)
         {
             newLogin = textBoxNewLogin.Text;
             newPass = textBoxNewPass.Text;
