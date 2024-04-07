@@ -697,7 +697,6 @@ namespace WarehouseManagement
                     {
                         // Товар существует, удаляем его
                         DeleteItem(db, fDeleteItem, mapName);
-                        MessageBox.Show("Товар успешно удален.");
                     }
                     else
                     {
@@ -725,10 +724,38 @@ namespace WarehouseManagement
         /// <param name="mapName"></param>
         private void DeleteItem(DB db, formDeleteItem fDeleteItem, string mapName)
         {
-            MySqlCommand command = new MySqlCommand("DELETE FROM `items` WHERE `item` = @itemName", db.getConnection());
-            Console.WriteLine(fDeleteItem.ItemToDelete);
-            command.Parameters.AddWithValue("@itemName", fDeleteItem.ItemToDelete);
-            command.ExecuteNonQuery();
+            MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
+            command.Parameters.AddWithValue("@item", fDeleteItem.ItemToDelete);
+            command.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+            command.Parameters.AddWithValue("@map", mapName);
+
+            int existingAmount = Convert.ToInt32(command.ExecuteScalar());
+            decimal requestedAmount = fDeleteItem.EnteredAmount;
+
+            if (requestedAmount <= existingAmount)
+            {
+                MySqlCommand updateCommand = new MySqlCommand("UPDATE `items` SET `amount` = `amount` - @requestedAmount WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
+                updateCommand.Parameters.AddWithValue("@requestedAmount", requestedAmount);
+                updateCommand.Parameters.AddWithValue("@item", fDeleteItem.ItemToDelete);
+                updateCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+                updateCommand.Parameters.AddWithValue("@map", mapName);
+                updateCommand.ExecuteNonQuery();
+                
+                MessageBox.Show("Указанное колчество товара было удалено.");
+            }
+            else if (requestedAmount == existingAmount)
+            {
+                MySqlCommand dellCommand = new MySqlCommand("DELETE FROM `items` WHERE `item` = @itemName", db.getConnection());
+                Console.WriteLine(fDeleteItem.ItemToDelete);
+                dellCommand.Parameters.AddWithValue("@itemName", fDeleteItem.ItemToDelete);
+                dellCommand.ExecuteNonQuery();
+
+                MessageBox.Show("Товар был удален.");
+            }
+            else
+            {
+                MessageBox.Show("Указанное количество больше имеющегося.");
+            }
         }
 
         /// <summary>

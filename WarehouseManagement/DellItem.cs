@@ -14,7 +14,7 @@ namespace WarehouseManagement
     public partial class formDeleteItem : Form
     {
         public string EnteredCell { get; set; }
-        public string EnteredAmount { get; set; }
+        public decimal EnteredAmount { get; set; }
         private string mapName;
 
         public string ItemToDelete { get; set; }
@@ -56,7 +56,7 @@ namespace WarehouseManagement
             else
             {
                 EnteredCell = comboBoxCells.SelectedItem.ToString();
-                EnteredAmount = numericUpDownAmount.Value.ToString();
+                EnteredAmount = numericUpDownAmount.Value;
                 ItemToDelete = comboBoxItems.SelectedItem.ToString();
                 //DeleteItem();
             }
