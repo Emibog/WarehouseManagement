@@ -321,11 +321,7 @@ namespace WarehouseManagement
         /// <param name="cell"></param>
         private void ShowProducts(StorageCell cell)
         {
-            //Запрос SELECT `item`, `quantity` FROM `items` WHERE cell = "ав"; 
-
-            // Получаем имя ячейки
             string cellName = cell.Name;
-            // Если ячейки не находятся в режиме редактирования
             if (!isEditing)
             {
                 DB db = new DB();
@@ -340,36 +336,24 @@ namespace WarehouseManagement
                     command.Parameters.AddWithValue("@cell", cellName);
                     command.Parameters.AddWithValue("@map", mapName);
 
-                    // Очищаем списки от предыдущих товаров и количества
                     Products.Clear();
                     Amount.Clear();
 
-                    // Используем ExecuteReader для выполнения запроса SELECT
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        // Перебираем результаты запроса
                         while (reader.Read())
                         {
-                            // Получаем значения из столбцов "item" и "amount"
                             string itemValue = reader["item"].ToString();
                             int amountValue = Convert.ToInt32(reader["amount"]);
-
-                            // Добавляем значения в соответствующие коллекции
                             Products.Add(itemValue);
                             Amount.Add(amountValue);
                         }
                     }
 
-                    // Закрываем соединение
                     db.closeConnection();
 
-                    // Очищаем и обновляем элементы ListBox
-                    listBoxProducts.Items.Clear();
-                    for (int i = 0; i < Products.Count; i++)
-                    {
-                        string itemWithAmount = $"{Products[i]} - {Amount[i]}";
-                        listBoxProducts.Items.Add(itemWithAmount);
-                    }
+                    Items formItems = new Items(Products, Amount, mapName);
+                    formItems.Show();
                 }
                 catch (Exception ex)
                 {
@@ -732,7 +716,7 @@ namespace WarehouseManagement
             int existingAmount = Convert.ToInt32(command.ExecuteScalar());
             decimal requestedAmount = fDeleteItem.EnteredAmount;
 
-            if (requestedAmount <= existingAmount)
+            if (requestedAmount < existingAmount)
             {
                 MySqlCommand updateCommand = new MySqlCommand("UPDATE `items` SET `amount` = `amount` - @requestedAmount WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
                 updateCommand.Parameters.AddWithValue("@requestedAmount", requestedAmount);
@@ -740,7 +724,7 @@ namespace WarehouseManagement
                 updateCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
                 updateCommand.Parameters.AddWithValue("@map", mapName);
                 updateCommand.ExecuteNonQuery();
-                
+
                 MessageBox.Show("Указанное колчество товара было удалено.");
             }
             else if (requestedAmount == existingAmount)
