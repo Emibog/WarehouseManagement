@@ -99,45 +99,52 @@ namespace WarehouseManagement
         private void MoveButton_Click(object sender, EventArgs e)
         {
             Button deleteButton = (Button)sender;
-            Button moveButton = (Button)sender;
             Label correspondingLabel = (Label)deleteButton.Tag;
             
             MoveItem moveItem = new MoveItem(mapName);
 
+            DB db = new DB();
+            db.openConnection();
             if (moveItem.ShowDialog() == DialogResult.OK)
             {
-                DB db = new DB();
-                db.openConnection();
-
                 MySqlCommand command = new MySqlCommand("UPDATE `items` SET `cell` = @cell WHERE `item` = @item AND `map` = @map", db.getConnection());
                 command.Parameters.AddWithValue("@cell", moveItem.CellToMove);
                 command.Parameters.AddWithValue("@item", correspondingLabel.Name);
                 command.Parameters.AddWithValue("@map", mapName);
                 command.ExecuteNonQuery();
-                db.closeConnection();
             }
             else
             {
                 return;
             }
 
-            int yOffset = correspondingLabel.Location.Y;
-            
-            // Удалить метку, связанную с кнопкой удаления
-            panelItems.Controls.Remove(correspondingLabel);
+            updateItems(db);
+            db.closeConnection();
+        }
 
-            // Удалить кнопки
-            panelItems.Controls.Remove(deleteButton);
-            panelItems.Controls.Remove(moveButton);
+        private void updateItems(DB db)
+        {
+            MySqlCommand updateItemCommand = new MySqlCommand("SELECT `item`, `amount` FROM `items` WHERE cell = @cell AND map = @map", db.getConnection());
 
-            // Сдвинуть нижние элементы вверх, чтобы заполнить пробел
-            foreach (Control control in panelItems.Controls)
+            updateItemCommand.Parameters.AddWithValue("@cell", cellName);
+            updateItemCommand.Parameters.AddWithValue("@map", mapName);
+
+            Products.Clear();
+            Amount.Clear();
+
+            using (MySqlDataReader reader = updateItemCommand.ExecuteReader())
             {
-                if (control.Location.Y > yOffset)
+                while (reader.Read())
                 {
-                    control.Location = new Point(control.Location.X, control.Location.Y - 50);
+                    string itemValue = reader["item"].ToString();
+                    int amountValue = Convert.ToInt32(reader["amount"]);
+                    Products.Add(itemValue);
+                    Amount.Add(amountValue);
                 }
             }
+
+            panelItems.Controls.Clear();
+            showProducts();
         }
     }
 }
