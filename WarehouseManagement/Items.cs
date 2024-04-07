@@ -27,18 +27,18 @@ namespace WarehouseManagement
             this.mapName = mapName;
             this.cellName = cellName;
             Text = "Товары в ячейке " + cellName;
-
         }
 
         private void showProducts()
         {
             int yOffset = 20; // Инициализировать смещение Y для позиционирования
+            Font labelFont = new Font("Arial", 12, FontStyle.Regular);
             foreach (string product in Products)
             {
                 // Создать новую метку для каждого продукта
                 Label label = new Label();
                 label.Name = product;
-                label.Font = new Font(label.Font.FontFamily, 12, label.Font.Style);
+                label.Font = labelFont;
                 label.Text = product + " - " + Amount[Products.IndexOf(product)];
                 label.Location = new Point(20, yOffset); // Установить позицию метки
                 yOffset += 50; // Увеличить смещение Y для следующей метки
