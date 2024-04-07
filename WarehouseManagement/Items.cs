@@ -39,8 +39,8 @@ namespace WarehouseManagement
                 label.Text = product + " - " + Amount[Products.IndexOf(product)];
                 label.Location = new Point(20, yOffset); // Установить позицию метки
                 yOffset += 50; // Увеличить смещение Y для следующей метки
-                this.Controls.Add(label);
-
+                panelItems.Controls.Add(label);
+                Console.WriteLine("Product: " + product);
                 // Создать новую кнопку для удаления метки
                 Button deleteButton = new Button();
                 deleteButton.BackgroundImage = global::WarehouseManagement.Properties.Resources.deleteButton;
@@ -50,7 +50,7 @@ namespace WarehouseManagement
                 deleteButton.Tag = label; // Отметить кнопку соответствующей меткой
                 deleteButton.Location = new Point(120, yOffset - 60); // Разместить кнопку удаления рядом с меткой
                 deleteButton.Click += DeleteButton_Click; // Присоединить обработчик события нажатия
-                this.Controls.Add(deleteButton); // Добавить кнопку удаления на форму
+                panelItems.Controls.Add(deleteButton); // Добавить кнопку удаления на форму
             }
         }
 

@@ -28,13 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.panelItems = new System.Windows.Forms.Panel();
             this.SuspendLayout();
+            // 
+            // panelItems
+            // 
+            this.panelItems.AutoScroll = true;
+            this.panelItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.panelItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelItems.Location = new System.Drawing.Point(0, 0);
+            this.panelItems.Name = "panelItems";
+            this.panelItems.Size = new System.Drawing.Size(800, 450);
+            this.panelItems.TabIndex = 0;
             // 
             // Items
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.panelItems);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Items";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -44,5 +56,7 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel panelItems;
     }
 }
