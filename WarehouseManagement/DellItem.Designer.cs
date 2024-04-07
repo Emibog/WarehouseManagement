@@ -134,6 +134,7 @@
             this.Controls.Add(this.buttonOK);
             this.Name = "formDeleteItem";
             this.Text = "DellItem";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formDellItem_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

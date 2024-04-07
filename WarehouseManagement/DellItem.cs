@@ -40,12 +40,19 @@ namespace WarehouseManagement
             }
         }
 
+        private void formDellItem_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (string.IsNullOrEmpty(comboBoxItems.Text) | string.IsNullOrEmpty(comboBoxCells.Text) | numericUpDownAmount.Value <= 0)
+            {
+                MessageBox.Show("Пожалуйста, выберите товар для удаления и укажите количество.");
+                e.Cancel = true; // Отменить закрытие формы
+            }
+        }
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(comboBoxItems.Text))
-            {
-                MessageBox.Show("Пожалуйста, выберите товар для удаления.");
-            }
+            if (string.IsNullOrEmpty(comboBoxItems.Text) | string.IsNullOrEmpty(comboBoxCells.Text)){ }
             else
             {
                 EnteredCell = comboBoxCells.SelectedItem.ToString();
