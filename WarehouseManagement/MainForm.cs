@@ -352,7 +352,7 @@ namespace WarehouseManagement
 
                     db.closeConnection();
 
-                    Items formItems = new Items(Products, Amount, mapName);
+                    Items formItems = new Items(Products, Amount, mapName, cellName);
                     formItems.Show();
                 }
                 catch (Exception ex)

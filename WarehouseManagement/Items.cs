@@ -16,18 +16,21 @@ namespace WarehouseManagement
         public List<string> Products;
         public List<int> Amount;
         public string mapName;
+        public string cellName;
 
-        public Items(List<string> products, List<int> amount, string mapName)
+        public Items(List<string> products, List<int> amount, string mapName, string cellName)
         {
             InitializeComponent();
             Products = products;
             Amount = amount;
-            ОтобразитьПродукты();
+            showProducts();
             this.mapName = mapName;
+            this.cellName = cellName;
+            Text = "Товары в ячейке " + cellName;
 
         }
 
-        private void ОтобразитьПродукты()
+        private void showProducts()
         {
             int yOffset = 20; // Инициализировать смещение Y для позиционирования
             foreach (string product in Products)
@@ -40,7 +43,7 @@ namespace WarehouseManagement
                 label.Location = new Point(20, yOffset); // Установить позицию метки
                 yOffset += 50; // Увеличить смещение Y для следующей метки
                 panelItems.Controls.Add(label);
-                Console.WriteLine("Product: " + product);
+
                 // Создать новую кнопку для удаления метки
                 Button deleteButton = new Button();
                 deleteButton.BackgroundImage = global::WarehouseManagement.Properties.Resources.deleteButton;
