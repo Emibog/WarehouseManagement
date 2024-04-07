@@ -68,17 +68,17 @@ namespace WarehouseManagement
                 Console.WriteLine(fDeleteItem.ItemToDelete);
             }
             // Удалить метку, связанную с кнопкой удаления
-            this.Controls.Remove(correspondingLabel);
+            panelItems.Controls.Remove(correspondingLabel);
 
             // Удалить саму кнопку удаления
-            this.Controls.Remove(deleteButton);
+            panelItems.Controls.Remove(deleteButton);
 
             // Сдвинуть нижние элементы вверх, чтобы заполнить пробел
-            foreach (Control control in this.Controls)
+            foreach (Control control in panelItems.Controls)
             {
                 if (control.Location.Y > yOffset)
                 {
-                    control.Location = new Point(control.Location.X, control.Location.Y - 40);
+                    control.Location = new Point(control.Location.X, control.Location.Y - 50);
                 }
             }
         }
