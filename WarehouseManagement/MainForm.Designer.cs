@@ -41,8 +41,8 @@ namespace WarehouseManagement
             this.tsmiAddUser = new System.Windows.Forms.ToolStripMenuItem();
             this.управлениеСкладомToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLoadMapImg = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiLoadMapData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiSaveMapData = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiLoadMapData = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiOpenDB = new System.Windows.Forms.ToolStripMenuItem();
             this.товарыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +52,7 @@ namespace WarehouseManagement
             this.textBoxMessage = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.удалитьТоварToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -162,14 +163,6 @@ namespace WarehouseManagement
             this.tsmiLoadMapImg.Text = "Загрузить к&арту склада";
             this.tsmiLoadMapImg.Click += new System.EventHandler(this.tsmiLoadMapImg_Click);
             // 
-            // tsmiLoadMapData
-            // 
-            this.tsmiLoadMapData.Image = global::WarehouseManagement.Properties.Resources.loadCells;
-            this.tsmiLoadMapData.Name = "tsmiLoadMapData";
-            this.tsmiLoadMapData.Size = new System.Drawing.Size(201, 22);
-            this.tsmiLoadMapData.Text = "&Загрузить ячейки";
-            this.tsmiLoadMapData.Click += new System.EventHandler(this.tsmiLoadMapData_Click);
-            // 
             // tsmiSaveMapData
             // 
             this.tsmiSaveMapData.Image = global::WarehouseManagement.Properties.Resources.saveCells;
@@ -177,6 +170,14 @@ namespace WarehouseManagement
             this.tsmiSaveMapData.Size = new System.Drawing.Size(201, 22);
             this.tsmiSaveMapData.Text = "&Сохранить ячейки";
             this.tsmiSaveMapData.Click += new System.EventHandler(this.tsmiSaveMapData_Click);
+            // 
+            // tsmiLoadMapData
+            // 
+            this.tsmiLoadMapData.Image = global::WarehouseManagement.Properties.Resources.loadCells;
+            this.tsmiLoadMapData.Name = "tsmiLoadMapData";
+            this.tsmiLoadMapData.Size = new System.Drawing.Size(201, 22);
+            this.tsmiLoadMapData.Text = "&Загрузить ячейки";
+            this.tsmiLoadMapData.Click += new System.EventHandler(this.tsmiLoadMapData_Click);
             // 
             // tsmiOpenDB
             // 
@@ -190,7 +191,8 @@ namespace WarehouseManagement
             // 
             this.товарыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAddItem,
-            this.tsmiAddCategory});
+            this.tsmiAddCategory,
+            this.удалитьТоварToolStripMenuItem});
             this.товарыToolStripMenuItem.Image = global::WarehouseManagement.Properties.Resources.item;
             this.товарыToolStripMenuItem.Name = "товарыToolStripMenuItem";
             this.товарыToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -264,6 +266,13 @@ namespace WarehouseManagement
             this.tableLayoutPanel2.Size = new System.Drawing.Size(304, 239);
             this.tableLayoutPanel2.TabIndex = 10;
             // 
+            // удалитьТоварToolStripMenuItem
+            // 
+            this.удалитьТоварToolStripMenuItem.Name = "удалитьТоварToolStripMenuItem";
+            this.удалитьТоварToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.удалитьТоварToolStripMenuItem.Text = "Удалить товар";
+            this.удалитьТоварToolStripMenuItem.Click += new System.EventHandler(this.tsmiDeleteItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,6 +322,7 @@ namespace WarehouseManagement
         private System.Windows.Forms.ToolStripMenuItem товарыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiAddItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiAddCategory;
+        private System.Windows.Forms.ToolStripMenuItem удалитьТоварToolStripMenuItem;
     }
 }
 

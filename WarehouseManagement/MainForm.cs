@@ -66,7 +66,7 @@ namespace WarehouseManagement
             cmsButtonDelete.Items.Add(menuDelete);
             buttonAddCell.Visible = isEditing ? true : false;
 
-            
+
             Image backgroundImage = Image.FromFile(imagePath);
             imgFileName = Path.GetFileName(imagePath);
             mapName = Path.GetFileNameWithoutExtension(imagePath);
@@ -246,12 +246,24 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Обрабатывает отрисовку кнопки ячейки
+        /// </summary>
+        /// <param name="sender">Кнопка, вызвавшая событие</param>
+        /// <param name="e">PaintEventArgs, содержащий данные события</param>
         private void CellButton_Paint(object sender, PaintEventArgs e)
         {
             Button resizedButton = (Button)sender;
-            if (storageCells.Any(c => c.Name == resizedButton.Text && c.IsResizing))
+            bool isResizingCell = storageCells.Any(c => c.Name == resizedButton.Text && c.IsResizing);
+
+            if (isResizingCell)
             {
-                e.Graphics.DrawRectangle(Pens.Black, 0, 0, resizedButton.Width - 1, resizedButton.Height - 1);
+                // Измените размер прямоугольника, чтобы он соответствовал кнопке
+                int width = resizedButton.Width - 1;
+                int height = resizedButton.Height - 1;
+
+                // Нарисуйте черный прямоугольник вокруг кнопки
+                e.Graphics.DrawRectangle(Pens.Black, 0, 0, width, height);
             }
         }
 
@@ -656,6 +668,61 @@ namespace WarehouseManagement
         }
 
         /// <summary>
+        /// Удаление товара
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiDeleteItem_Click(object sender, EventArgs e)
+        {
+            formDeleteItem fDeleteItem = new formDeleteItem(mapName);
+
+            if (fDeleteItem.ShowDialog() == DialogResult.OK)
+            {
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+
+                    // Проверка наличия товара в БД
+                    if (ItemExists(db, fDeleteItem, mapName))
+                    {
+                        // Товар существует, удаляем его
+                        DeleteItem(db, fDeleteItem, mapName);
+                        MessageBox.Show("Товар успешно удален.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Товар не найден.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при работе с базой данных.\n\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+                }
+
+                fDeleteItem.Close();
+            }
+        }
+
+        /// <summary>
+        /// Удаление товара из базы данных
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="fDeleteItem"></param>
+        /// <param name="mapName"></param>
+        private void DeleteItem(DB db, formDeleteItem fDeleteItem, string mapName)
+        {
+            MySqlCommand command = new MySqlCommand("DELETE FROM `items` WHERE `item` = @itemName", db.getConnection());
+            Console.WriteLine(fDeleteItem.ItemToDelete);
+            command.Parameters.AddWithValue("@itemName", fDeleteItem.ItemToDelete);
+            command.ExecuteNonQuery();
+        }
+
+        /// <summary>
         /// Проверка на существование товара
         /// </summary>
         /// <param name="db"></param>
@@ -664,14 +731,25 @@ namespace WarehouseManagement
         /// <param name="map"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        private bool ItemExists(DB db, formAddItem fAddItem, string mapName)
+        private bool ItemExists(DB db, Form form, string mapName)
         {
             // Проверка наличия товара в БД по заданным условиям
             MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
-            command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
-            command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
+
+            if (form is formAddItem)
+            {
+                formAddItem fAddItem = (formAddItem)form;
+                command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
+                command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
+                command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
+            }
+            else if (form is formDeleteItem)
+            {
+                formDeleteItem dellItem = (formDeleteItem)form;
+                // Add parameters specific to DellItem
+            }
+
             command.Parameters.AddWithValue("@map", mapName);
-            command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
 
             int count = Convert.ToInt32(command.ExecuteScalar());
             return count > 0;
@@ -742,7 +820,7 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void tsmiAddCategory_Click(object sender, EventArgs e)
         {
-           formAddCategory fAddCategory = new formAddCategory();
+            formAddCategory fAddCategory = new formAddCategory();
 
             if (fAddCategory.ShowDialog() == DialogResult.OK)
             {
