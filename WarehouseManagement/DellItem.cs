@@ -43,7 +43,7 @@ namespace WarehouseManagement
         private void formDellItem_FormClosing(object sender, FormClosingEventArgs e)
         {
 
-            if (string.IsNullOrEmpty(comboBoxItems.Text) | string.IsNullOrEmpty(comboBoxCells.Text) | numericUpDownAmount.Value <= 0)
+            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(comboBoxItems.Text) | string.IsNullOrEmpty(comboBoxCells.Text) | numericUpDownAmount.Value <= 0)
             {
                 MessageBox.Show("Пожалуйста, выберите товар для удаления и укажите количество.");
                 e.Cancel = true; // Отменить закрытие формы
@@ -97,6 +97,28 @@ namespace WarehouseManagement
             finally
             {
                 db.closeConnection();
+            }
+        }
+
+        private void setMaxAmount_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(comboBoxItems.Text) && !string.IsNullOrEmpty(comboBoxCells.Text))
+            {
+                db = new DB();
+                db.openConnection();
+                MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
+                command.Parameters.AddWithValue("@item", comboBoxItems.SelectedItem.ToString());
+                command.Parameters.AddWithValue("@cell", comboBoxCells.SelectedItem.ToString());
+                command.Parameters.AddWithValue("@map", mapName);
+
+                int existingAmount = Convert.ToInt32(command.ExecuteScalar());
+
+                numericUpDownAmount.Value = existingAmount;
+                db.closeConnection();
+            }
+            else
+            {
+                MessageBox.Show("Выберите товар");
             }
         }
     }
