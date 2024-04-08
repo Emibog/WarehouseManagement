@@ -16,6 +16,7 @@ namespace WarehouseManagement
     {
         public List<string> Products;
         public List<int> Amount;
+        private int existingAmount;
         public string mapName;
         public string cellName;
 
@@ -94,24 +95,82 @@ namespace WarehouseManagement
                     control.Location = new Point(control.Location.X, control.Location.Y - 50);
                 }
             }
+
+            fDeleteItem.Close();
         }
 
         private void MoveButton_Click(object sender, EventArgs e)
         {
             Button deleteButton = (Button)sender;
             Label correspondingLabel = (Label)deleteButton.Tag;
-            
-            MoveItem moveItem = new MoveItem(mapName);
+
+            MoveItem moveItem = new MoveItem(mapName, correspondingLabel.Name, cellName);
 
             DB db = new DB();
             db.openConnection();
+
+            MySqlCommand command = new MySqlCommand("SELECT `amount`, `category` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
+            command.Parameters.AddWithValue("@item", correspondingLabel.Name);
+            command.Parameters.AddWithValue("@cell", cellName);
+            command.Parameters.AddWithValue("@map", mapName);
+
+            string category = "";
+
+            using (MySqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    existingAmount = Convert.ToInt32(reader["amount"]);
+                    category = reader["category"].ToString();
+                }
+            }
+
             if (moveItem.ShowDialog() == DialogResult.OK)
             {
-                MySqlCommand command = new MySqlCommand("UPDATE `items` SET `cell` = @cell WHERE `item` = @item AND `map` = @map", db.getConnection());
-                command.Parameters.AddWithValue("@cell", moveItem.CellToMove);
-                command.Parameters.AddWithValue("@item", correspondingLabel.Name);
-                command.Parameters.AddWithValue("@map", mapName);
-                command.ExecuteNonQuery();
+                if (moveItem.EnteredAmount < existingAmount)
+                {
+                    decimal newAmount = existingAmount - moveItem.EnteredAmount;
+
+                    // Logging the new amount
+                    Console.WriteLine($"New amount after subtraction: {newAmount} in cell {cellName} for item {correspondingLabel.Name} with category {category}");
+
+                    MySqlCommand updateCommand = new MySqlCommand("UPDATE `items` SET `amount` = @newAmount WHERE `item` = @item AND `cell` = @cell AND `map` = @map", db.getConnection());
+                    updateCommand.Parameters.AddWithValue("@newAmount", newAmount);
+                    updateCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
+                    updateCommand.Parameters.AddWithValue("@cell", cellName);
+                    updateCommand.Parameters.AddWithValue("@map", mapName);
+
+                    // Logging the update command
+                    Console.WriteLine($"Колличество: {moveItem.EnteredAmount}");
+
+                    MySqlCommand newItemCommand = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `amount`, `map`, `category`, `date`) VALUES (@item, @cell, @amount, @map, @category, NOW())", db.getConnection());
+                    newItemCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
+                    newItemCommand.Parameters.AddWithValue("@cell", moveItem.CellToMove);
+                    newItemCommand.Parameters.AddWithValue("@amount", moveItem.EnteredAmount);
+                    newItemCommand.Parameters.AddWithValue("@map", mapName);
+                    newItemCommand.Parameters.AddWithValue("@category", category);
+
+                    // Logging the new item command
+                    Console.WriteLine($"New amount item in cell: {moveItem.EnteredAmount} in cell {cellName} for item {correspondingLabel.Name}");
+
+                    updateCommand.ExecuteNonQuery();
+                    newItemCommand.ExecuteNonQuery();
+                }
+                else if (existingAmount == moveItem.EnteredAmount)
+                {
+                    // Update the cell and the item
+                    MySqlCommand updateCommand = new MySqlCommand("UPDATE `items` SET `cell` = @cell, `amount` = @amount WHERE `item` = @item AND `cell` = @cell AND `map` = @map", db.getConnection());
+                    updateCommand.Parameters.AddWithValue("@cell", moveItem.CellToMove);
+                    updateCommand.Parameters.AddWithValue("@amount", moveItem.EnteredAmount);
+                    updateCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
+                    updateCommand.Parameters.AddWithValue("@cell", cellName);
+                    updateCommand.Parameters.AddWithValue("@map", mapName);
+                    updateCommand.ExecuteNonQuery();
+                }
+                else
+                {
+                    MessageBox.Show("Указанное колчество больше имеющегося.");
+                }
             }
             else
             {
@@ -120,6 +179,8 @@ namespace WarehouseManagement
 
             updateItems(db);
             db.closeConnection();
+
+            moveItem.Close();
         }
 
         private void updateItems(DB db)

@@ -32,6 +32,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.setMaxAmount = new System.Windows.Forms.Button();
+            this.numericUpDownAmount = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBoxCells
@@ -55,7 +59,7 @@
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(292, 311);
+            this.buttonOK.Location = new System.Drawing.Point(237, 331);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 24;
@@ -66,7 +70,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(514, 310);
+            this.buttonCancel.Location = new System.Drawing.Point(444, 331);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 25;
@@ -74,11 +78,45 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // setMaxAmount
+            // 
+            this.setMaxAmount.Location = new System.Drawing.Point(444, 254);
+            this.setMaxAmount.Name = "setMaxAmount";
+            this.setMaxAmount.Size = new System.Drawing.Size(75, 23);
+            this.setMaxAmount.TabIndex = 28;
+            this.setMaxAmount.Text = "Максимум";
+            this.setMaxAmount.UseVisualStyleBackColor = true;
+            this.setMaxAmount.Click += new System.EventHandler(this.setMaxAmount_Click);
+            // 
+            // numericUpDownAmount
+            // 
+            this.numericUpDownAmount.Location = new System.Drawing.Point(311, 257);
+            this.numericUpDownAmount.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDownAmount.Name = "numericUpDownAmount";
+            this.numericUpDownAmount.Size = new System.Drawing.Size(121, 20);
+            this.numericUpDownAmount.TabIndex = 27;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(234, 264);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(66, 13);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Количество";
+            // 
             // MoveItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.setMaxAmount);
+            this.Controls.Add(this.numericUpDownAmount);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.comboBoxCells);
@@ -88,6 +126,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "moveItem";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MoveItem_FormClosing);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -99,5 +138,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Button setMaxAmount;
+        private System.Windows.Forms.NumericUpDown numericUpDownAmount;
+        private System.Windows.Forms.Label label4;
     }
 }

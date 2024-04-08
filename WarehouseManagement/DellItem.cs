@@ -43,7 +43,7 @@ namespace WarehouseManagement
         private void formDellItem_FormClosing(object sender, FormClosingEventArgs e)
         {
 
-            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(comboBoxItems.Text) | string.IsNullOrEmpty(comboBoxCells.Text) | numericUpDownAmount.Value <= 0)
+            if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(comboBoxItems.Text) | string.IsNullOrEmpty(comboBoxCells.Text) | numericUpDownAmount.Value < 0)
             {
                 MessageBox.Show("Пожалуйста, выберите товар для удаления и укажите количество.");
                 e.Cancel = true; // Отменить закрытие формы

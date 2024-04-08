@@ -729,9 +729,11 @@ namespace WarehouseManagement
             }
             else if (requestedAmount == existingAmount)
             {
-                MySqlCommand dellCommand = new MySqlCommand("DELETE FROM `items` WHERE `item` = @itemName", db.getConnection());
+                MySqlCommand dellCommand = new MySqlCommand("DELETE FROM `items` WHERE `item` = @itemName AND `cell` = @cell AND `map` = @map", db.getConnection());
                 Console.WriteLine(fDeleteItem.ItemToDelete);
                 dellCommand.Parameters.AddWithValue("@itemName", fDeleteItem.ItemToDelete);
+                dellCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+                dellCommand.Parameters.AddWithValue("@map", mapName);
                 dellCommand.ExecuteNonQuery();
 
                 MessageBox.Show("Товар был удален.");
