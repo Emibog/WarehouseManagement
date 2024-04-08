@@ -58,7 +58,6 @@ namespace WarehouseManagement
 
             // Assert
             Assert.AreEqual(initialStorageCellCount - 1, mainForm.storageCells.Count);
-
             // Проверка, что ячейка была удалена визуально
             Button deletedButton = mainForm.Controls.Find("Cell " + (initialStorageCellCount), true).FirstOrDefault() as Button;
             Assert.IsNull(deletedButton);
