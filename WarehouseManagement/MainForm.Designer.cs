@@ -31,16 +31,9 @@ namespace WarehouseManagement
         {
             this.components = new System.ComponentModel.Container();
             this.panelWarehouse = new System.Windows.Forms.Panel();
-            this.listBoxProducts = new System.Windows.Forms.ListBox();
             this.buttonAddCell = new System.Windows.Forms.Button();
             this.panelScroll = new System.Windows.Forms.Panel();
             this.menuStripMainForm = new System.Windows.Forms.MenuStrip();
-            this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
-            this.timerMessageBox = new System.Windows.Forms.Timer(this.components);
-            this.textBoxMessage = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonEditingMap = new System.Windows.Forms.Button();
             this.tsmChangeUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiChangeUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddUser = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +46,12 @@ namespace WarehouseManagement
             this.tsmiAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddCategory = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьТоварToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
+            this.timerMessageBox = new System.Windows.Forms.Timer(this.components);
+            this.textBoxMessage = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonEditingMap = new System.Windows.Forms.Button();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -67,19 +66,11 @@ namespace WarehouseManagement
             this.panelWarehouse.Size = new System.Drawing.Size(222, 110);
             this.panelWarehouse.TabIndex = 0;
             // 
-            // listBoxProducts
-            // 
-            this.listBoxProducts.FormattingEnabled = true;
-            this.listBoxProducts.Location = new System.Drawing.Point(3, 3);
-            this.listBoxProducts.Name = "listBoxProducts";
-            this.listBoxProducts.Size = new System.Drawing.Size(174, 160);
-            this.listBoxProducts.TabIndex = 1;
-            // 
             // buttonAddCell
             // 
-            this.buttonAddCell.Location = new System.Drawing.Point(3, 211);
+            this.buttonAddCell.Location = new System.Drawing.Point(322, 22);
             this.buttonAddCell.Name = "buttonAddCell";
-            this.buttonAddCell.Size = new System.Drawing.Size(174, 23);
+            this.buttonAddCell.Size = new System.Drawing.Size(174, 21);
             this.buttonAddCell.TabIndex = 2;
             this.buttonAddCell.Text = "Добавить ячейку";
             this.buttonAddCell.UseVisualStyleBackColor = true;
@@ -92,7 +83,7 @@ namespace WarehouseManagement
             this.panelScroll.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelScroll.Location = new System.Drawing.Point(3, 3);
             this.panelScroll.Name = "panelScroll";
-            this.panelScroll.Size = new System.Drawing.Size(602, 383);
+            this.panelScroll.Size = new System.Drawing.Size(912, 383);
             this.panelScroll.TabIndex = 4;
             // 
             // menuStripMainForm
@@ -106,71 +97,6 @@ namespace WarehouseManagement
             this.menuStripMainForm.Size = new System.Drawing.Size(918, 24);
             this.menuStripMainForm.TabIndex = 7;
             this.menuStripMainForm.Text = "Меню главной формы";
-            // 
-            // openFileDialogSelectMapImg
-            // 
-            this.openFileDialogSelectMapImg.FileName = "MapImg";
-            // 
-            // timerMessageBox
-            // 
-            this.timerMessageBox.Interval = 4000;
-            this.timerMessageBox.Tick += new System.EventHandler(this.timerMessageBox_Tick);
-            // 
-            // textBoxMessage
-            // 
-            this.textBoxMessage.AutoSize = true;
-            this.textBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
-            this.textBoxMessage.Location = new System.Drawing.Point(183, 0);
-            this.textBoxMessage.MinimumSize = new System.Drawing.Size(100, 0);
-            this.textBoxMessage.Name = "textBoxMessage";
-            this.textBoxMessage.Size = new System.Drawing.Size(100, 16);
-            this.textBoxMessage.TabIndex = 8;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.33987F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.66013F));
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panelScroll, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.20862F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.79138F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(918, 441);
-            this.tableLayoutPanel1.TabIndex = 9;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 59.375F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.625F));
-            this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.listBoxProducts, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 0, 2);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(611, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.00654F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.99346F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(304, 239);
-            this.tableLayoutPanel2.TabIndex = 10;
-            // 
-            // buttonEditingMap
-            // 
-            this.buttonEditingMap.Location = new System.Drawing.Point(3, 176);
-            this.buttonEditingMap.Name = "buttonEditingMap";
-            this.buttonEditingMap.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.buttonEditingMap.Size = new System.Drawing.Size(174, 23);
-            this.buttonEditingMap.TabIndex = 3;
-            this.buttonEditingMap.Text = "Редактировать карту";
-            this.buttonEditingMap.UseVisualStyleBackColor = true;
-            this.buttonEditingMap.Click += new System.EventHandler(this.btnEditingMap_Click);
             // 
             // tsmChangeUsers
             // 
@@ -274,6 +200,73 @@ namespace WarehouseManagement
             this.удалитьТоварToolStripMenuItem.Text = "Удалить товар";
             this.удалитьТоварToolStripMenuItem.Click += new System.EventHandler(this.tsmiDeleteItem_Click);
             // 
+            // openFileDialogSelectMapImg
+            // 
+            this.openFileDialogSelectMapImg.FileName = "MapImg";
+            // 
+            // timerMessageBox
+            // 
+            this.timerMessageBox.Interval = 4000;
+            this.timerMessageBox.Tick += new System.EventHandler(this.timerMessageBox_Tick);
+            // 
+            // textBoxMessage
+            // 
+            this.textBoxMessage.AutoSize = true;
+            this.textBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
+            this.textBoxMessage.Location = new System.Drawing.Point(696, 19);
+            this.textBoxMessage.MinimumSize = new System.Drawing.Size(100, 0);
+            this.textBoxMessage.Name = "textBoxMessage";
+            this.textBoxMessage.Size = new System.Drawing.Size(100, 16);
+            this.textBoxMessage.TabIndex = 8;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.92593F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.07407F));
+            this.tableLayoutPanel1.Controls.Add(this.panelScroll, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.20862F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.79138F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(918, 441);
+            this.tableLayoutPanel1.TabIndex = 9;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.03482F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.96518F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 218F));
+            this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 1, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 392);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 41.6185F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 58.3815F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(912, 46);
+            this.tableLayoutPanel2.TabIndex = 10;
+            // 
+            // buttonEditingMap
+            // 
+            this.buttonEditingMap.Location = new System.Drawing.Point(3, 22);
+            this.buttonEditingMap.Name = "buttonEditingMap";
+            this.buttonEditingMap.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.buttonEditingMap.Size = new System.Drawing.Size(174, 21);
+            this.buttonEditingMap.TabIndex = 3;
+            this.buttonEditingMap.Text = "Редактировать карту";
+            this.buttonEditingMap.UseVisualStyleBackColor = true;
+            this.buttonEditingMap.Click += new System.EventHandler(this.btnEditingMap_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -302,7 +295,6 @@ namespace WarehouseManagement
         #endregion
 
         private System.Windows.Forms.Panel panelWarehouse;
-        private System.Windows.Forms.ListBox listBoxProducts;
         private System.Windows.Forms.Button buttonAddCell;
         private System.Windows.Forms.Button buttonEditingMap;
         private System.Windows.Forms.Panel panelScroll;

@@ -297,7 +297,6 @@ namespace WarehouseManagement
                     delItemsInCell.ExecuteNonQuery();
 
                     Products.Clear();
-                    listBoxProducts.Items.Clear();
 
                     // Закрываем соединение
                     db.closeConnection();
@@ -596,9 +595,6 @@ namespace WarehouseManagement
                 // Устанавливаем изображение фоном для панели и подгружаем ячейки
                 panelWarehouse.BackgroundImage = backgroundImage;
                 panelWarehouse.Controls.Clear();
-
-                //Восстановление исходных параметров
-                listBoxProducts.Items.Clear();
 
                 disableEditingMod();
 
