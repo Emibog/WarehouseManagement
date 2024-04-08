@@ -19,16 +19,18 @@ namespace WarehouseManagement
         private string mapName;
         private string item;
         private string cell;
+        private int existingAmount;
         private DB db;
 
-        public MoveItem(string mapName, string item, string cell)
+        public MoveItem(string mapName, string item, string cell, int existingAmount)
         {
             InitializeComponent();
             this.mapName = mapName;
             this.item = item;
             this.cell = cell;
+            this.existingAmount = existingAmount;
             db = new DB();
-
+            numericUpDownAmount.Maximum = decimal.MaxValue;
             db.openConnection();
             MySqlCommand command = new MySqlCommand("SELECT `cell` FROM `cells` WHERE `map` = @map", db.getConnection());
             command.Parameters.AddWithValue("@map", mapName);
@@ -38,7 +40,10 @@ namespace WarehouseManagement
                 while (reader.Read())
                 {
                     string itemName = reader["cell"].ToString();
-                    comboBoxCells.Items.Add(itemName);
+                    if (itemName != cell)
+                    {
+                        comboBoxCells.Items.Add(itemName);
+                    }
                 }
             }
         }
@@ -79,6 +84,11 @@ namespace WarehouseManagement
             {
                 MessageBox.Show("Выберите ячейку и количество товара для перемещения");
                 e.Cancel = true; // Отменить закрытие формы
+            }
+            else if (DialogResult == DialogResult.OK && existingAmount < numericUpDownAmount.Value)
+            {
+                MessageBox.Show("Указанное колчество больше имеющегося.");
+                e.Cancel= true;
             }
         }
     }

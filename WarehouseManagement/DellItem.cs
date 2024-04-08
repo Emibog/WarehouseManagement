@@ -24,8 +24,9 @@ namespace WarehouseManagement
         {
             InitializeComponent();
             this.mapName = mapName;
-            db = new DB();
+            numericUpDownAmount.Maximum = decimal.MaxValue;
 
+            db = new DB();
             db.openConnection();
             MySqlCommand command = new MySqlCommand("SELECT `cell` FROM `cells` WHERE `map` = @map", db.getConnection());
             command.Parameters.AddWithValue("@map", mapName);
