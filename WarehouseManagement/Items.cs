@@ -163,7 +163,6 @@ namespace WarehouseManagement
                     updateCommand.Parameters.AddWithValue("@cell", moveItem.CellToMove);
                     updateCommand.Parameters.AddWithValue("@amount", moveItem.EnteredAmount);
                     updateCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
-                    updateCommand.Parameters.AddWithValue("@cell", cellName);
                     updateCommand.Parameters.AddWithValue("@map", mapName);
                     updateCommand.ExecuteNonQuery();
                 }
