@@ -66,7 +66,7 @@ namespace WarehouseManagement
             cmsButtonDelete.Items.Add(menuDelete);
             buttonAddCell.Visible = isEditing ? true : false;
 
-            
+
             Image backgroundImage = Image.FromFile(imagePath);
             imgFileName = Path.GetFileName(imagePath);
             mapName = Path.GetFileNameWithoutExtension(imagePath);
@@ -246,12 +246,24 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Обрабатывает отрисовку кнопки ячейки
+        /// </summary>
+        /// <param name="sender">Кнопка, вызвавшая событие</param>
+        /// <param name="e">PaintEventArgs, содержащий данные события</param>
         private void CellButton_Paint(object sender, PaintEventArgs e)
         {
             Button resizedButton = (Button)sender;
-            if (storageCells.Any(c => c.Name == resizedButton.Text && c.IsResizing))
+            bool isResizingCell = storageCells.Any(c => c.Name == resizedButton.Text && c.IsResizing);
+
+            if (isResizingCell)
             {
-                e.Graphics.DrawRectangle(Pens.Black, 0, 0, resizedButton.Width - 1, resizedButton.Height - 1);
+                // Измените размер прямоугольника, чтобы он соответствовал кнопке
+                int width = resizedButton.Width - 1;
+                int height = resizedButton.Height - 1;
+
+                // Нарисуйте черный прямоугольник вокруг кнопки
+                e.Graphics.DrawRectangle(Pens.Black, 0, 0, width, height);
             }
         }
 
@@ -304,51 +316,44 @@ namespace WarehouseManagement
         }
 
         /// <summary>
-        /// Показать содержимое ячейки
+        /// Показать содержимое ячейки и количество товара
         /// </summary>
         /// <param name="cell"></param>
         private void ShowProducts(StorageCell cell)
         {
-            //Запрос SELECT `item` FROM `items` WHERE cell = "ав"; 
-
-            // Получаем имя ячейки
             string cellName = cell.Name;
-            // Если ячейки не находятся в режиме редактирования
             if (!isEditing)
             {
                 DB db = new DB();
+                List<string> Products = new List<string>();
+                List<int> Amount = new List<int>();
                 try
                 {
                     db.openConnection();
 
-                    MySqlCommand command = new MySqlCommand("SELECT `item` FROM `items` WHERE cell = @cell AND map = @map", db.getConnection());
+                    MySqlCommand command = new MySqlCommand("SELECT `item`, `amount` FROM `items` WHERE cell = @cell AND map = @map", db.getConnection());
 
                     command.Parameters.AddWithValue("@cell", cellName);
                     command.Parameters.AddWithValue("@map", mapName);
 
-                    //Очищаем список от предыдущих товаров
                     Products.Clear();
+                    Amount.Clear();
 
-                    // Используем ExecuteReader для выполнения запроса SELECT
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        // Перебираем результаты запроса
                         while (reader.Read())
                         {
-                            // Получаем значение из столбца "item"
                             string itemValue = reader["item"].ToString();
-
-                            // Добавляем значение в коллекцию Products
+                            int amountValue = Convert.ToInt32(reader["amount"]);
                             Products.Add(itemValue);
+                            Amount.Add(amountValue);
                         }
                     }
 
-                    // Закрываем соединение
                     db.closeConnection();
 
-                    // Очищаем и обновляем элементы ListBox
-                    listBoxProducts.Items.Clear();
-                    listBoxProducts.Items.AddRange(Products.ToArray());
+                    Items formItems = new Items(Products, Amount, mapName, cellName);
+                    formItems.Show();
                 }
                 catch (Exception ex)
                 {
@@ -656,6 +661,90 @@ namespace WarehouseManagement
         }
 
         /// <summary>
+        /// Удаление товара
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsmiDeleteItem_Click(object sender, EventArgs e)
+        {
+            formDeleteItem fDeleteItem = new formDeleteItem(mapName);
+
+            if (fDeleteItem.ShowDialog() == DialogResult.OK)
+            {
+                DB db = new DB();
+                try
+                {
+                    db.openConnection();
+
+                    // Проверка наличия товара в БД
+                    if (ItemExists(db, fDeleteItem, mapName))
+                    {
+                        // Товар существует, удаляем его
+                        DeleteItem(db, fDeleteItem, mapName);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Товар не найден.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при работе с базой данных.\n\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    db.closeConnection();
+                }
+
+                fDeleteItem.Close();
+            }
+        }
+
+        /// <summary>
+        /// Удаление товара из базы данных
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="fDeleteItem"></param>
+        /// <param name="mapName"></param>
+        private void DeleteItem(DB db, formDeleteItem fDeleteItem, string mapName)
+        {
+            MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
+            command.Parameters.AddWithValue("@item", fDeleteItem.ItemToDelete);
+            command.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+            command.Parameters.AddWithValue("@map", mapName);
+
+            int existingAmount = Convert.ToInt32(command.ExecuteScalar());
+            decimal requestedAmount = fDeleteItem.EnteredAmount;
+
+            if (requestedAmount < existingAmount)
+            {
+                MySqlCommand updateCommand = new MySqlCommand("UPDATE `items` SET `amount` = `amount` - @requestedAmount WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
+                updateCommand.Parameters.AddWithValue("@requestedAmount", requestedAmount);
+                updateCommand.Parameters.AddWithValue("@item", fDeleteItem.ItemToDelete);
+                updateCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+                updateCommand.Parameters.AddWithValue("@map", mapName);
+                updateCommand.ExecuteNonQuery();
+
+                MessageBox.Show("Указанное колчество товара было удалено.");
+            }
+            else if (requestedAmount == existingAmount)
+            {
+                MySqlCommand dellCommand = new MySqlCommand("DELETE FROM `items` WHERE `item` = @itemName AND `cell` = @cell AND `map` = @map", db.getConnection());
+                Console.WriteLine(fDeleteItem.ItemToDelete);
+                dellCommand.Parameters.AddWithValue("@itemName", fDeleteItem.ItemToDelete);
+                dellCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+                dellCommand.Parameters.AddWithValue("@map", mapName);
+                dellCommand.ExecuteNonQuery();
+
+                MessageBox.Show("Товар был удален.");
+            }
+            else
+            {
+                MessageBox.Show("Указанное количество больше имеющегося.");
+            }
+        }
+
+        /// <summary>
         /// Проверка на существование товара
         /// </summary>
         /// <param name="db"></param>
@@ -664,17 +753,34 @@ namespace WarehouseManagement
         /// <param name="map"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        private bool ItemExists(DB db, formAddItem fAddItem, string mapName)
+        private bool ItemExists(DB db, Form form, string mapName)
         {
             // Проверка наличия товара в БД по заданным условиям
-            MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
-            command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
-            command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
-            command.Parameters.AddWithValue("@map", mapName);
-            command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
 
-            int count = Convert.ToInt32(command.ExecuteScalar());
-            return count > 0;
+            if (form is formAddItem)
+            {
+                formAddItem fAddItem = (formAddItem)form;
+                MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
+                command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
+                command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
+                command.Parameters.AddWithValue("@category", fAddItem.EnteredCategory);
+                command.Parameters.AddWithValue("@map", mapName);
+
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0;
+            }
+            else if (form is formDeleteItem)
+            {
+                formDeleteItem dellItem = (formDeleteItem)form;
+                MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map ", db.getConnection());
+                command.Parameters.AddWithValue("@item", dellItem.ItemToDelete);
+                command.Parameters.AddWithValue("@cell", dellItem.EnteredCell);
+                command.Parameters.AddWithValue("@map", mapName);
+
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                return count > 0;
+            }
+            return false;
         }
 
         /// <summary>
@@ -742,7 +848,7 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void tsmiAddCategory_Click(object sender, EventArgs e)
         {
-           formAddCategory fAddCategory = new formAddCategory();
+            formAddCategory fAddCategory = new formAddCategory();
 
             if (fAddCategory.ShowDialog() == DialogResult.OK)
             {

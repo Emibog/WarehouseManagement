@@ -87,11 +87,29 @@
     <Compile Include="AddCell.Designer.cs">
       <DependentUpon>AddCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="DellItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DellItem.Designer.cs">
+      <DependentUpon>DellItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Items.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Items.Designer.cs">
+      <DependentUpon>Items.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoveItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MoveItem.Designer.cs">
+      <DependentUpon>MoveItem.cs</DependentUpon>
     </Compile>
     <Compile Include="StorageCell.cs" />
     <Compile Include="MainForm.cs">
@@ -112,6 +130,12 @@
     <EmbeddedResource Include="DBView.resx">
       <DependentUpon>DBView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DellItem.resx">
+      <DependentUpon>DellItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Items.resx">
+      <DependentUpon>Items.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddUser.resx">
       <DependentUpon>AddUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MoveItem.resx">
+      <DependentUpon>MoveItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -180,6 +207,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deleteButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\move.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
