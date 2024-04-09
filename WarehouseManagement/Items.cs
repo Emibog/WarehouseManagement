@@ -77,26 +77,68 @@ namespace WarehouseManagement
             Label correspondingLabel = (Label)deleteButton.Tag;
             int yOffset = correspondingLabel.Location.Y;
             formDeleteItem fDeleteItem = new formDeleteItem(mapName);
+
+            DB db = new DB();
+            db.openConnection();
+
             if (fDeleteItem.ShowDialog() == DialogResult.OK)
             {
-                Console.WriteLine(fDeleteItem.ItemToDelete);
-            }
-            // Удалить метку, связанную с кнопкой удаления
-            panelItems.Controls.Remove(correspondingLabel);
-
-            // Удалить саму кнопку удаления
-            panelItems.Controls.Remove(deleteButton);
-
-            // Сдвинуть нижние элементы вверх, чтобы заполнить пробел
-            foreach (Control control in panelItems.Controls)
-            {
-                if (control.Location.Y > yOffset)
+                try
                 {
-                    control.Location = new Point(control.Location.X, control.Location.Y - 50);
+                    
+
+                    // Товар существует, удаляем его
+                    DeleteItem(db, fDeleteItem, mapName);
+
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при работе с базой данных.\n\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                fDeleteItem.Close();
             }
 
-            fDeleteItem.Close();
+            updateItems(db);
+
+            db.closeConnection();
+        }
+
+        private void DeleteItem(DB db, formDeleteItem fDeleteItem, string mapName)
+        {
+            MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
+            command.Parameters.AddWithValue("@item", fDeleteItem.ItemToDelete);
+            command.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+            command.Parameters.AddWithValue("@map", mapName);
+
+            int existingAmount = Convert.ToInt32(command.ExecuteScalar());
+            decimal requestedAmount = fDeleteItem.EnteredAmount;
+
+            if (requestedAmount < existingAmount)
+            {
+                MySqlCommand updateCommand = new MySqlCommand("UPDATE `items` SET `amount` = `amount` - @requestedAmount WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
+                updateCommand.Parameters.AddWithValue("@requestedAmount", requestedAmount);
+                updateCommand.Parameters.AddWithValue("@item", fDeleteItem.ItemToDelete);
+                updateCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+                updateCommand.Parameters.AddWithValue("@map", mapName);
+                updateCommand.ExecuteNonQuery();
+
+                MessageBox.Show("Указанное колчество товара было удалено.");
+            }
+            else if (requestedAmount == existingAmount)
+            {
+                MySqlCommand dellCommand = new MySqlCommand("DELETE FROM `items` WHERE `item` = @itemName AND `cell` = @cell AND `map` = @map", db.getConnection());
+                Console.WriteLine(fDeleteItem.ItemToDelete);
+                dellCommand.Parameters.AddWithValue("@itemName", fDeleteItem.ItemToDelete);
+                dellCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
+                dellCommand.Parameters.AddWithValue("@map", mapName);
+                dellCommand.ExecuteNonQuery();
+
+                MessageBox.Show("Товар был удален.");
+            }
+            else
+            {
+                MessageBox.Show("Указанное количество больше имеющегося.");
+            }
         }
 
         private void MoveButton_Click(object sender, EventArgs e)
