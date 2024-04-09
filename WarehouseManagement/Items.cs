@@ -75,7 +75,6 @@ namespace WarehouseManagement
         {
             Button deleteButton = (Button)sender;
             Label correspondingLabel = (Label)deleteButton.Tag;
-            int yOffset = correspondingLabel.Location.Y;
             formDeleteItem fDeleteItem = new formDeleteItem(mapName);
 
             DB db = new DB();
@@ -85,11 +84,7 @@ namespace WarehouseManagement
             {
                 try
                 {
-                    
-
-                    // Товар существует, удаляем его
                     DeleteItem(db, fDeleteItem, mapName);
-
                 }
                 catch (Exception ex)
                 {
