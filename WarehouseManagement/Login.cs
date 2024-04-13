@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -48,6 +49,26 @@ namespace WarehouseManagement
         }
 
         /// <summary>
+        /// Хэширование пароля
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
+        /// <summary>
         /// Проверка на наличие запущенного MAMP
         /// </summary>
         /// <returns></returns>
@@ -65,7 +86,7 @@ namespace WarehouseManagement
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             userLogin = textBoxLogin.Text;
-            userPass = textBoxPass.Text;
+            userPass = HashPassword(textBoxPass.Text);
 
             DB db = new DB();
 
