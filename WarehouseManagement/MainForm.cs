@@ -11,6 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Spire.Xls;
 
 namespace WarehouseManagement
 {
@@ -50,6 +51,9 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
+
+
+
             // Скрытие запрещенных элементов для пользователя
             if (userPost == "Пользователь")
             {
@@ -923,6 +927,57 @@ namespace WarehouseManagement
 
             autoIncrement.ExecuteNonQuery();
             command.ExecuteNonQuery();
+        }
+
+        private void tsmiReceipt_Click(object sender, EventArgs e)
+        {
+            Workbook workbook = new Workbook();
+            Worksheet worksheet = workbook.Worksheets[0];
+
+            // Retrieve data from the "receipt" table in the database
+            DataTable receiptData = RetrieveReceiptDataFromDB();
+            worksheet.Range[1, 1].Value = "Товар";
+            worksheet.Range[1, 2].Value = "Количество";
+            worksheet.Range[1, 3].Value = "Пользователь";
+            worksheet.Range[1, 4].Value = "Дата";
+            // Write data to specific cells in the Excel file
+            for (int i = 0; i < receiptData.Rows.Count; i++)
+            {
+                worksheet.Range[i + 2, 1].Value = receiptData.Rows[i]["item"].ToString();
+                worksheet.Range[i + 2, 2].Value = receiptData.Rows[i]["amount"].ToString();
+                worksheet.Range[i + 2, 3].Value = receiptData.Rows[i]["user"].ToString();
+                worksheet.Range[i + 2, 4].Value = "'" + receiptData.Rows[i]["date"].ToString() + "'";
+            }
+
+            worksheet.AllocatedRange.AutoFitColumns();
+
+            CellStyle style = workbook.Styles.Add("newStyle");
+            style.Font.IsBold = true;
+            worksheet.Range[1, 1, 1, 4].Style = style;
+
+            try
+            {
+                workbook.SaveToFile("WriteToCells.xlsx");
+                MessageBox.Show("Файл успешно сохранен!");
+                System.Diagnostics.Process.Start("WriteToCells.xlsx");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private DataTable RetrieveReceiptDataFromDB()
+        {
+            DB db = new DB();
+            db.openConnection();
+            MySqlCommand command = new MySqlCommand("SELECT item, amount, user, date FROM receipt", db.getConnection());
+            MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+            db.closeConnection();
+
+            return dataTable;
         }
 
         /// <summary>
