@@ -75,6 +75,7 @@ namespace WarehouseManagement
             // panelScroll
             // 
             this.panelScroll.AutoScroll = true;
+            this.panelScroll.BackColor = System.Drawing.Color.Khaki;
             this.panelScroll.Controls.Add(this.panelWarehouse);
             this.panelScroll.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelScroll.Location = new System.Drawing.Point(3, 3);
@@ -242,7 +243,7 @@ namespace WarehouseManagement
             this.textBoxMessage.AutoSize = true;
             this.textBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
-            this.textBoxMessage.Location = new System.Drawing.Point(682, 12);
+            this.textBoxMessage.Location = new System.Drawing.Point(689, 12);
             this.textBoxMessage.MinimumSize = new System.Drawing.Size(100, 0);
             this.textBoxMessage.Name = "textBoxMessage";
             this.textBoxMessage.Size = new System.Drawing.Size(100, 16);
@@ -267,10 +268,11 @@ namespace WarehouseManagement
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Khaki;
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.40648F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.59352F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 233F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
             this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 1, 1);
@@ -289,6 +291,7 @@ namespace WarehouseManagement
             this.buttonEditingMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonEditingMap.Image = global::WarehouseManagement.Properties.Resources.editingMap;
             this.buttonEditingMap.Location = new System.Drawing.Point(3, 15);
+            this.buttonEditingMap.MaximumSize = new System.Drawing.Size(377, 68);
             this.buttonEditingMap.Name = "buttonEditingMap";
             this.buttonEditingMap.Size = new System.Drawing.Size(377, 68);
             this.buttonEditingMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -300,7 +303,8 @@ namespace WarehouseManagement
             // 
             this.buttonAddCell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAddCell.Image = global::WarehouseManagement.Properties.Resources.addCell;
-            this.buttonAddCell.Location = new System.Drawing.Point(386, 15);
+            this.buttonAddCell.Location = new System.Drawing.Point(390, 15);
+            this.buttonAddCell.MaximumSize = new System.Drawing.Size(290, 68);
             this.buttonAddCell.Name = "buttonAddCell";
             this.buttonAddCell.Size = new System.Drawing.Size(290, 68);
             this.buttonAddCell.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
