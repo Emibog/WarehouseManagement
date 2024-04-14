@@ -256,6 +256,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico.ico" />
+    <None Include="Resources\editingMapOff.png" />
+    <None Include="Resources\editingMapOff.bmp" />
+    <None Include="Resources\addCell.png" />
+    <None Include="Resources\editingMap.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

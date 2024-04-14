@@ -374,7 +374,7 @@ namespace WarehouseManagement
         private void btnEditingMap_Click(object sender, EventArgs e)
         {
             isEditing = !isEditing;
-            buttonEditingMap.Text = isEditing ? "Отключить редактирование" : "Редактировать карту";
+            buttonEditingMap.Image = isEditing ? Properties.Resources.editingMapOff : Properties.Resources.editingMap;
             if (!isEditing)
             {
                 SaveMapDataToFile(datFileName);
@@ -933,7 +933,7 @@ namespace WarehouseManagement
             if (isEditing)
             {
                 isEditing = false;
-                buttonEditingMap.Text = "Редактировать карту";
+                buttonEditingMap.Image = Properties.Resources.editingMap;
                 buttonAddCell.Visible = false;
 
                 // Устанавливаем или снимаем ContextMenuStrip у существующих кнопок в зависимости от значения isEditing

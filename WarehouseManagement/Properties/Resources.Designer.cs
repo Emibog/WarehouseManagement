@@ -63,6 +63,16 @@ namespace WarehouseManagement.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap addCell {
+            get {
+                object obj = ResourceManager.GetObject("addCell", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap addUser {
             get {
                 object obj = ResourceManager.GetObject("addUser", resourceCulture);
@@ -86,6 +96,26 @@ namespace WarehouseManagement.Properties {
         internal static System.Drawing.Bitmap deleteButton {
             get {
                 object obj = ResourceManager.GetObject("deleteButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap editingMap {
+            get {
+                object obj = ResourceManager.GetObject("editingMap", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap editingMapOff {
+            get {
+                object obj = ResourceManager.GetObject("editingMapOff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
