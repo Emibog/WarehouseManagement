@@ -122,7 +122,6 @@ namespace WarehouseManagement
             else if (requestedAmount == existingAmount)
             {
                 MySqlCommand dellCommand = new MySqlCommand("DELETE FROM `items` WHERE `item` = @itemName AND `cell` = @cell AND `map` = @map", db.getConnection());
-                Console.WriteLine(fDeleteItem.ItemToDelete);
                 dellCommand.Parameters.AddWithValue("@itemName", fDeleteItem.ItemToDelete);
                 dellCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
                 dellCommand.Parameters.AddWithValue("@map", mapName);
@@ -177,7 +176,6 @@ namespace WarehouseManagement
 
                     if (ItemExists(db, moveItem.CellToMove, correspondingLabel.Name, category))
                     {
-                        Console.WriteLine("Item already exists in the database");
                         MySqlCommand updateAmountCommand = new MySqlCommand("UPDATE `items` SET `amount` = `amount` + @newAmount WHERE `item` = @item AND `cell` = @cell AND `map` = @map", db.getConnection());
                         updateAmountCommand.Parameters.AddWithValue("@newAmount", moveItem.EnteredAmount);
                         updateAmountCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
@@ -187,7 +185,6 @@ namespace WarehouseManagement
                     }
                     else
                     {
-                        Console.WriteLine("Item does not exist in the database");
                         MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `items` AUTO_INCREMENT = 1", db.getConnection());
                         MySqlCommand newItemCommand = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `amount`, `map`, `category`, `date`) VALUES (@item, @cell, @amount, @map, @category, NOW())", db.getConnection());
                         newItemCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);

@@ -32,7 +32,7 @@ namespace WarehouseManagement
         private string imagePath = "..\\..\\Resources\\Map1.png";
         private string mapName = "";
         private DBView dbView = new DBView();
-        private Login logiForm = new Login();
+        private Login loginForm = new Login();
         private List<string> Products = new List<string> { };
 
         public MainForm(string userPost, string userName)
@@ -58,6 +58,7 @@ namespace WarehouseManagement
                 tsmiAddUser.Visible = false;
                 tsmiSaveMapData.Visible = false;
                 tsmiOpenDB.Visible = false;
+                tsmiAddPost.Visible = false;
             }
 
             // Загрузка сохраненной карты склада
@@ -398,7 +399,7 @@ namespace WarehouseManagement
         private void tsmiChangeUser_Click(object sender, EventArgs e)
         {
             SaveMapDataToFile(datFileName);
-            logiForm.Show();
+            loginForm.Show();
             this.Hide();
             dbView.Hide();
         }
@@ -432,6 +433,17 @@ namespace WarehouseManagement
                 }
             }
             addUser.Close();
+        }
+
+        private void tsmiAddPost_Click(object sender, EventArgs e)
+        {
+            AddPost addPost = new AddPost(userName);
+            if (addPost.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show("Должность успешно добавлена.");
+            }
+
+            addPost.Close();
         }
 
         /// <summary>
@@ -613,6 +625,21 @@ namespace WarehouseManagement
             dbView.Show();
         }
 
+        private void AddOperationToHistory(string table, string item, string amount, string user)
+        {
+            DB db = new DB();
+            db.openConnection();
+            MySqlCommand autoIncrementHistory = new MySqlCommand("ALTER TABLE `" + table + "` AUTO_INCREMENT = 1", db.getConnection());
+            autoIncrementHistory.ExecuteNonQuery();
+            MySqlCommand historyCommand = new MySqlCommand("INSERT INTO `" + table + "` (`item`, `amount`, `user`, `map`, `date`) VALUES (@item, @amount, @user, @map, NOW())", db.getConnection());
+            historyCommand.Parameters.AddWithValue("@item", item);
+            historyCommand.Parameters.AddWithValue("@amount", amount);
+            historyCommand.Parameters.AddWithValue("@user", user);
+            historyCommand.Parameters.AddWithValue("@map", mapName);
+            historyCommand.ExecuteNonQuery();
+            db.closeConnection();
+        }
+
         /// <summary>
         /// Добавление товара
         /// </summary>
@@ -634,12 +661,16 @@ namespace WarehouseManagement
                     {
                         // Товар уже существует, обновляем количество
                         UpdateItemAmount(db, fAddItem, mapName);
+                        AddOperationToHistory("receipt", fAddItem.EnteredItemName, fAddItem.EnteredAmount, userName);
+
                         MessageBox.Show("Количество товара успешно обновлено.");
                     }
                     else
                     {
                         // Товар не существует, добавляем новую запись
                         InsertNewItem(db, fAddItem, mapName);
+                        AddOperationToHistory("receipt", fAddItem.EnteredItemName, fAddItem.EnteredAmount, userName);
+
                         MessageBox.Show("Товар успешно добавлен.");
                     }
                 }
@@ -691,7 +722,6 @@ namespace WarehouseManagement
                 {
                     db.closeConnection();
                 }
-
                 fDeleteItem.Close();
             }
         }
@@ -721,6 +751,8 @@ namespace WarehouseManagement
                 updateCommand.Parameters.AddWithValue("@map", mapName);
                 updateCommand.ExecuteNonQuery();
 
+                AddOperationToHistory("consumption", fDeleteItem.ItemToDelete, fDeleteItem.EnteredAmount.ToString(), userName);
+
                 MessageBox.Show("Указанное колчество товара было удалено.");
             }
             else if (requestedAmount == existingAmount)
@@ -731,6 +763,8 @@ namespace WarehouseManagement
                 dellCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
                 dellCommand.Parameters.AddWithValue("@map", mapName);
                 dellCommand.ExecuteNonQuery();
+
+                AddOperationToHistory("consumption", fDeleteItem.ItemToDelete, fDeleteItem.EnteredAmount.ToString(), userName);
 
                 MessageBox.Show("Товар был удален.");
             }

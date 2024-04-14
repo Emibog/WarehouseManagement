@@ -52,6 +52,7 @@ namespace WarehouseManagement
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonEditingMap = new System.Windows.Forms.Button();
+            this.tsmiAddPost = new System.Windows.Forms.ToolStripMenuItem();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -102,7 +103,8 @@ namespace WarehouseManagement
             // 
             this.tsmChangeUsers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiChangeUser,
-            this.tsmiAddUser});
+            this.tsmiAddUser,
+            this.tsmiAddPost});
             this.tsmChangeUsers.Image = global::WarehouseManagement.Properties.Resources.user;
             this.tsmChangeUsers.Name = "tsmChangeUsers";
             this.tsmChangeUsers.Size = new System.Drawing.Size(195, 20);
@@ -214,7 +216,7 @@ namespace WarehouseManagement
             this.textBoxMessage.AutoSize = true;
             this.textBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
-            this.textBoxMessage.Location = new System.Drawing.Point(696, 19);
+            this.textBoxMessage.Location = new System.Drawing.Point(695, 19);
             this.textBoxMessage.MinimumSize = new System.Drawing.Size(100, 0);
             this.textBoxMessage.Name = "textBoxMessage";
             this.textBoxMessage.Size = new System.Drawing.Size(100, 16);
@@ -242,7 +244,7 @@ namespace WarehouseManagement
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.03482F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.96518F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 218F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 219F));
             this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 1, 1);
@@ -266,6 +268,13 @@ namespace WarehouseManagement
             this.buttonEditingMap.Text = "Редактировать карту";
             this.buttonEditingMap.UseVisualStyleBackColor = true;
             this.buttonEditingMap.Click += new System.EventHandler(this.btnEditingMap_Click);
+            // 
+            // tsmiAddPost
+            // 
+            this.tsmiAddPost.Name = "tsmiAddPost";
+            this.tsmiAddPost.Size = new System.Drawing.Size(204, 22);
+            this.tsmiAddPost.Text = "Добавить должность";
+            this.tsmiAddPost.Click += new System.EventHandler(this.tsmiAddPost_Click);
             // 
             // MainForm
             // 
@@ -316,6 +325,7 @@ namespace WarehouseManagement
         private System.Windows.Forms.ToolStripMenuItem tsmiAddItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiAddCategory;
         private System.Windows.Forms.ToolStripMenuItem удалитьТоварToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAddPost;
     }
 }
 

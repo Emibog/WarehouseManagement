@@ -125,5 +125,10 @@ namespace WarehouseManagement
                 MessageBox.Show("Не удалось поключиться к БД");
             }            
         }
+
+        private void Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
