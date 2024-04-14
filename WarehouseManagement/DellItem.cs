@@ -18,12 +18,16 @@ namespace WarehouseManagement
         private string mapName;
 
         public string ItemToDelete { get; set; }
+        string parentCell;
+        string parentItem;
         private DB db;
 
-        public formDeleteItem(string mapName)
+        public formDeleteItem(string mapName, string parentCell = "", string parentItem = "")
         {
             InitializeComponent();
             this.mapName = mapName;
+            this.parentCell = parentCell;
+            this.parentItem = parentItem;
             numericUpDownAmount.Maximum = decimal.MaxValue;
 
             db = new DB();
@@ -39,6 +43,9 @@ namespace WarehouseManagement
                     comboBoxCells.Items.Add(itemName);
                 }
             }
+
+            comboBoxCells.SelectedItem = parentCell;
+
         }
 
         private void formDellItem_FormClosing(object sender, FormClosingEventArgs e)
@@ -88,6 +95,8 @@ namespace WarehouseManagement
                         comboBoxItems.Items.Add(itemName);
                     }
                 }
+
+                comboBoxItems.SelectedItem = parentItem;
 
                 db.closeConnection();
             }

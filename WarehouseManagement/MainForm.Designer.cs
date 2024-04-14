@@ -84,6 +84,7 @@ namespace WarehouseManagement
             // 
             // menuStripMainForm
             // 
+            this.menuStripMainForm.BackColor = System.Drawing.Color.Khaki;
             this.menuStripMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmChangeUsers,
             this.управлениеСкладомToolStripMenuItem,
@@ -175,6 +176,7 @@ namespace WarehouseManagement
             // 
             // товарыToolStripMenuItem
             // 
+            this.товарыToolStripMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.товарыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAddItem,
             this.удалитьТоварToolStripMenuItem,
@@ -268,7 +270,7 @@ namespace WarehouseManagement
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.40648F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.59352F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 232F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 233F));
             this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 1, 1);

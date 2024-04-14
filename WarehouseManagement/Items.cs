@@ -19,6 +19,7 @@ namespace WarehouseManagement
         private int existingAmount;
         public string mapName;
         public string cellName;
+        string parentItem;
         public string userName;
 
         public Items(List<string> products, List<int> amount, string mapName, string cellName, string userName)
@@ -55,6 +56,7 @@ namespace WarehouseManagement
                 deleteButton.BackgroundImageLayout = ImageLayout.Zoom; // Растянуть изображение для заполнения кнопки
                 deleteButton.Width = 40;
                 deleteButton.Height = 40;
+                deleteButton.Name = product;
                 deleteButton.Tag = label; // Отметить кнопку соответствующей меткой
                 deleteButton.Location = new Point(230, yOffset - 60); // Разместить кнопку удаления рядом с меткой
                 deleteButton.Click += DeleteButton_Click; // Присоединить обработчик события нажатия
@@ -66,6 +68,7 @@ namespace WarehouseManagement
                 moveButton.BackgroundImageLayout = ImageLayout.Zoom; // Растянуть изображение для заполнения кнопки
                 moveButton.Width = 40;
                 moveButton.Height = 40;
+                deleteButton.Name = product;
                 moveButton.Tag = label; // Отметить кнопку соответствующей меткой
                 moveButton.Location = new Point(170, yOffset - 60); // Разместить кнопку перемещения рядом с меткой
                 moveButton.Click += MoveButton_Click; // Присоединить обработчик события нажатия
@@ -99,8 +102,15 @@ namespace WarehouseManagement
         {
             Button deleteButton = (Button)sender;
             Label correspondingLabel = (Label)deleteButton.Tag;
-            formDeleteItem fDeleteItem = new formDeleteItem(mapName);
+            
 
+            if (sender is Control control)
+            {
+                parentItem = control.Name;
+            }
+
+            formDeleteItem fDeleteItem = new formDeleteItem(mapName, cellName, parentItem);
+            
             DB db = new DB();
             db.openConnection();
 
