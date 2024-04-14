@@ -33,6 +33,17 @@ namespace WarehouseManagement
             this.panelWarehouse = new System.Windows.Forms.Panel();
             this.panelScroll = new System.Windows.Forms.Panel();
             this.menuStripMainForm = new System.Windows.Forms.MenuStrip();
+            this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.отчетПриходаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.отчетРасходаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
+            this.timerMessageBox = new System.Windows.Forms.Timer(this.components);
+            this.textBoxMessage = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.saveFileDialogReceipt = new System.Windows.Forms.SaveFileDialog();
+            this.buttonEditingMap = new System.Windows.Forms.PictureBox();
+            this.buttonAddCell = new System.Windows.Forms.PictureBox();
             this.tsmChangeUsers = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiChangeUser = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddUser = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,16 +57,6 @@ namespace WarehouseManagement
             this.tsmiAddItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьТоварToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddCategory = new System.Windows.Forms.ToolStripMenuItem();
-            this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.отчетПриходаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.отчетРасходаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialogSelectMapImg = new System.Windows.Forms.OpenFileDialog();
-            this.timerMessageBox = new System.Windows.Forms.Timer(this.components);
-            this.textBoxMessage = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonEditingMap = new System.Windows.Forms.PictureBox();
-            this.buttonAddCell = new System.Windows.Forms.PictureBox();
             this.panelScroll.SuspendLayout();
             this.menuStripMainForm.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -96,6 +97,117 @@ namespace WarehouseManagement
             this.menuStripMainForm.Size = new System.Drawing.Size(918, 24);
             this.menuStripMainForm.TabIndex = 7;
             this.menuStripMainForm.Text = "Меню главной формы";
+            // 
+            // отчетыToolStripMenuItem
+            // 
+            this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.отчетПриходаToolStripMenuItem,
+            this.отчетРасходаToolStripMenuItem});
+            this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
+            this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.отчетыToolStripMenuItem.Text = "Отчеты";
+            // 
+            // отчетПриходаToolStripMenuItem
+            // 
+            this.отчетПриходаToolStripMenuItem.Name = "отчетПриходаToolStripMenuItem";
+            this.отчетПриходаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.отчетПриходаToolStripMenuItem.Text = "Отчет прихода";
+            this.отчетПриходаToolStripMenuItem.Click += new System.EventHandler(this.tsmiReceipt_Click);
+            // 
+            // отчетРасходаToolStripMenuItem
+            // 
+            this.отчетРасходаToolStripMenuItem.Name = "отчетРасходаToolStripMenuItem";
+            this.отчетРасходаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.отчетРасходаToolStripMenuItem.Text = "Отчет расхода";
+            // 
+            // openFileDialogSelectMapImg
+            // 
+            this.openFileDialogSelectMapImg.FileName = "MapImg";
+            // 
+            // timerMessageBox
+            // 
+            this.timerMessageBox.Interval = 4000;
+            this.timerMessageBox.Tick += new System.EventHandler(this.timerMessageBox_Tick);
+            // 
+            // textBoxMessage
+            // 
+            this.textBoxMessage.AutoSize = true;
+            this.textBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
+            this.textBoxMessage.Location = new System.Drawing.Point(686, 12);
+            this.textBoxMessage.MinimumSize = new System.Drawing.Size(100, 0);
+            this.textBoxMessage.Name = "textBoxMessage";
+            this.textBoxMessage.Size = new System.Drawing.Size(100, 16);
+            this.textBoxMessage.TabIndex = 8;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.92593F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.07407F));
+            this.tableLayoutPanel1.Controls.Add(this.panelScroll, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 82.47619F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.52381F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(918, 525);
+            this.tableLayoutPanel1.TabIndex = 9;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Khaki;
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.40648F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.59352F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 228F));
+            this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 1, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 436);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.95349F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 86.04651F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(912, 86);
+            this.tableLayoutPanel2.TabIndex = 10;
+            // 
+            // saveFileDialogReceipt
+            // 
+            this.saveFileDialogReceipt.DefaultExt = "xlsx";
+            this.saveFileDialogReceipt.FileName = "Отчет прихода";
+            this.saveFileDialogReceipt.Title = "Сохранение отчета";
+            // 
+            // buttonEditingMap
+            // 
+            this.buttonEditingMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonEditingMap.Image = global::WarehouseManagement.Properties.Resources.editingMap;
+            this.buttonEditingMap.Location = new System.Drawing.Point(3, 15);
+            this.buttonEditingMap.MaximumSize = new System.Drawing.Size(377, 68);
+            this.buttonEditingMap.Name = "buttonEditingMap";
+            this.buttonEditingMap.Size = new System.Drawing.Size(377, 68);
+            this.buttonEditingMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonEditingMap.TabIndex = 9;
+            this.buttonEditingMap.TabStop = false;
+            this.buttonEditingMap.Click += new System.EventHandler(this.btnEditingMap_Click);
+            // 
+            // buttonAddCell
+            // 
+            this.buttonAddCell.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAddCell.Image = global::WarehouseManagement.Properties.Resources.addCell;
+            this.buttonAddCell.Location = new System.Drawing.Point(388, 15);
+            this.buttonAddCell.MaximumSize = new System.Drawing.Size(290, 68);
+            this.buttonAddCell.Name = "buttonAddCell";
+            this.buttonAddCell.Size = new System.Drawing.Size(290, 68);
+            this.buttonAddCell.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.buttonAddCell.TabIndex = 10;
+            this.buttonAddCell.TabStop = false;
+            this.buttonAddCell.Click += new System.EventHandler(this.btnAddCell_Click);
             // 
             // tsmChangeUsers
             // 
@@ -208,111 +320,6 @@ namespace WarehouseManagement
             this.tsmiAddCategory.Text = "Добавить категорию";
             this.tsmiAddCategory.Click += new System.EventHandler(this.tsmiAddCategory_Click);
             // 
-            // отчетыToolStripMenuItem
-            // 
-            this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.отчетПриходаToolStripMenuItem,
-            this.отчетРасходаToolStripMenuItem});
-            this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
-            this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.отчетыToolStripMenuItem.Text = "Отчеты";
-            // 
-            // отчетПриходаToolStripMenuItem
-            // 
-            this.отчетПриходаToolStripMenuItem.Name = "отчетПриходаToolStripMenuItem";
-            this.отчетПриходаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.отчетПриходаToolStripMenuItem.Text = "Отчет прихода";
-            this.отчетПриходаToolStripMenuItem.Click += new System.EventHandler(this.tsmiReceipt_Click);
-            // 
-            // отчетРасходаToolStripMenuItem
-            // 
-            this.отчетРасходаToolStripMenuItem.Name = "отчетРасходаToolStripMenuItem";
-            this.отчетРасходаToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.отчетРасходаToolStripMenuItem.Text = "Отчет расхода";
-            // 
-            // openFileDialogSelectMapImg
-            // 
-            this.openFileDialogSelectMapImg.FileName = "MapImg";
-            // 
-            // timerMessageBox
-            // 
-            this.timerMessageBox.Interval = 4000;
-            this.timerMessageBox.Tick += new System.EventHandler(this.timerMessageBox_Tick);
-            // 
-            // textBoxMessage
-            // 
-            this.textBoxMessage.AutoSize = true;
-            this.textBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
-            this.textBoxMessage.Location = new System.Drawing.Point(687, 12);
-            this.textBoxMessage.MinimumSize = new System.Drawing.Size(100, 0);
-            this.textBoxMessage.Name = "textBoxMessage";
-            this.textBoxMessage.Size = new System.Drawing.Size(100, 16);
-            this.textBoxMessage.TabIndex = 8;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.92593F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.07407F));
-            this.tableLayoutPanel1.Controls.Add(this.panelScroll, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 82.47619F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.52381F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(918, 525);
-            this.tableLayoutPanel1.TabIndex = 9;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Khaki;
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.40648F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.59352F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 227F));
-            this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 2, 1);
-            this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 1, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 436);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.95349F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 86.04651F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(912, 86);
-            this.tableLayoutPanel2.TabIndex = 10;
-            // 
-            // buttonEditingMap
-            // 
-            this.buttonEditingMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonEditingMap.Image = global::WarehouseManagement.Properties.Resources.editingMap;
-            this.buttonEditingMap.Location = new System.Drawing.Point(3, 15);
-            this.buttonEditingMap.MaximumSize = new System.Drawing.Size(377, 68);
-            this.buttonEditingMap.Name = "buttonEditingMap";
-            this.buttonEditingMap.Size = new System.Drawing.Size(377, 68);
-            this.buttonEditingMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonEditingMap.TabIndex = 9;
-            this.buttonEditingMap.TabStop = false;
-            this.buttonEditingMap.Click += new System.EventHandler(this.btnEditingMap_Click);
-            // 
-            // buttonAddCell
-            // 
-            this.buttonAddCell.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAddCell.Image = global::WarehouseManagement.Properties.Resources.addCell;
-            this.buttonAddCell.Location = new System.Drawing.Point(389, 15);
-            this.buttonAddCell.MaximumSize = new System.Drawing.Size(290, 68);
-            this.buttonAddCell.Name = "buttonAddCell";
-            this.buttonAddCell.Size = new System.Drawing.Size(290, 68);
-            this.buttonAddCell.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.buttonAddCell.TabIndex = 10;
-            this.buttonAddCell.TabStop = false;
-            this.buttonAddCell.Click += new System.EventHandler(this.btnAddCell_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -368,6 +375,7 @@ namespace WarehouseManagement
         private System.Windows.Forms.ToolStripMenuItem отчетРасходаToolStripMenuItem;
         private System.Windows.Forms.PictureBox buttonEditingMap;
         private System.Windows.Forms.PictureBox buttonAddCell;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogReceipt;
     }
 }
 

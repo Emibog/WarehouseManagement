@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Spire.Xls;
+using System.Diagnostics;
 
 namespace WarehouseManagement
 {
@@ -931,40 +932,76 @@ namespace WarehouseManagement
 
         private void tsmiReceipt_Click(object sender, EventArgs e)
         {
-            Workbook workbook = new Workbook();
-            Worksheet worksheet = workbook.Worksheets[0];
+            Stream myStream;
+            SaveFileDialog saveFileDialogReceipt = new SaveFileDialog();
 
-            // Retrieve data from the "receipt" table in the database
-            DataTable receiptData = RetrieveReceiptDataFromDB();
-            worksheet.Range[1, 1].Value = "Товар";
-            worksheet.Range[1, 2].Value = "Количество";
-            worksheet.Range[1, 3].Value = "Пользователь";
-            worksheet.Range[1, 4].Value = "Дата";
-            // Write data to specific cells in the Excel file
-            for (int i = 0; i < receiptData.Rows.Count; i++)
+            saveFileDialogReceipt.Filter = "Excel files (*.xlsx)|*.xlsx";
+            saveFileDialogReceipt.FilterIndex = 1;
+            saveFileDialogReceipt.RestoreDirectory = true;
+
+            if (saveFileDialogReceipt.ShowDialog() == DialogResult.OK)
             {
-                worksheet.Range[i + 2, 1].Value = receiptData.Rows[i]["item"].ToString();
-                worksheet.Range[i + 2, 2].Value = receiptData.Rows[i]["amount"].ToString();
-                worksheet.Range[i + 2, 3].Value = receiptData.Rows[i]["user"].ToString();
-                worksheet.Range[i + 2, 4].Value = "'" + receiptData.Rows[i]["date"].ToString() + "'";
+                string filePath = saveFileDialogReceipt.FileName;
+
+                Workbook workbook = new Workbook();
+                Worksheet worksheet = workbook.Worksheets[0];
+
+                // Retrieve data from the "receipt" table in the database
+                DataTable receiptData = RetrieveReceiptDataFromDB();
+                worksheet.Range[1, 1].Value = "Товар";
+                worksheet.Range[1, 2].Value = "Количество";
+                worksheet.Range[1, 3].Value = "Пользователь";
+                worksheet.Range[1, 4].Value = "Дата";
+                // Write data to specific cells in the Excel file
+                for (int i = 0; i < receiptData.Rows.Count; i++)
+                {
+                    worksheet.Range[i + 2, 1].Value = receiptData.Rows[i]["item"].ToString();
+                    worksheet.Range[i + 2, 2].Value = receiptData.Rows[i]["amount"].ToString();
+                    worksheet.Range[i + 2, 3].Value = receiptData.Rows[i]["user"].ToString();
+                    worksheet.Range[i + 2, 4].Value = "'" + receiptData.Rows[i]["date"].ToString() + "'";
+                }
+
+
+                CellStyle style = workbook.Styles.Add("newStyle");
+                style.Font.IsBold = false;
+                style.Font.FontName = "Times New Roman";
+                style.Font.Size = 14;
+                
+                CellStyle styleBold = workbook.Styles.Add("newStyleBold");
+                styleBold.Font.IsBold = true;
+                styleBold.Font.FontName = "Times New Roman";
+                styleBold.Font.Size = 14;
+
+                int rowCount = worksheet.Rows.Length;
+                int colCount = worksheet.Columns.Length;
+
+                CellRange entireTable = worksheet.Range[1, 1, rowCount, colCount];
+                entireTable.Style = style;
+                worksheet.Range[1, 1, 1, 4].Style = styleBold;
+                worksheet.AllocatedRange.AutoFitColumns();
+
+                try
+                {
+                    workbook.SaveToFile(filePath); // Save the file to the selected path
+                    MessageBox.Show("Файл успешно сохранен!"); // Show the saved file path
+                    
+                    
+                    ProcessStartInfo info = new ProcessStartInfo(filePath);
+                    info.Verb = "PrintTo";
+                    info.CreateNoWindow = true;
+                    info.WindowStyle = ProcessWindowStyle.Hidden;
+                    Process.Start(info);
+
+                    Process.Start(filePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
 
-            worksheet.AllocatedRange.AutoFitColumns();
 
-            CellStyle style = workbook.Styles.Add("newStyle");
-            style.Font.IsBold = true;
-            worksheet.Range[1, 1, 1, 4].Style = style;
-
-            try
-            {
-                workbook.SaveToFile("WriteToCells.xlsx");
-                MessageBox.Show("Файл успешно сохранен!");
-                System.Diagnostics.Process.Start("WriteToCells.xlsx");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            
         }
 
         private DataTable RetrieveReceiptDataFromDB()
