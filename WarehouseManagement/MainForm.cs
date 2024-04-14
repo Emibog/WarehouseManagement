@@ -352,7 +352,7 @@ namespace WarehouseManagement
 
                     db.closeConnection();
 
-                    Items formItems = new Items(Products, Amount, mapName, cellName);
+                    Items formItems = new Items(Products, Amount, mapName, cellName, userName);
                     formItems.Show();
                 }
                 catch (Exception ex)
@@ -625,6 +625,13 @@ namespace WarehouseManagement
             dbView.Show();
         }
 
+        /// <summary>
+        /// Добавление операции в историю
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="item"></param>
+        /// <param name="amount"></param>
+        /// <param name="user"></param>
         private void AddOperationToHistory(string table, string item, string amount, string user)
         {
             DB db = new DB();

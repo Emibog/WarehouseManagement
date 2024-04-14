@@ -19,8 +19,9 @@ namespace WarehouseManagement
         private int existingAmount;
         public string mapName;
         public string cellName;
+        public string userName;
 
-        public Items(List<string> products, List<int> amount, string mapName, string cellName)
+        public Items(List<string> products, List<int> amount, string mapName, string cellName, string userName)
         {
             InitializeComponent();
             Products = products;
@@ -28,6 +29,7 @@ namespace WarehouseManagement
             showProducts();
             this.mapName = mapName;
             this.cellName = cellName;
+            this.userName = userName;
             Text = "Товары в ячейке " + cellName;
         }
 
@@ -69,6 +71,28 @@ namespace WarehouseManagement
                 moveButton.Click += MoveButton_Click; // Присоединить обработчик события нажатия
                 panelItems.Controls.Add(moveButton); // Добавить кнопку перемещения на форму
             }
+        }
+
+        /// <summary>
+        /// Добавление операции в историю
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="item"></param>
+        /// <param name="amount"></param>
+        /// <param name="user"></param>
+        private void AddOperationToHistory(string table, string item, string amount, string user)
+        {
+            DB db = new DB();
+            db.openConnection();
+            MySqlCommand autoIncrementHistory = new MySqlCommand("ALTER TABLE `" + table + "` AUTO_INCREMENT = 1", db.getConnection());
+            autoIncrementHistory.ExecuteNonQuery();
+            MySqlCommand historyCommand = new MySqlCommand("INSERT INTO `" + table + "` (`item`, `amount`, `user`, `map`, `date`) VALUES (@item, @amount, @user, @map, NOW())", db.getConnection());
+            historyCommand.Parameters.AddWithValue("@item", item);
+            historyCommand.Parameters.AddWithValue("@amount", amount);
+            historyCommand.Parameters.AddWithValue("@user", user);
+            historyCommand.Parameters.AddWithValue("@map", mapName);
+            historyCommand.ExecuteNonQuery();
+            db.closeConnection();
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
@@ -117,6 +141,8 @@ namespace WarehouseManagement
                 updateCommand.Parameters.AddWithValue("@map", mapName);
                 updateCommand.ExecuteNonQuery();
 
+                AddOperationToHistory("consumption", fDeleteItem.ItemToDelete, fDeleteItem.EnteredAmount.ToString(), userName);
+
                 MessageBox.Show("Указанное колчество товара было удалено.");
             }
             else if (requestedAmount == existingAmount)
@@ -126,6 +152,8 @@ namespace WarehouseManagement
                 dellCommand.Parameters.AddWithValue("@cell", fDeleteItem.EnteredCell);
                 dellCommand.Parameters.AddWithValue("@map", mapName);
                 dellCommand.ExecuteNonQuery();
+
+                AddOperationToHistory("consumption", fDeleteItem.ItemToDelete, fDeleteItem.EnteredAmount.ToString(), userName);
 
                 MessageBox.Show("Товар был удален.");
             }
