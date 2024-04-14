@@ -42,7 +42,7 @@
             // 
             this.comboBoxCells.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCells.FormattingEnabled = true;
-            this.comboBoxCells.Location = new System.Drawing.Point(398, 215);
+            this.comboBoxCells.Location = new System.Drawing.Point(228, 67);
             this.comboBoxCells.Name = "comboBoxCells";
             this.comboBoxCells.Size = new System.Drawing.Size(121, 21);
             this.comboBoxCells.TabIndex = 23;
@@ -50,7 +50,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(234, 218);
+            this.label3.Location = new System.Drawing.Point(64, 70);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(139, 13);
             this.label3.TabIndex = 22;
@@ -59,7 +59,7 @@
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(237, 331);
+            this.buttonOK.Location = new System.Drawing.Point(67, 183);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 24;
@@ -70,7 +70,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(444, 331);
+            this.buttonCancel.Location = new System.Drawing.Point(274, 183);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 25;
@@ -80,7 +80,7 @@
             // 
             // setMaxAmount
             // 
-            this.setMaxAmount.Location = new System.Drawing.Point(444, 254);
+            this.setMaxAmount.Location = new System.Drawing.Point(274, 106);
             this.setMaxAmount.Name = "setMaxAmount";
             this.setMaxAmount.Size = new System.Drawing.Size(75, 23);
             this.setMaxAmount.TabIndex = 28;
@@ -90,7 +90,7 @@
             // 
             // numericUpDownAmount
             // 
-            this.numericUpDownAmount.Location = new System.Drawing.Point(311, 257);
+            this.numericUpDownAmount.Location = new System.Drawing.Point(141, 109);
             this.numericUpDownAmount.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -103,7 +103,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(234, 264);
+            this.label4.Location = new System.Drawing.Point(64, 116);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(66, 13);
             this.label4.TabIndex = 26;
@@ -113,7 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(424, 282);
             this.Controls.Add(this.setMaxAmount);
             this.Controls.Add(this.numericUpDownAmount);
             this.Controls.Add(this.label4);
@@ -124,7 +124,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "MoveItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "moveItem";
+            this.Text = "Перемещение товара";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MoveItem_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAmount)).EndInit();
             this.ResumeLayout(false);

@@ -29,6 +29,8 @@ namespace WarehouseManagement
             this.item = item;
             this.cell = cell;
             this.existingAmount = existingAmount;
+            Text = "Перемещение товара (" + item + ") из ячейки " + cell;
+
             db = new DB();
             numericUpDownAmount.Maximum = decimal.MaxValue;
             db.openConnection();
