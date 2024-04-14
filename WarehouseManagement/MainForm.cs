@@ -11,6 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Spire.Xls;
 
 namespace WarehouseManagement
 {
@@ -50,6 +51,38 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
+
+            //Создание объекта Workbook 
+            Workbook workbook = new Workbook();
+
+            //Получение первой рабочей страницы
+            workbook.Worksheets.Clear();
+            Worksheet worksheet = workbook.Worksheets.Add("New Worksheet");
+            //Запись данных в определенные ячейки
+            worksheet.Range[1, 1].Value = "Имя";
+            worksheet.Range[1, 2].Value = "Возраст";
+            worksheet.Range[1, 3].Value = "Департамент";
+            worksheet.Range[1, 4].Value = "Дата найма";
+            worksheet.Range[1, 2].Value = "Хейзел";
+            worksheet.Range[2, 2].Value2 = 29;
+            worksheet.Range[2, 3].Value = "Маркетинг";
+            worksheet.Range[2, 4].Value = "2019-07-01";
+            worksheet.Range[3, 1].Value = "Тина";
+            worksheet.Range[3, 2].Value2 = 31;
+            worksheet.Range[3, 3].Value = "Техническая поддержка";
+            worksheet.Range[3, 4].Value = "2015-04-27";
+
+            //Автоматическое подгонка ширины столбцов
+            worksheet.AllocatedRange.AutoFitColumns();
+
+            //Применение стиля к первой строке
+            CellStyle style = workbook.Styles.Add("newStyle");
+            style.Font.IsBold = true;
+            worksheet.Range[1, 1, 1, 4].Style = style;
+
+            //Сохранение в файл Excel
+            workbook.SaveToFile("WriteToCells.xlsx");
+
             // Скрытие запрещенных элементов для пользователя
             if (userPost == "Пользователь")
             {
