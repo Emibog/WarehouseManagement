@@ -117,6 +117,7 @@ namespace WarehouseManagement
 
                 }
             }
+            fAddCategory.Close();
         }
 
         private void dbAddCategory(DB db, formAddCategory fAddCategory)

@@ -329,44 +329,14 @@ namespace WarehouseManagement
             string cellName = cell.Name;
             if (!isEditing)
             {
-                DB db = new DB();
-                List<string> Products = new List<string>();
-                List<int> Amount = new List<int>();
                 try
                 {
-                    db.openConnection();
-
-                    MySqlCommand command = new MySqlCommand("SELECT `item`, `amount` FROM `items` WHERE cell = @cell AND map = @map", db.getConnection());
-
-                    command.Parameters.AddWithValue("@cell", cellName);
-                    command.Parameters.AddWithValue("@map", mapName);
-
-                    Products.Clear();
-                    Amount.Clear();
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            string itemValue = reader["item"].ToString();
-                            int amountValue = Convert.ToInt32(reader["amount"]);
-                            Products.Add(itemValue);
-                            Amount.Add(amountValue);
-                        }
-                    }
-
-                    db.closeConnection();
-
-                    Items formItems = new Items(Products, Amount, mapName, cellName, userName);
+                    Items formItems = new Items(mapName, cellName, userName);
                     formItems.Show();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Ошибка при отображении товаров.\n\n" + ex.Message, "Ошибка отображения товаров", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    db.closeConnection();
                 }
             }
         }
@@ -447,7 +417,6 @@ namespace WarehouseManagement
             {
                 MessageBox.Show("Должность успешно добавлена.");
             }
-
             addPost.Close();
         }
 
@@ -837,7 +806,7 @@ namespace WarehouseManagement
         private void UpdateItemAmount(DB db, formAddItem fAddItem, string mapName)
         {
             // Обновление количества товара
-            MySqlCommand command = new MySqlCommand("UPDATE `items` SET `amount` = `amount` + @newAmount WHERE `item` = @item AND `cell` = @cell AND `map` = @map AND `category` = @category", db.getConnection());
+            MySqlCommand command = new MySqlCommand("UPDATE `items` SET `amount` = `amount` + @newAmount, `date` = NOW() WHERE `item` = @item AND `cell` = @cell AND `map` = @map AND `category` = @category", db.getConnection());
             command.Parameters.AddWithValue("@item", fAddItem.EnteredItemName);
             command.Parameters.AddWithValue("@cell", fAddItem.EnteredCell);
             command.Parameters.AddWithValue("@map", mapName);
@@ -912,6 +881,7 @@ namespace WarehouseManagement
 
                 }
             }
+            fAddCategory.Close();
         }
 
         /// <summary>
