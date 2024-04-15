@@ -20,15 +20,17 @@ namespace WarehouseManagement
         private string item;
         private string cell;
         private int existingAmount;
+        private string category;
         private DB db;
 
-        public MoveItem(string mapName, string item, string cell, int existingAmount)
+        public MoveItem(string mapName, string item, string cell, int existingAmount, string category)
         {
             InitializeComponent();
             this.mapName = mapName;
             this.item = item;
             this.cell = cell;
             this.existingAmount = existingAmount;
+            this.category = category;
             Text = "Перемещение товара (" + item + ") из ячейки " + cell;
 
             db = new DB();
@@ -55,12 +57,8 @@ namespace WarehouseManagement
             db = new DB();
             db.openConnection();
 
-            int startIndex = item.IndexOf('(') + 1;
-            int endIndex = item.LastIndexOf(')');
-            string category = item.Substring(startIndex, endIndex - startIndex);
-            string itemName = item.Substring(0, startIndex - 2);
             MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
-            command.Parameters.AddWithValue("@item", itemName);
+            command.Parameters.AddWithValue("@item", item);
             command.Parameters.AddWithValue("@cell", cell);
             command.Parameters.AddWithValue("@map", mapName);
             command.Parameters.AddWithValue("@category", category);
@@ -83,7 +81,7 @@ namespace WarehouseManagement
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+
         }
 
         private void MoveItem_FormClosing(object sender, FormClosingEventArgs e)

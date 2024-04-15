@@ -65,7 +65,8 @@ namespace WarehouseManagement
             {
                 EnteredCell = comboBoxCells.SelectedItem.ToString();
                 EnteredAmount = numericUpDownAmount.Value;
-                ItemToDelete = comboBoxItems.SelectedItem.ToString();
+                int startIndex = comboBoxItems.SelectedItem.ToString().IndexOf('(') + 1;
+                ItemToDelete = comboBoxItems.SelectedItem.ToString().Substring(0, startIndex - 2);
                 //DeleteItem();
             }
         }

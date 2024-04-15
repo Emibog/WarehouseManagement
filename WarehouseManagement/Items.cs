@@ -22,6 +22,7 @@ namespace WarehouseManagement
         string parentItem;
         public string userName;
         public string category;
+        string itemName;
 
         public Items(string mapName, string cellName, string userName)
         {
@@ -160,13 +161,14 @@ namespace WarehouseManagement
                 int startIndex = fullName.IndexOf('(') + 1;
                 int endIndex = fullName.LastIndexOf(')');
                 category = fullName.Substring(startIndex, endIndex - startIndex);
+                itemName = fullName.Substring(0, startIndex - 2);
             }
 
             DB db = new DB();
             db.openConnection();
 
             MySqlCommand command = new MySqlCommand("SELECT `amount`, `category` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
-            command.Parameters.AddWithValue("@item", correspondingLabel.Name);
+            command.Parameters.AddWithValue("@item", itemName);
             command.Parameters.AddWithValue("@cell", cellName);
             command.Parameters.AddWithValue("@map", mapName);
             command.Parameters.AddWithValue("@category", category);
@@ -179,7 +181,7 @@ namespace WarehouseManagement
                 }
             }
 
-            MoveItem moveItem = new MoveItem(mapName, correspondingLabel.Name, cellName, existingAmount);
+            MoveItem moveItem = new MoveItem(mapName, itemName, cellName, existingAmount, category);
 
             if (moveItem.ShowDialog() == DialogResult.OK)
             {
@@ -189,20 +191,20 @@ namespace WarehouseManagement
 
                     MySqlCommand updateCommand = new MySqlCommand("UPDATE `items` SET `amount` = @newAmount, `date` = NOW() WHERE `item` = @item AND `cell` = @cell AND `map` = @map AND `category` = @category", db.getConnection());
                     updateCommand.Parameters.AddWithValue("@newAmount", newAmount);
-                    updateCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
+                    updateCommand.Parameters.AddWithValue("@item", itemName);
                     updateCommand.Parameters.AddWithValue("@cell", cellName);
                     updateCommand.Parameters.AddWithValue("@map", mapName);
                     updateCommand.Parameters.AddWithValue("@category", category);
                     updateCommand.ExecuteNonQuery();
 
-                    UpdateOrInsertItem(db, moveItem, correspondingLabel, category);
+                    UpdateOrInsertItem(db, moveItem, itemName, category);
                 }
                 else if (existingAmount == moveItem.EnteredAmount)
                 {
-                    UpdateOrInsertItem(db, moveItem, correspondingLabel, category);
+                    UpdateOrInsertItem(db, moveItem, itemName, category);
 
                     MySqlCommand deleteOldItemCommand = new MySqlCommand("DELETE FROM `items` WHERE `item` = @item AND `cell` = @oldCell AND `map` = @map AND `category` = @category", db.getConnection());
-                    deleteOldItemCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
+                    deleteOldItemCommand.Parameters.AddWithValue("@item", itemName);
                     deleteOldItemCommand.Parameters.AddWithValue("@oldCell", cellName);
                     deleteOldItemCommand.Parameters.AddWithValue("@map", mapName);
                     deleteOldItemCommand.Parameters.AddWithValue("@category", category);
@@ -268,13 +270,13 @@ namespace WarehouseManagement
             }
         }
 
-        private void UpdateOrInsertItem(DB db, MoveItem moveItem, Label correspondingLabel, string category)
+        private void UpdateOrInsertItem(DB db, MoveItem moveItem, string item, string category)
         {
-            if (ItemExists(db, moveItem.CellToMove, correspondingLabel.Name, category))
+            if (ItemExists(db, moveItem.CellToMove, item, category))
             {
                 MySqlCommand updateAmountCommand = new MySqlCommand("UPDATE `items` SET `amount` = `amount` + @newAmount, `date` = NOW() WHERE `item` = @item AND `cell` = @cell AND `map` = @map AND `category` = @category", db.getConnection());
                 updateAmountCommand.Parameters.AddWithValue("@newAmount", moveItem.EnteredAmount);
-                updateAmountCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
+                updateAmountCommand.Parameters.AddWithValue("@item", item);
                 updateAmountCommand.Parameters.AddWithValue("@cell", moveItem.CellToMove);
                 updateAmountCommand.Parameters.AddWithValue("@map", mapName);
                 updateAmountCommand.Parameters.AddWithValue("@category", category);
@@ -284,7 +286,7 @@ namespace WarehouseManagement
             {
                 MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `items` AUTO_INCREMENT = 1", db.getConnection());
                 MySqlCommand newItemCommand = new MySqlCommand("INSERT INTO `items` (`item`, `cell`, `amount`, `map`, `category`, `date`) VALUES (@item, @cell, @amount, @map, @category, NOW())", db.getConnection());
-                newItemCommand.Parameters.AddWithValue("@item", correspondingLabel.Name);
+                newItemCommand.Parameters.AddWithValue("@item", item);
                 newItemCommand.Parameters.AddWithValue("@cell", moveItem.CellToMove);
                 newItemCommand.Parameters.AddWithValue("@amount", moveItem.EnteredAmount);
                 newItemCommand.Parameters.AddWithValue("@map", mapName);
@@ -299,7 +301,6 @@ namespace WarehouseManagement
             MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
             command.Parameters.AddWithValue("@item", item);
             command.Parameters.AddWithValue("@cell", cellToMove);
-            command.Parameters.AddWithValue("@category", category);
             command.Parameters.AddWithValue("@map", mapName);
             command.Parameters.AddWithValue("@category", category);
 
