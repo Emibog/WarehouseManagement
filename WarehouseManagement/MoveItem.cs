@@ -54,10 +54,16 @@ namespace WarehouseManagement
         {
             db = new DB();
             db.openConnection();
-            MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
-            command.Parameters.AddWithValue("@item", item);
+
+            int startIndex = item.IndexOf('(') + 1;
+            int endIndex = item.LastIndexOf(')');
+            string category = item.Substring(startIndex, endIndex - startIndex);
+            string itemName = item.Substring(0, startIndex - 2);
+            MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
+            command.Parameters.AddWithValue("@item", itemName);
             command.Parameters.AddWithValue("@cell", cell);
             command.Parameters.AddWithValue("@map", mapName);
+            command.Parameters.AddWithValue("@category", category);
 
             int existingAmount = Convert.ToInt32(command.ExecuteScalar());
 
@@ -77,7 +83,7 @@ namespace WarehouseManagement
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void MoveItem_FormClosing(object sender, FormClosingEventArgs e)

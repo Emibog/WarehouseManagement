@@ -83,7 +83,7 @@ namespace WarehouseManagement
             try
             {
                 db.openConnection();
-                MySqlCommand command = new MySqlCommand("SELECT `item` FROM `items` WHERE `map` = @map AND `cell` = @cell", db.getConnection());
+                MySqlCommand command = new MySqlCommand("SELECT `item`, `category` FROM `items` WHERE `map` = @map AND `cell` = @cell", db.getConnection());
                 command.Parameters.AddWithValue("@map", mapName);
                 command.Parameters.AddWithValue("@cell", comboBoxCells.SelectedItem.ToString());
 
@@ -91,8 +91,9 @@ namespace WarehouseManagement
                 {
                     while (reader.Read())
                     {
-                        string itemName = reader["item"].ToString();
-                        comboBoxItems.Items.Add(itemName);
+                        string categoryValue = reader["category"].ToString();
+                        string itemName = reader["item"].ToString() ;
+                        comboBoxItems.Items.Add(itemName + " (" + categoryValue + ") ");
                     }
                 }
 
@@ -116,13 +117,19 @@ namespace WarehouseManagement
             {
                 db = new DB();
                 db.openConnection();
-                MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map", db.getConnection());
-                command.Parameters.AddWithValue("@item", comboBoxItems.SelectedItem.ToString());
+
+                int startIndex = comboBoxItems.SelectedItem.ToString().IndexOf('(') + 1;
+                int endIndex = comboBoxItems.SelectedItem.ToString().LastIndexOf(')');
+                string category = comboBoxItems.SelectedItem.ToString().Substring(startIndex, endIndex - startIndex);
+                string itemName = comboBoxItems.SelectedItem.ToString().Substring(0, startIndex - 2);
+                MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
+                command.Parameters.AddWithValue("@item", itemName);
                 command.Parameters.AddWithValue("@cell", comboBoxCells.SelectedItem.ToString());
                 command.Parameters.AddWithValue("@map", mapName);
+                command.Parameters.AddWithValue("@category", category);
 
                 int existingAmount = Convert.ToInt32(command.ExecuteScalar());
-
+                
                 numericUpDownAmount.Value = existingAmount;
                 db.closeConnection();
             }

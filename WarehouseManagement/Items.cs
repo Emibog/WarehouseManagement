@@ -120,7 +120,6 @@ namespace WarehouseManagement
             {
                 parentItem = control.Name;
                 string fullName = parentItem;
-                MessageBox.Show(fullName);
                 int startIndex = fullName.IndexOf('(') + 1;
                 int endIndex = fullName.LastIndexOf(')');
                 category = fullName.Substring(startIndex, endIndex - startIndex);  
@@ -158,7 +157,6 @@ namespace WarehouseManagement
             {
                 parentItem = control.Name;
                 string fullName = parentItem;
-                MessageBox.Show(fullName);
                 int startIndex = fullName.IndexOf('(') + 1;
                 int endIndex = fullName.LastIndexOf(')');
                 category = fullName.Substring(startIndex, endIndex - startIndex);
