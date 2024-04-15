@@ -71,8 +71,7 @@ namespace WarehouseManagement
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(comboBoxCells.Text)) { }
-            else
+            if(!string.IsNullOrEmpty(comboBoxCells.Text))
             {
                 CellToMove = comboBoxCells.SelectedItem.ToString();
                 EnteredAmount = numericUpDownAmount.Value;
@@ -81,7 +80,7 @@ namespace WarehouseManagement
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void MoveItem_FormClosing(object sender, FormClosingEventArgs e)
