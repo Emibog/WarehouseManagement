@@ -43,9 +43,12 @@ namespace WarehouseManagement
                     comboBoxCells.Items.Add(itemName);
                 }
             }
-
-            comboBoxCells.SelectedItem = parentCell;
-
+            
+            if (!string.IsNullOrEmpty(parentCell))
+            {
+                comboBoxCells.SelectedItem = parentCell;
+                comboBoxCells.Enabled = false;
+            }
         }
 
         private void formDellItem_FormClosing(object sender, FormClosingEventArgs e)
@@ -98,7 +101,11 @@ namespace WarehouseManagement
                     }
                 }
 
-                comboBoxItems.SelectedItem = parentItem;
+                if (!string.IsNullOrEmpty(parentItem))
+                {
+                    comboBoxItems.SelectedItem = parentItem;
+                    comboBoxItems.Enabled = false;
+                }
 
                 db.closeConnection();
             }
