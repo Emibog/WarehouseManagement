@@ -43,6 +43,7 @@ namespace WarehouseManagement
             this.userPost = userPost;
             this.userName = userName;
             Text = "Управление складом. Пользователь: " + userName + " (" + userPost + ")";
+            //tableLayoutPanel1.RowStyles[1].Height = 10;
         }
 
         /// <summary>
@@ -52,9 +53,6 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
-
-
-
             // Скрытие запрещенных элементов для пользователя
             if (userPost == "Пользователь")
             {
@@ -628,7 +626,7 @@ namespace WarehouseManagement
         /// <param name="e"></param>
         private void tsmiAddItem_Click(object sender, EventArgs e)
         {
-            formAddItem fAddItem = new formAddItem(storageCells);
+            formAddItem fAddItem = new formAddItem(mapName);
 
             if (fAddItem.ShowDialog() == DialogResult.OK)
             {

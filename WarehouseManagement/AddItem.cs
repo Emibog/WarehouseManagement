@@ -17,22 +17,36 @@ namespace WarehouseManagement
         public string EnteredCategory { get; set; }
         public string EnteredCell { get; set; }
         public string EnteredAmount { get; set; }
-        private List<StorageCell> storageCell;
+        private string mapName;
         private formAddItem form;
 
-        public formAddItem(List<StorageCell> storageCell)
+        public formAddItem(string mapName, string parentCell = "")
         {
             InitializeComponent();
-            this.storageCell = storageCell;
+            this.mapName = mapName;
             form = this;
-            foreach (StorageCell control in storageCell)
-            {
-                comboBoxCells.Items.Add(control.Name);
-            }
+
             DB db = new DB();
             try
             {
                 db.openConnection();
+
+                MySqlCommand commandGetCell = new MySqlCommand("SELECT `cell` FROM `cells` WHERE `map` = @map", db.getConnection());
+                commandGetCell.Parameters.AddWithValue("@map", mapName);
+
+                // Используем ExecuteReader для выполнения запроса SELECT
+                using (MySqlDataReader reader = commandGetCell.ExecuteReader())
+                {
+                    // Перебираем результаты запроса
+                    while (reader.Read())
+                    {
+                        // Получаем значение из столбца "item"
+                        string cell = reader["cell"].ToString();
+
+                        // Добавляем значение в коллекцию Products
+                        comboBoxCells.Items.Add(cell);
+                    }
+                }
 
                 MySqlCommand command = new MySqlCommand("SELECT `category` FROM `categories`", db.getConnection());
 
@@ -52,7 +66,11 @@ namespace WarehouseManagement
 
                 // Закрываем соединение
                 db.closeConnection();
-
+                if (!string.IsNullOrEmpty(parentCell))
+                {
+                    comboBoxCells.SelectedItem = parentCell;
+                    comboBoxCells.Enabled = false;
+                }
             }
             catch (Exception ex)
             {
