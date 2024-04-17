@@ -900,7 +900,6 @@ namespace WarehouseManagement
 
         private void tsmiReceipt_Click(object sender, EventArgs e)
         {
-            Stream myStream;
             SaveFileDialog saveFileDialogReceipt = new SaveFileDialog();
 
             saveFileDialogReceipt.Filter = "Excel files (*.xlsx)|*.xlsx";
@@ -915,7 +914,7 @@ namespace WarehouseManagement
                 Worksheet worksheet = workbook.Worksheets[0];
 
                 // Retrieve data from the "receipt" table in the database
-                DataTable receiptData = RetrieveReceiptDataFromDB();
+                DataTable receiptData = RetrieveDataFromDB("receipt");
                 worksheet.Range[1, 1].Value = "Товар";
                 worksheet.Range[1, 2].Value = "Количество";
                 worksheet.Range[1, 3].Value = "Пользователь";
@@ -954,29 +953,96 @@ namespace WarehouseManagement
                     MessageBox.Show("Файл успешно сохранен!"); // Show the saved file path
                     
                     
-                    ProcessStartInfo info = new ProcessStartInfo(filePath);
+                    /*ProcessStartInfo info = new ProcessStartInfo(filePath);
                     info.Verb = "PrintTo";
                     info.CreateNoWindow = true;
                     info.WindowStyle = ProcessWindowStyle.Hidden;
                     Process.Start(info);
 
-                    Process.Start(filePath);
+                    Process.Start(filePath);*/
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }   
+        }
+
+        private void tsmiConsumption_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialogReceipt = new SaveFileDialog();
+
+            saveFileDialogReceipt.Filter = "Excel files (*.xlsx)|*.xlsx";
+            saveFileDialogReceipt.FilterIndex = 1;
+            saveFileDialogReceipt.RestoreDirectory = true;
+
+            if (saveFileDialogReceipt.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialogReceipt.FileName;
+
+                Workbook workbook = new Workbook();
+                Worksheet worksheet = workbook.Worksheets[0];
+
+                // Retrieve data from the "receipt" table in the database
+                DataTable receiptData = RetrieveDataFromDB("consumption");
+                worksheet.Range[1, 1].Value = "Товар";
+                worksheet.Range[1, 2].Value = "Количество";
+                worksheet.Range[1, 3].Value = "Пользователь";
+                worksheet.Range[1, 4].Value = "Дата";
+                // Write data to specific cells in the Excel file
+                for (int i = 0; i < receiptData.Rows.Count; i++)
+                {
+                    worksheet.Range[i + 2, 1].Value = receiptData.Rows[i]["item"].ToString();
+                    worksheet.Range[i + 2, 2].Value = receiptData.Rows[i]["amount"].ToString();
+                    worksheet.Range[i + 2, 3].Value = receiptData.Rows[i]["user"].ToString();
+                    worksheet.Range[i + 2, 4].Value = "'" + receiptData.Rows[i]["date"].ToString() + "'";
+                }
+
+
+                CellStyle style = workbook.Styles.Add("newStyle");
+                style.Font.IsBold = false;
+                style.Font.FontName = "Times New Roman";
+                style.Font.Size = 14;
+
+                CellStyle styleBold = workbook.Styles.Add("newStyleBold");
+                styleBold.Font.IsBold = true;
+                styleBold.Font.FontName = "Times New Roman";
+                styleBold.Font.Size = 14;
+
+                int rowCount = worksheet.Rows.Length;
+                int colCount = worksheet.Columns.Length;
+
+                CellRange entireTable = worksheet.Range[1, 1, rowCount, colCount];
+                entireTable.Style = style;
+                worksheet.Range[1, 1, 1, 4].Style = styleBold;
+                worksheet.AllocatedRange.AutoFitColumns();
+
+                try
+                {
+                    workbook.SaveToFile(filePath); // Save the file to the selected path
+                    MessageBox.Show("Файл успешно сохранен!"); // Show the saved file path
+
+
+                    /*ProcessStartInfo info = new ProcessStartInfo(filePath);
+                    info.Verb = "PrintTo";
+                    info.CreateNoWindow = true;
+                    info.WindowStyle = ProcessWindowStyle.Hidden;
+                    Process.Start(info);
+
+                    Process.Start(filePath);*/
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
                 }
             }
-
-
-            
         }
 
-        private DataTable RetrieveReceiptDataFromDB()
+        private DataTable RetrieveDataFromDB(string table)
         {
             DB db = new DB();
             db.openConnection();
-            MySqlCommand command = new MySqlCommand("SELECT item, amount, user, date FROM receipt", db.getConnection());
+            MySqlCommand command = new MySqlCommand("SELECT item, amount, user, date FROM " + table, db.getConnection());
             MySqlDataAdapter adapter = new MySqlDataAdapter(command);
             DataTable dataTable = new DataTable();
             adapter.Fill(dataTable);

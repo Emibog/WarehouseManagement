@@ -192,14 +192,14 @@ namespace WarehouseManagement
             // 
             this.tsmiAddItem.Name = "tsmiAddItem";
             this.tsmiAddItem.Size = new System.Drawing.Size(188, 22);
-            this.tsmiAddItem.Text = "Добавить товар";
+            this.tsmiAddItem.Text = "Приход товаров";
             this.tsmiAddItem.Click += new System.EventHandler(this.tsmiAddItem_Click);
             // 
             // удалитьТоварToolStripMenuItem
             // 
             this.удалитьТоварToolStripMenuItem.Name = "удалитьТоварToolStripMenuItem";
             this.удалитьТоварToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.удалитьТоварToolStripMenuItem.Text = "Удалить товар";
+            this.удалитьТоварToolStripMenuItem.Text = "Расход товаров";
             this.удалитьТоварToolStripMenuItem.Click += new System.EventHandler(this.tsmiDeleteItem_Click);
             // 
             // tsmiAddCategory
@@ -221,15 +221,16 @@ namespace WarehouseManagement
             // отчетПриходаToolStripMenuItem
             // 
             this.отчетПриходаToolStripMenuItem.Name = "отчетПриходаToolStripMenuItem";
-            this.отчетПриходаToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.отчетПриходаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.отчетПриходаToolStripMenuItem.Text = "Отчет прихода";
             this.отчетПриходаToolStripMenuItem.Click += new System.EventHandler(this.tsmiReceipt_Click);
             // 
             // отчетРасходаToolStripMenuItem
             // 
             this.отчетРасходаToolStripMenuItem.Name = "отчетРасходаToolStripMenuItem";
-            this.отчетРасходаToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.отчетРасходаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.отчетРасходаToolStripMenuItem.Text = "Отчет расхода";
+            this.отчетРасходаToolStripMenuItem.Click += new System.EventHandler(this.tsmiConsumption_Click);
             // 
             // openFileDialogSelectMapImg
             // 
@@ -245,10 +246,11 @@ namespace WarehouseManagement
             this.textBoxMessage.AutoSize = true;
             this.textBoxMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.textBoxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
-            this.textBoxMessage.Location = new System.Drawing.Point(683, 12);
-            this.textBoxMessage.MinimumSize = new System.Drawing.Size(100, 0);
+            this.textBoxMessage.Location = new System.Drawing.Point(706, 5);
+            this.textBoxMessage.MaximumSize = new System.Drawing.Size(200, 0);
+            this.textBoxMessage.MinimumSize = new System.Drawing.Size(200, 0);
             this.textBoxMessage.Name = "textBoxMessage";
-            this.textBoxMessage.Size = new System.Drawing.Size(100, 16);
+            this.textBoxMessage.Size = new System.Drawing.Size(200, 16);
             this.textBoxMessage.TabIndex = 8;
             // 
             // tableLayoutPanel1
@@ -274,8 +276,7 @@ namespace WarehouseManagement
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 56.40648F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43.59352F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 231F));
-            this.tableLayoutPanel2.Controls.Add(this.textBoxMessage, 2, 1);
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 233F));
             this.tableLayoutPanel2.Controls.Add(this.buttonEditingMap, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonAddCell, 1, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -305,7 +306,7 @@ namespace WarehouseManagement
             // 
             this.buttonAddCell.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAddCell.Image = global::WarehouseManagement.Properties.Resources.addCell;
-            this.buttonAddCell.Location = new System.Drawing.Point(387, 15);
+            this.buttonAddCell.Location = new System.Drawing.Point(386, 15);
             this.buttonAddCell.MaximumSize = new System.Drawing.Size(290, 68);
             this.buttonAddCell.Name = "buttonAddCell";
             this.buttonAddCell.Size = new System.Drawing.Size(290, 68);
@@ -325,6 +326,7 @@ namespace WarehouseManagement
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(918, 549);
+            this.Controls.Add(this.textBoxMessage);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStripMainForm);
             this.MainMenuStrip = this.menuStripMainForm;
@@ -339,7 +341,6 @@ namespace WarehouseManagement
             this.menuStripMainForm.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buttonEditingMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.buttonAddCell)).EndInit();
             this.ResumeLayout(false);
