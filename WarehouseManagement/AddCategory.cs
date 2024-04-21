@@ -18,6 +18,11 @@ namespace WarehouseManagement
             InitializeComponent();
         }
 
+        /// <summary>
+        /// При закрытии формы проверяем, что поле "Название категории" не пустое
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddCategory_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxNameCategory.Text))

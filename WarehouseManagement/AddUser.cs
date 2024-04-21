@@ -24,6 +24,11 @@ namespace WarehouseManagement
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Проверка на корректность введенных данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddUser_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxNewLogin.Text) | string.IsNullOrEmpty(textBoxNewPass.Text))
@@ -39,6 +44,11 @@ namespace WarehouseManagement
             newPass = HashPassword(textBoxNewPass.Text);
         }
 
+        /// <summary>
+        /// Хэширование пароля
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         private string HashPassword(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())

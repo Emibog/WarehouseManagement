@@ -34,6 +34,9 @@ namespace WarehouseManagement
             showProducts();
         }
 
+        /// <summary>
+        /// Показать содержимое ячейки и количество товара
+        /// </summary>
         private void showProducts()
         {
             int yOffset = 20; // Инициализировать смещение Y для позиционирования
@@ -67,9 +70,10 @@ namespace WarehouseManagement
 
                     // Создать новую кнопку для удаления товара
                     Button deleteButton = new Button();
-                    deleteButton.BackgroundImage = Properties.Resources.deleteButton;
-                    deleteButton.BackgroundImageLayout = ImageLayout.Zoom; // Растянуть изображение для заполнения кнопки
-                    deleteButton.Width = 40;
+                    //deleteButton.BackgroundImage = Properties.Resources.deleteButton;
+                    //deleteButton.BackgroundImageLayout = ImageLayout.Zoom; // Растянуть изображение для заполнения кнопки
+                    deleteButton.Text = "Списать";
+                    deleteButton.Width = 60;
                     deleteButton.Height = 40;
                     deleteButton.Name = itemValue;
                     deleteButton.Tag = label; // Отметить кнопку соответствующей меткой
@@ -89,12 +93,21 @@ namespace WarehouseManagement
                     moveButton.Click += MoveButton_Click; // Присоединить обработчик события нажатия
                     panelItems.Controls.Add(moveButton); // Добавить кнопку перемещения на форму
                 }
+                // Создать новую кнопку для добавления товара
+                Button addItemButton = new Button();
+                addItemButton.Text = "Добавить товар в ячейку";
+                addItemButton.MaximumSize = new Size(200, 80);
+                addItemButton.Name = "addButton";
+
+                addItemButton.Dock = DockStyle.Right;
+                addItemButton.Click += buttonAddItem_Click; // Присоединить обработчик события нажатия
+                panelItems.Controls.Add(addItemButton); // Добавить кнопку перемещения на форму
             }
             db.closeConnection();
         }
 
         /// <summary>
-        /// Добавление операции в историю
+        /// Добавление операции в историю (приход/расход)
         /// </summary>
         /// <param name="table"></param>
         /// <param name="item"></param>
@@ -115,6 +128,11 @@ namespace WarehouseManagement
             db.closeConnection();
         }
 
+        /// <summary>
+        /// Обработчик события нажатия на кнопку "Удалить"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (sender is Control control)
@@ -149,6 +167,11 @@ namespace WarehouseManagement
             fDeleteItem.Close();
         }
 
+        /// <summary>
+        /// Обработчик события нажатия на кнопку "Переместить"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MoveButton_Click(object sender, EventArgs e)
         {
             Button deleteButton = (Button)sender;
@@ -226,6 +249,13 @@ namespace WarehouseManagement
             moveItem.Close();
         }
 
+        /// <summary>
+        /// Удаление товара из базы данных
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="fDeleteItem"></param>
+        /// <param name="mapName"></param>
+        /// <param name="category"></param>
         private void DeleteItem(DB db, formDeleteItem fDeleteItem, string mapName, string category)
         {
             MySqlCommand command = new MySqlCommand("SELECT `amount` FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
@@ -270,6 +300,13 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Обновление или добавление нового товара
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="moveItem"></param>
+        /// <param name="item"></param>
+        /// <param name="category"></param>
         private void UpdateOrInsertItem(DB db, MoveItem moveItem, string item, string category)
         {
             if (ItemExists(db, moveItem.CellToMove, item, category))
@@ -296,6 +333,14 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Проверка на существование
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="cellToMove"></param>
+        /// <param name="item"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
         private bool ItemExists(DB db, string cellToMove, string item, string category)
         {
             MySqlCommand command = new MySqlCommand("SELECT COUNT(*) FROM `items` WHERE BINARY `item` = @item AND BINARY `cell` = @cell AND BINARY `map` = @map AND BINARY `category` = @category", db.getConnection());
@@ -309,6 +354,10 @@ namespace WarehouseManagement
             return count > 0;
         }
 
+        /// <summary>
+        /// Обновление информации о товарах
+        /// </summary>
+        /// <param name="db"></param>
         private void updateItems(DB db)
         {
             db.openConnection();
@@ -368,6 +417,11 @@ namespace WarehouseManagement
             db.closeConnection();
         }
 
+        /// <summary>
+        /// Обработчик события нажатия на кнопку "Добавить"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonAddItem_Click(object sender, EventArgs e)
         {
             formAddItem fAddItem = new formAddItem(mapName, cellName);

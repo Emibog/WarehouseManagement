@@ -30,6 +30,7 @@ namespace WarehouseManagement
             this.parentItem = parentItem;
             numericUpDownAmount.Maximum = decimal.MaxValue;
 
+            //// Заполняем комбобокс ячейками
             db = new DB();
             db.openConnection();
             MySqlCommand command = new MySqlCommand("SELECT `cell` FROM `cells` WHERE `map` = @map", db.getConnection());
@@ -79,6 +80,11 @@ namespace WarehouseManagement
             this.Close();
         }
 
+        /// <summary>
+        /// Обработчик события выбора ячейки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxCells_SelectedIndexChanged(object sender, EventArgs e)
         {
             db = new DB();
@@ -103,6 +109,7 @@ namespace WarehouseManagement
 
                 if (!string.IsNullOrEmpty(parentItem))
                 {
+                    Console.WriteLine(parentItem);
                     comboBoxItems.SelectedItem = parentItem;
                     comboBoxItems.Enabled = false;
                 }
@@ -119,6 +126,11 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Установка максимального количества
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void setMaxAmount_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(comboBoxItems.Text) && !string.IsNullOrEmpty(comboBoxCells.Text))

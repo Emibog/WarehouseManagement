@@ -12,6 +12,9 @@ namespace WarehouseManagement
 {
     public partial class DBView : Form
     {
+        /// <summary>
+        /// Отображает базу данных
+        /// </summary>
         public DBView()
         {
             InitializeComponent();

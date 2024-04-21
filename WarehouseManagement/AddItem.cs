@@ -82,6 +82,11 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Проверка на корректность введенных данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void formAddItem_FormClosing(object sender, FormClosingEventArgs e)
         {
 
@@ -110,6 +115,11 @@ namespace WarehouseManagement
 
         }
 
+        /// <summary>
+        /// Добавление категории
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonAddCategory_Click(object sender, EventArgs e)
         {
             formAddCategory fAddCategory = new formAddCategory();
@@ -138,6 +148,11 @@ namespace WarehouseManagement
             fAddCategory.Close();
         }
 
+        /// <summary>
+        /// Запрос добавления категории
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="fAddCategory"></param>
         private void dbAddCategory(DB db, formAddCategory fAddCategory)
         {
             MySqlCommand autoIncrement = new MySqlCommand("ALTER TABLE `categories` AUTO_INCREMENT = 1", db.getConnection());

@@ -33,6 +33,11 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// При закрытии формы проверяем, что поле "Название ячейки" не пустое
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InputDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(textBoxName.Text) | string.IsNullOrEmpty(comboBoxColor.Text))

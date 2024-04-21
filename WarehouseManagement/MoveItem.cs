@@ -52,6 +52,11 @@ namespace WarehouseManagement
             }
         }
 
+        /// <summary>
+        /// Установка максимального количества
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void setMaxAmount_Click(object sender, EventArgs e)
         {
             db = new DB();
@@ -83,6 +88,11 @@ namespace WarehouseManagement
             this.Close();
         }
 
+        /// <summary>
+        /// Проверка введенных данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MoveItem_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (DialogResult == DialogResult.OK && string.IsNullOrEmpty(comboBoxCells.Text) | numericUpDownAmount.Value <= 0)
